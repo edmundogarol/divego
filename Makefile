@@ -18,23 +18,19 @@ postgres:
 build:
 	pip install --upgrade pip && pip install -r requirements.txt && pip list
 
+env: dev build
 
 # gui:
-# 	cd gdaypunchwebapp/gdaypunchreact && yarn && yarn run dev
+# 	cd divego_frontend && yarn && yarn run dev
 
 # prodgui:
-# 	cd gdaypunchwebapp/gdaypunchreact && yarn && yarn run build
+# 	cd divego_frontend && yarn && yarn run build
 
 # watchgui:
-# 	cd gdaypunchwebapp/gdaypunchreact && yarn && yarn run devwatch
-
-# deletemigrations:
-# 	cd gdaypunchbackend/gdaypunchapi/migrations && find . ! -name __init__.py -maxdepth 1 -type f -delete
+# 	cd divego_frontend && yarn && yarn run devwatch
 
 # deletedb:
 # 	rm db.sqlite3
-
-# env: dev build
 
 # static:
 # 	DEPLOYENV=deployment python manage.py collectstatic --noinput 
@@ -56,7 +52,7 @@ build:
 # dockerapp: gui build migrate	server
 
 # ebdeploy: 
-# 	eb deploy gday-punch-web-dev
+# 	eb deploy divego-project
 
 # deploy: prodgui static	ebdeploy
 

@@ -10,8 +10,6 @@ class AdminOnly(BasePermission):
     def has_permission(self, request):
         return request.user.is_authenticated and request.user.is_staff
 
-
-
 # Only allow logged in users to create and edit their own interactions (create, retrieve, partial, destroy)
 class UserPermissions(BasePermission):
     def has_permission(self, request, view):
