@@ -1,3 +1,5 @@
+import pytz
+
 from django.db import models
 from django.core.validators import validate_email
 from django.core.exceptions import ValidationError
@@ -13,7 +15,7 @@ from rest_framework import exceptions
 
 from storages.backends.s3boto3 import S3Boto3Storage
 
-from .constants import *
+from divego_project.constants import *
 
 class UserManager(BaseUserManager):
     use_in_migrations = True
@@ -113,3 +115,23 @@ class User(AbstractBaseUser, PermissionsMixin):
     objects = UserManager()
 
     USERNAME_FIELD = "email"
+
+    @property
+    def readable_date_joined(self):
+        local_tz = pytz.timezone("Asia/Manila")
+        local_dt = self.date_joined.replace(tzinfo=pytz.utc).astimezone(local_tz)
+
+        return {
+            "date": local_dt.strftime("%d %b %Y"),
+            "time": local_dt.strftime("%I:%M %p"),
+        }
+
+    @property
+    def readable_last_login(self):
+        local_tz = pytz.timezone("Asia/Manila")
+        local_dt = self.last_login.replace(tzinfo=pytz.utc).astimezone(local_tz)
+
+        return {
+            "date": local_dt.strftime("%d %b %Y"),
+            "time": local_dt.strftime("%I:%M %p"),
+        }

@@ -7,13 +7,17 @@ makemigrations:
 	DEVENV=development python manage.py makemigrations
 
 server:
-	DEVENV=development python manage.py runserver 0.0.0.0:8000
+	DEVENV=development python manage.py runserver
 
 dev:
 	python -m venv venv && source venv/bin/activate 
 
 postgres:
 	brew services start postgresql@14
+
+build:
+	pip install --upgrade pip && pip install -r requirements.txt && pip list
+
 
 # gui:
 # 	cd gdaypunchwebapp/gdaypunchreact && yarn && yarn run dev
@@ -29,9 +33,6 @@ postgres:
 
 # deletedb:
 # 	rm db.sqlite3
-
-# build:
-# 	pip install --upgrade pip && pip install --upgrade wheel && pip install --upgrade setuptools && pip install --user -r requirements.txt && pip list
 
 # env: dev build
 

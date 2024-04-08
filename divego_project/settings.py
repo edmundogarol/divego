@@ -37,7 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'divego_project',
-    'divego_project.divego_api'
+    'drf_yasg',
 ]
 
 MIDDLEWARE = [
@@ -51,11 +51,13 @@ MIDDLEWARE = [
 ]
 
 REST_FRAMEWORK = {
+    'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema',
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     'PAGE_SIZE': 10
 }
 
-AUTH_USER_MODEL="divego_api.User"
+
+AUTH_USER_MODEL="divego_project.User"
 DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
 
 ROOT_URLCONF = 'divego_project.urls'
@@ -79,8 +81,10 @@ TEMPLATES = [
 WSGI_APPLICATION = 'divego_project.wsgi.application'
 
 if "DEVENV" in os.environ or "DEPLOYENV" in os.environ:
+    LOCAL_DEV = True
     dbconfig = "./divego-config.json"
 else:
+    LOCAL_DEV = False
     dbconfig = "/opt/app/divego-config.json"
 
 SETTINGS = None
@@ -134,4 +138,27 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
+if "DEVENV" in os.environ or "DEPLOYENV" in os.environ:
+    STATIC_ROOT = os.path.join(BASE_DIR, "divego_project/public/static/")
+else:
+    STATIC_ROOT = "opt/app/divego_project/public/static/"
+
+
+if "DEPLOYENV" in os.environ:
+    STATICFILES_DIRS = [
+        os.path.join(
+            BASE_DIR, "divego_frontend/public/static/resources"
+        ),
+        os.path.join(BASE_DIR, "divego_project/build/"),
+    ]
+else:
+    STATICFILES_DIRS = [
+        os.path.join(
+            BASE_DIR, "divego_frontend/public/static/resources"
+        ),
+        os.path.join(BASE_DIR, "divego_frontend/public/static/assets"),
+        os.path.join(BASE_DIR, "divego_project/build/"),
+    ]
+
 STATIC_URL = '/static/'
+
