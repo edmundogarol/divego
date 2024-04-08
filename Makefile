@@ -12,6 +12,9 @@ server:
 dev:
 	python -m venv venv && source venv/bin/activate 
 
+source:
+	source venv/bin/activate 
+
 postgres:
 	brew services start postgresql@14
 
