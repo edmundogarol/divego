@@ -9,28 +9,22 @@ makemigrations:
 server:
 	DEVENV=development python manage.py runserver
 
-dev:
-	python -m venv venv && source venv/bin/activate 
-
-source:
-	source venv/bin/activate 
-
 postgres:
 	brew services start postgresql@14
 
 build:
 	pip install --upgrade pip && pip install -r requirements.txt && pip list
 
-env: dev build
+env: build
 
-# gui:
-# 	cd divego_frontend && yarn && yarn run dev
+gui:
+	cd frontend && rm -rf node_modules && yarn && yarn start
 
 # prodgui:
-# 	cd divego_frontend && yarn && yarn run build
+# 	cd frontend && yarn && yarn start
 
 # watchgui:
-# 	cd divego_frontend && yarn && yarn run devwatch
+# 	cd frontend && yarn && yarn run devwatch
 
 # deletedb:
 # 	rm db.sqlite3
