@@ -15,6 +15,12 @@ postgres:
 build:
 	pip install --upgrade pip && pip install -r requirements.txt && pip list
 
+yarn:
+	cd divego_rn && rm -rf node_modules && yarn install && bundle exec pod install && yarn start
+
+ios:
+	cd divego_rn && && yarn ios
+
 env: build
 
 gui:
