@@ -1,4 +1,5 @@
 {
   "name": "divego_rn",
-  "displayName": "divego_rn"
+  "displayName": "divego_rn",
+  "packagerOpts": { "config": "metro.config.js", "sourceExts": [ "js","jsx","svg","ts","tsx"] }
 }

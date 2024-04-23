@@ -7,7 +7,7 @@
     "baseUrl": ".",
     "paths": {
       "@tests": ["src/tests/*"],
-      "@assets/*": ["src/components/*"],
+      "@assets/*": ["src/assets/*"],
       "@components/*": ["src/components/*"],
       "@modules/*": ["src/modules/*"],
       "@hooks/*": ["src/hooks/*"],
