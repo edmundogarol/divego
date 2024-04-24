@@ -11,15 +11,16 @@
     "paths": {
       "@tests": ["src/tests/*"],
       "@assets/*": ["src/assets/*"],
+      "@pages/*": ["src/pages/*"],
       "@components/*": ["src/components/*"],
       "@modules/*": ["src/modules/*"],
       "@hooks/*": ["src/hooks/*"],
       "@interfaces/*": ["src/interfaces/*"],
+      "@redux/*": ["src/redux/*"],
     },
   },
   "include": [
     "**/*.ts",
     "**/*.tsx",
-    "./src",
-  ]
+  ],
 }
