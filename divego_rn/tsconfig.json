@@ -1,5 +1,8 @@
 {
   "extends": "@react-native/typescript-config/tsconfig.json",
+  "ts-node": {
+    "require": ["tsconfig-paths/register"]
+  },
   "compilerOptions": {
     "target": "es6",
     "lib": ["es5", "es6", "dom"],
@@ -17,5 +20,6 @@
   "include": [
     "**/*.ts",
     "**/*.tsx",
+    "./src",
   ]
 }

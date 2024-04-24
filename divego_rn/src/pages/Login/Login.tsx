@@ -1,13 +1,5 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- */
-
 import React from "react";
 import {
-  Image,
   SafeAreaView,
   ScrollView,
   StatusBar,
@@ -15,9 +7,9 @@ import {
   View,
 } from "react-native";
 import { Colors } from "react-native/Libraries/NewAppScreen";
-import DivegoLogo from "./src/assets/divego_logo_transparent_non_vector.svg";
+import DivegoLogo from "../assets/divego_logo_transparent_non_vector.svg";
 
-function App(): React.JSX.Element {
+const Login: React.FunctionComponent = () => {
   const isDarkMode = useColorScheme() === "dark";
 
   const backgroundStyle = {
@@ -42,6 +34,6 @@ function App(): React.JSX.Element {
       </ScrollView>
     </SafeAreaView>
   );
-}
+};
 
-export default App;
+export default Login;
