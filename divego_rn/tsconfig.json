@@ -13,11 +13,20 @@
       "@assets/*": ["src/assets/*"],
       "@pages/*": ["src/pages/*"],
       "@components/*": ["src/components/*"],
+      "@styles/*": ["src/styles/*"],
       "@modules/*": ["src/modules/*"],
       "@hooks/*": ["src/hooks/*"],
       "@interfaces/*": ["src/interfaces/*"],
       "@redux/*": ["src/redux/*"],
     },
+    "plugins": [
+      {
+        "name": "@styled/typescript-styled-plugin",
+        "lint": {
+          "vendorPrefix": "error",
+        }
+      }
+    ]
   },
   "include": [
     "**/*.ts",

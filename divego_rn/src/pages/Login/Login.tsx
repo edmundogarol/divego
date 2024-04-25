@@ -1,49 +1,62 @@
 import React from "react";
+import { ActivityIndicator, StatusBar, useColorScheme } from "react-native";
+import DivegoLogo from "@assets/divego_logo_v2.svg";
 import {
-  Button,
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  Text,
-  useColorScheme,
-  View,
-} from "react-native";
-import { Colors } from "react-native/Libraries/NewAppScreen";
-import DivegoLogo from "@assets/divego_logo_transparent_non_vector.svg";
-import useLoginState from "./hooks/useLoginState";
+  LoginContainer,
+  LoginHeader,
+  LoginInputsContainer,
+} from "./LoginStyledComponents";
+import globalStyles from "@styles/global";
+import Input from "@components/Input/Input";
+import Button from "@components/Button/Button";
 import useLoginDispatch from "./hooks/useLoginDispatch";
+import useLoginState from "./hooks/useLoginState";
+import Icon from "@components/Icon/Icon";
+import { IconTypeEnum } from "@components/Icon/IconInterfaces";
+import { Style } from "@components/Icon/IconStyle";
 
 const Login: React.FunctionComponent = () => {
-  const { loading } = useLoginState();
   const { updateLoading } = useLoginDispatch();
+  const { loading } = useLoginState();
+  const styles = globalStyles();
   const isDarkMode = useColorScheme() === "dark";
 
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-  };
-
   return (
-    <SafeAreaView style={backgroundStyle}>
+    <LoginContainer>
       <StatusBar
         barStyle={isDarkMode ? "light-content" : "dark-content"}
-        backgroundColor={backgroundStyle.backgroundColor}
+        backgroundColor={styles.container.backgroundColor}
       />
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={backgroundStyle}>
-        <View
-          style={{
-            backgroundColor: isDarkMode ? Colors.black : Colors.white,
-          }}>
-          <DivegoLogo width={200} height={200} />
-          <Text>{loading ? "Loading" : "Not Loading"}</Text>
-          <Button
-            title="Update Loading"
-            onPress={() => updateLoading(!loading)}
-          />
-        </View>
-      </ScrollView>
-    </SafeAreaView>
+      <DivegoLogo width={200} height={200} />
+      <LoginHeader>Welcome!</LoginHeader>
+      <LoginInputsContainer>
+        <Input
+          label="Email / Username"
+          placeholder="Type email or username"
+          icon={
+            <Icon name="user" type={IconTypeEnum.Ionicons} style={Style.icon} />
+          }
+        />
+        <Input
+          label="Password"
+          placeholder="Type password"
+          icon={
+            <Icon
+              name="lock-outline"
+              type={IconTypeEnum.MaterialCommunityIcons}
+              style={Style.icon}
+            />
+          }
+          secureTextEntry
+        />
+      </LoginInputsContainer>
+      <Button
+        text={
+          loading ? <ActivityIndicator size="small" color="white" /> : "Login"
+        }
+        onPress={() => updateLoading(!loading)}
+      />
+    </LoginContainer>
   );
 };
 

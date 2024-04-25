@@ -1,0 +1,4 @@
+export const CONTAINER_PADDING_DEFAULT = 10;
+export const CONTAINER_MARGIN_DEFAULT = 10;
+
+export const CONTAINER_MARGIN_SMALL = 5;
