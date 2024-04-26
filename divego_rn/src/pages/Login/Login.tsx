@@ -20,6 +20,7 @@ import {
   LoginHeader,
   LoginInputsContainer,
 } from "./LoginStyledComponents";
+import useLoginCheck from "./hooks/useLoginCheck";
 
 const Login: React.FunctionComponent = () => {
   const { updateLoading } = useLoginDispatch();
@@ -29,6 +30,7 @@ const Login: React.FunctionComponent = () => {
   const fadeAnimation = useRef(new Animated.Value(0)).current;
   const fallAnimation = useRef(new Animated.Value(-30)).current;
   useLoginLogoEntryAnimation(fadeAnimation, fallAnimation);
+  useLoginCheck();
 
   return (
     <LoginContainer>

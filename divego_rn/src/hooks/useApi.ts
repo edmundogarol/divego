@@ -1,55 +1,51 @@
-// import { message } from "antd";
-import useFetch, { DiveGoFetchWrapper, DiveGoResponse } from "./useFetch";
+import useFetch, { DiveGoResponse } from "./useFetch";
 
 /**
  * Make an API call using the appropriate fetcher.
  */
-export const api = (): (({
-  url,
-  params,
-}: DiveGoFetchWrapper) => Promise<Response | DiveGoResponse>) => {
-  return async ({ url, params }) => {
-    const diveGofetch = useFetch();
-    try {
-      const response = await diveGofetch({ url, params });
+export const useApi = <T>(): ((
+  url: string,
+  params?: {
+    method?: string;
+    contentType?: string;
+    accept?: string;
+    params?: { [key: string]: any };
+  },
+) => Promise<Response | DiveGoResponse<T>>) => {
+  return (url, params) => {
+    const diveGofetch = useFetch<T>();
 
-      if (response.ok) {
-        console.debug("Ok!", response);
-      } else if (response.status === 403) {
-        console.debug("Login required");
-
-        if (
-          (response as DiveGoResponse).data.detail &&
-          (response as DiveGoResponse).data.detail.includes(
-            "Authentication credentials were not provided.",
-          )
-        ) {
-          console.debug("Not logged in");
-          // yield put(logoutSuccess());
-          // yield put(doCheckLogin());
+    return diveGofetch(url, params)
+      .then((response) => {
+        if (response.ok) {
+          console.debug("Ok!", response.url);
+        } else if (response.status === 403) {
+          console.debug("Login required");
+        } else if (response.status === 503) {
+          console.error("Timeout", response);
+        } else {
+          console.error("Bad request", response);
         }
-      } else if (response.status === 503) {
-        console.error("Timeout", response);
-      } else {
-        console.error("Bad request", response);
-      }
 
-      return response;
-    } catch (error: any) {
-      console.error("Error talking to DiveGo:", error);
-      if (error.offline) {
-        console.error("You are offline.", error);
-      }
+        return response;
+      })
+      .catch((error) => {
+        console.error("Error talking to DiveGo:", error);
+        if (error.offline) {
+          console.error("You are offline.", error);
+        }
 
-      const errorResponse = Response.error();
-      return {
-        ...errorResponse,
-        ok: false,
-        exception: true,
-        status: error.name,
-        statusText: error.toString(),
-        data: error,
-      };
-    }
+        const errorResponse = Response.error();
+        return {
+          ...errorResponse,
+          ok: false,
+          exception: true,
+          status: error.name,
+          statusText: error.toString(),
+          data: error,
+        };
+      });
   };
 };
+
+export default useApi;

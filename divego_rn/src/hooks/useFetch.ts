@@ -1,5 +1,6 @@
 import set from "lodash/set";
 import useBuildSearchParams from "./useBuildSearchParams";
+import environmentConfig from "@utils/environmentConfig";
 
 export const APPLICATION_JSON = "application/json";
 
@@ -12,25 +13,22 @@ export const APPLICATION_JSON = "application/json";
  *   * params - query params
  */
 
-export interface DiveGoFetchWrapper {
-  url: string;
-  params?: {
-    contentType?: string;
-    accept?: string;
-    params?: { [key: string]: any };
-  };
-}
-
-export interface DiveGoResponse extends Response {
-  data?: any;
+export interface DiveGoResponse<T> extends Response {
+  data?: T | null;
   rawData?: any;
 }
 
-export const useFetch = (): (({
-  url,
-  params,
-}: DiveGoFetchWrapper) => Promise<Response | DiveGoResponse>) => {
-  return async ({ url, params }) => {
+export const useFetch = <T>(): ((
+  url: string,
+  params?: {
+    method?: string;
+    contentType?: string;
+    accept?: string;
+    params?: { [key: string]: any };
+  },
+  type?: any,
+) => Promise<Response | DiveGoResponse<T>>) => {
+  return (url, params, type) => {
     const inputParams = params || {};
     const {
       contentType = APPLICATION_JSON,
@@ -47,9 +45,10 @@ export const useFetch = (): (({
       ...inputParams,
       headers,
     };
+
     const composedURL = new URL(
       url.includes("api") ? url : `api/${url}`,
-      window.location.origin,
+      environmentConfig.HOST,
     );
 
     useBuildSearchParams({
@@ -61,41 +60,45 @@ export const useFetch = (): (({
       headers.append("Content-Type", contentType);
     }
 
-    // By default, we will use application/json here, otherwise we'll just leave
-    // it like 'multipart/form-data'
     if (contentType === APPLICATION_JSON) {
       finalParams.body = JSON.stringify(finalParams.body);
     }
 
-    const response = await fetch(composedURL, finalParams).catch((exc) => {
-      throw exc;
-    });
+    let responseAssign: Response | DiveGoResponse<typeof type>;
 
-    const responseContentType = response.headers.get("content-type");
+    return fetch(composedURL, finalParams)
+      .then((fetchResponse) => {
+        const responseContentType = fetchResponse.headers.get("content-type");
 
-    if (!responseContentType) {
-      return response;
-    }
+        if (!responseContentType) {
+          return fetchResponse;
+        }
 
-    if (response.ok && !responseContentType.startsWith(accept)) {
-      console.warn(`Expected ${accept} got ${responseContentType}`);
-      return {
-        ...response,
-        ok: false,
-        status: 406,
-        statusText: "Not Acceptable",
-      };
-    }
+        if (fetchResponse.ok && !responseContentType.startsWith(accept)) {
+          console.warn(`Expected ${accept} got ${responseContentType}`);
+          return {
+            ...fetchResponse,
+            ok: false,
+            status: 406,
+            statusText: "Not Acceptable",
+          };
+        }
 
-    if (responseContentType.startsWith(APPLICATION_JSON)) {
-      set(response, "data", response.json());
+        if (responseContentType.startsWith(APPLICATION_JSON)) {
+          responseAssign = fetchResponse;
+        }
 
-      if (response.ok) {
-        set(response, "response.data", (response as DiveGoResponse).data);
-      }
-    }
-
-    return response;
+        return fetchResponse.json();
+      })
+      .then((responseJson) => {
+        if (responseAssign.ok) {
+          set(responseAssign, "data", responseJson);
+        }
+        return responseAssign;
+      })
+      .catch((exc) => {
+        throw exc;
+      });
   };
 };
 

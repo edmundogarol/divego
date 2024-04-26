@@ -5,7 +5,7 @@
   "scripts": {
     "prep": "rm -rf node_modules && yarn install",
     "android": "react-native run-android",
-    "ios": "react-native run-ios --simulator=\"iPhone 15\"",
+    "ios": "ENVFILE=.env.dev react-native run-ios --simulator=\"iPhone 15\"",
     "pods": "cd ios && bundle exec pod install --repo-update && cd ..",
     "clean-android": "cd android && ./gradlew clean && cd ..",
     "clean-ios": "cd ios && xcodebuild clean && cd ..",
@@ -21,6 +21,7 @@
     "lodash": "^4.17.21",
     "react": "18.2.0",
     "react-native": "0.73.7",
+    "react-native-config": "^1.5.1",
     "react-native-svg": "^15.2.0",
     "react-native-vector-icons": "^10.0.3",
     "react-native-web": "^0.19.11",

@@ -7,7 +7,7 @@ makemigrations:
 	DEVENV=development python manage.py makemigrations
 
 server:
-	DEVENV=development python manage.py runserver
+	source venv/bin/activate && DEVENV=development python manage.py runserver
 
 postgres:
 	brew services start postgresql@14

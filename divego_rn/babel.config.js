@@ -15,6 +15,7 @@ module.exports = {
           "@hooks": "./src/hooks",
           "@interfaces": "./src/interfaces",
           "@redux": "./src/redux",
+          "@utils": "./src/utils",
         },
       },
     ],

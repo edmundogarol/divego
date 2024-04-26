@@ -112,13 +112,12 @@ prepare_ios() {
   xattr -w com.apple.xcode.CreatedByBuildSystem true ios/build
   rm -rf ios/Pods ios/Podfile.lock ios/build
   rm -rf ~/Library/Developer/Xcode/DerivedData/
-  watchman watch-del '/Users/YungYung/Code/divego/divego_rn' ; watchman watch-project '/Users/YungYung/Code/divego/divego_rn'
   yarn clean-ios
   yarn cache clean
   
   # Prepare
   yarn pods
-  
+  watchman watch-del '/Users/YungYung/Code/divego/divego_rn' ; watchman watch-project '/Users/YungYung/Code/divego/divego_rn'  
   yarn start
 }
 
