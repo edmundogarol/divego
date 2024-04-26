@@ -7,6 +7,7 @@ export interface ButtonWrapperProps extends PressableProps {
   label?: string;
   disabled?: boolean;
   textStyle?: TextStyle;
+  loading?: boolean;
 }
 
 const Button: React.FunctionComponent<ButtonWrapperProps> = ({
@@ -15,10 +16,12 @@ const Button: React.FunctionComponent<ButtonWrapperProps> = ({
   style,
   disabled,
   onPress,
+  loading,
   ...props
 }): React.ReactElement => {
   return (
     <PressableWrapper
+      loading={loading}
       {...props}
       onPress={(e): void => {
         if (onPress) onPress(e);
