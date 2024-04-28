@@ -52,7 +52,7 @@ const ResetPassword: React.FunctionComponent = () => {
       <ResetPasswordInputsContainer>
         <Input
           label="Email"
-          placeholder="Type email"
+          placeholder="Enter email"
           icon={
             <Icon
               name="mail"

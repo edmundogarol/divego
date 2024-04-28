@@ -57,7 +57,7 @@ const Login: React.FunctionComponent = () => {
       <LoginInputsContainer>
         <Input
           label="Email / Username"
-          placeholder="Type email or username"
+          placeholder="Enter email or username"
           icon={
             <Icon
               name="user-o"
@@ -68,7 +68,7 @@ const Login: React.FunctionComponent = () => {
         />
         <Input
           label="Password"
-          placeholder="Type password"
+          placeholder="Enter password"
           icon={
             <Icon
               name="lock-outline"

@@ -52,7 +52,7 @@ const SignUp: React.FunctionComponent = () => {
       <SignUpInputsContainer>
         <Input
           label="First Name"
-          placeholder="Type first name"
+          placeholder="Enter first name"
           icon={
             <Icon
               name="user-o"
@@ -63,7 +63,7 @@ const SignUp: React.FunctionComponent = () => {
         />
         <Input
           label="Last Name"
-          placeholder="Type last name"
+          placeholder="Enter last name"
           icon={
             <Icon
               name="user-o"
@@ -74,7 +74,7 @@ const SignUp: React.FunctionComponent = () => {
         />
         <Input
           label="Email"
-          placeholder="Type email"
+          placeholder="Enter email"
           icon={
             <Icon
               name="mail"
@@ -85,7 +85,19 @@ const SignUp: React.FunctionComponent = () => {
         />
         <Input
           label="Password"
-          placeholder="Type password"
+          placeholder="Enter password"
+          icon={
+            <Icon
+              name="lock-outline"
+              type={IconTypeEnum.MaterialCommunityIcons}
+              style={Style.icon}
+            />
+          }
+          secureTextEntry
+        />
+        <Input
+          label="Confirm Password"
+          placeholder="Confirm password"
           icon={
             <Icon
               name="lock-outline"
