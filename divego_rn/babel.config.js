@@ -16,6 +16,7 @@ module.exports = {
           "@interfaces": "./src/interfaces",
           "@redux": "./src/redux",
           "@utils": "./src/utils",
+          "@navigation": "./src/navigation",
         },
       },
     ],

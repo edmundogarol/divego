@@ -2,7 +2,7 @@ import React, { ReactElement } from "react";
 
 interface IfProps {
   condition?: boolean;
-  children?: React.ReactElement;
+  children?: JSX.Element | JSX.Element[];
 }
 
 export const ElseIf: React.FunctionComponent<IfProps> = ({

@@ -1,10 +1,16 @@
-import { useEffect } from "react";
 import { Animated } from "react-native";
 
 const useLoginLogoEntryAnimation = (
   fadeAnimation: Animated.Value,
   fallAnimation: Animated.Value,
 ) => {
+  fadeAnimation.addListener(() => {
+    return;
+  });
+  fallAnimation.addListener(() => {
+    return;
+  });
+
   Animated.timing(fadeAnimation, {
     toValue: 1,
     duration: 1500,

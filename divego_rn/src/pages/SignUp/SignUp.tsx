@@ -3,6 +3,7 @@ import {
   ActivityIndicator,
   Animated,
   StatusBar,
+  Text,
   useColorScheme,
 } from "react-native";
 import DiveGoLogo from "@assets/divego_logo_v2.svg";
@@ -11,25 +12,19 @@ import Input from "@components/Input/Input";
 import Icon from "@components/Icon/Icon";
 import { IconTypeEnum } from "@components/Icon/IconInterfaces";
 import { Style } from "@components/Icon/IconStyle";
-import useLoginDispatch from "./hooks/useLoginDispatch";
-import useLoginState from "./hooks/useLoginState";
-import useLoginLogoEntryAnimation from "./hooks/useLoginLogoEntryAnimation";
-import {
-  ForgotPasswordLink,
-  LoginButton,
-  LoginContainer,
-  LoginHeader,
-  LoginInputsContainer,
-  SignUpLink,
-  SignUpText,
-  SignUpTextContainer,
-} from "./LoginStyledComponents";
-import useLoginCheck from "./hooks/useLoginCheck";
 import Gap from "@components/Gap/Gap.native";
-import { PageEnum } from "@interfaces/NavigationTypes";
-import { linkToUrl } from "@navigation/hooks/link";
+import {
+  SignUpButton,
+  SignUpContainer,
+  SignUpHeader,
+  SignUpInputsContainer,
+} from "./SignUpStyledComponents";
+import useLoginDispatch from "@pages/Login/hooks/useLoginDispatch";
+import useLoginState from "@pages/Login/hooks/useLoginState";
+import useLoginLogoEntryAnimation from "@pages/Login/hooks/useLoginLogoEntryAnimation";
+import { useCommonHeaderOptions } from "@navigation/hooks/useCommonHeaderOptions.native";
 
-const Login: React.FunctionComponent = () => {
+const SignUp: React.FunctionComponent = () => {
   const { updateLoading } = useLoginDispatch();
   const { loading } = useLoginState();
   const styles = globalStyles();
@@ -37,10 +32,9 @@ const Login: React.FunctionComponent = () => {
   const fadeAnimation = useRef(new Animated.Value(0)).current;
   const fallAnimation = useRef(new Animated.Value(-30)).current;
   useLoginLogoEntryAnimation(fadeAnimation, fallAnimation);
-  useLoginCheck();
 
   return (
-    <LoginContainer>
+    <SignUpContainer>
       <StatusBar
         barStyle={isDarkMode ? "light-content" : "dark-content"}
         backgroundColor={styles.container.backgroundColor}
@@ -50,18 +44,41 @@ const Login: React.FunctionComponent = () => {
           opacity: fadeAnimation,
           transform: [{ translateY: fallAnimation }],
         }}>
-        <DiveGoLogo width={200} height={200} />
+        <DiveGoLogo width={100} height={100} />
       </Animated.View>
-      <LoginHeader>{"Welcome!"}</LoginHeader>
       <Gap level={1} />
-      <LoginInputsContainer>
+      <SignUpHeader>{"Sign Up"}</SignUpHeader>
+      <Gap level={1} />
+      <SignUpInputsContainer>
         <Input
-          label="Email / Username"
-          placeholder="Type email or username"
+          label="First Name"
+          placeholder="Type first name"
           icon={
             <Icon
               name="user-o"
               type={IconTypeEnum.FontAwesome}
+              style={Style.icon}
+            />
+          }
+        />
+        <Input
+          label="Last Name"
+          placeholder="Type last name"
+          icon={
+            <Icon
+              name="user-o"
+              type={IconTypeEnum.FontAwesome}
+              style={Style.icon}
+            />
+          }
+        />
+        <Input
+          label="Email"
+          placeholder="Type email"
+          icon={
+            <Icon
+              name="mail"
+              type={IconTypeEnum.MaterialIcons}
               style={Style.icon}
             />
           }
@@ -78,22 +95,16 @@ const Login: React.FunctionComponent = () => {
           }
           secureTextEntry
         />
-        <ForgotPasswordLink>{"Forgot Password?"}</ForgotPasswordLink>
-        <Gap level={1} />
-      </LoginInputsContainer>
-      <LoginButton
+      </SignUpInputsContainer>
+      <SignUpButton
         loading={loading}
         text={
-          loading ? <ActivityIndicator size="small" color="white" /> : "Login"
+          loading ? <ActivityIndicator size="small" color="white" /> : "Submit"
         }
         onPress={() => updateLoading(!loading)}
       />
-      <SignUpTextContainer>
-        <SignUpText>{"Don't have an Account?"}</SignUpText>
-        <SignUpLink to={linkToUrl(PageEnum.SignUp)}>{"Sign Up"}</SignUpLink>
-      </SignUpTextContainer>
-    </LoginContainer>
+    </SignUpContainer>
   );
 };
 
-export default Login;
+export default SignUp;

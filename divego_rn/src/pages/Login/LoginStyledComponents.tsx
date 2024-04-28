@@ -1,8 +1,12 @@
 import styled from "styled-components/native";
 import {
   CONTAINER_MARGIN_DEFAULT,
+  CONTAINER_MARGIN_SMALL,
   CONTAINER_PADDING_DEFAULT,
 } from "@styles/constants";
+import { color } from "@styles/colors";
+import Button from "@components/Button/Button";
+import { Link } from "@react-navigation/native";
 
 export const LoginContainer = styled.View`
   align-items: center;
@@ -20,5 +24,22 @@ export const LoginHeader = styled.Text`
   width: 250px;
   font-size: 30px;
   font-weight: 100;
-  margin-bottom: ${CONTAINER_MARGIN_DEFAULT}px;
 `;
+
+export const SignUpTextContainer = styled.View`
+  flex-direction: row;
+  margin-top: ${CONTAINER_MARGIN_DEFAULT}px;
+`;
+export const SignUpText = styled.Text``;
+
+export const SignUpLink = styled(Link)`
+  color: ${color("SystemBlue1")};
+  margin-left: ${CONTAINER_MARGIN_SMALL}px;
+  font-weight: 800;
+`;
+
+export const ForgotPasswordLink = styled.Text`
+  margin-left: auto;
+`;
+
+export const LoginButton = styled(Button)``;

@@ -2,11 +2,21 @@ import { color } from "@styles/colors";
 import { CONTAINER_PADDING_DEFAULT } from "@styles/constants";
 import styled from "styled-components/native";
 
-export const PressableWrapper = styled.Pressable<{ loading?: boolean }>`
+export const PressableWrapper = styled.Pressable<{
+  loading?: boolean;
+  transparent?: boolean;
+}>`
+  flex-direction: row;
   align-items: center;
   justify-content: center;
-  background-color: ${({ loading }) => {
-    return loading ? "#c1d5e7" : color("SystemBlue3");
+  background-color: ${({ loading, transparent }) => {
+    if (loading) {
+      return "#c1d5e7";
+    }
+    if (transparent) {
+      return "transparent";
+    }
+    return color("SystemBlue3");
   }};
   padding: ${CONTAINER_PADDING_DEFAULT}px;
   width: 250px;

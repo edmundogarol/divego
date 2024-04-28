@@ -1,22 +1,34 @@
 import React from "react";
-import { Pressable, PressableProps, Text, TextStyle } from "react-native";
-import { ButtonText, PressableWrapper } from "./ButtonComponents";
+import { PressableProps, TextStyle } from "react-native";
+import { IconGlyph, IconTypeEnum } from "@components/Icon/IconInterfaces";
+import { ButtonText, PressableWrapper } from "./ButtonStyledComponents";
+import Icon from "@components/Icon/Icon";
 
 export interface ButtonWrapperProps extends PressableProps {
   text?: string | React.ReactElement;
   label?: string;
+  loading?: boolean;
   disabled?: boolean;
   textStyle?: TextStyle;
-  loading?: boolean;
+  iconStyle?: TextStyle;
+  iconType?: IconTypeEnum;
+  iconLeft?: IconGlyph;
+  iconRight?: IconGlyph;
+  transparent?: boolean;
 }
 
 const Button: React.FunctionComponent<ButtonWrapperProps> = ({
   text,
   textStyle,
+  iconLeft,
+  iconRight,
+  iconStyle,
   style,
   disabled,
+  transparent,
   onPress,
   loading,
+  iconType = IconTypeEnum.FontAwesome,
   ...props
 }): React.ReactElement => {
   return (
@@ -27,8 +39,15 @@ const Button: React.FunctionComponent<ButtonWrapperProps> = ({
         if (onPress) onPress(e);
       }}
       disabled={disabled}
+      transparent={transparent}
       style={style}>
+      {iconLeft ? (
+        <Icon style={iconStyle} name={iconLeft} type={iconType} />
+      ) : null}
       <ButtonText style={[textStyle]}>{text}</ButtonText>
+      {iconRight ? (
+        <Icon style={iconStyle} name={iconRight} type={iconType} />
+      ) : null}
     </PressableWrapper>
   );
 };
