@@ -28,16 +28,23 @@ import useLoginCheck from "./hooks/useLoginCheck";
 import Gap from "@components/Gap/Gap.native";
 import { PageEnum } from "@interfaces/NavigationTypes";
 import { linkToUrl } from "@navigation/hooks/link";
+import { color } from "@styles/colors";
+import useLogin from "./hooks/useLogin";
+import useCheckLoginFormErrors from "./hooks/useCheckLoginFormErrors";
+import FormError from "@components/Error/FormError/FormError";
 
 const Login: React.FunctionComponent = () => {
-  const { updateLoading } = useLoginDispatch();
-  const { loading } = useLoginState();
+  const { updateLoginForm } = useLoginDispatch();
+  const { loading, loginForm, loginFormErrors } = useLoginState();
+  const login = useLogin();
   const styles = globalStyles();
   const isDarkMode = useColorScheme() === "dark";
   const fadeAnimation = useRef(new Animated.Value(0)).current;
   const fallAnimation = useRef(new Animated.Value(-30)).current;
+
   useLoginLogoEntryAnimation(fadeAnimation, fallAnimation);
   useLoginCheck();
+  useCheckLoginFormErrors();
 
   return (
     <LoginContainer>
@@ -56,28 +63,53 @@ const Login: React.FunctionComponent = () => {
       <Gap level={1} />
       <LoginInputsContainer>
         <Input
+          value={loginForm.email}
+          error={loginFormErrors.email}
           label="Email / Username"
           placeholder="Enter email or username"
+          onChange={(e) => {
+            updateLoginForm({ email: e.nativeEvent.text });
+          }}
           icon={
             <Icon
               name="user-o"
               type={IconTypeEnum.FontAwesome}
-              style={Style.icon}
+              style={{
+                ...Style.icon,
+                ...{
+                  color: !!loginFormErrors.email
+                    ? color("SystemError2")
+                    : color("SystemLabel1"),
+                },
+              }}
             />
           }
         />
         <Input
+          value={loginForm.password}
+          error={loginFormErrors.password}
           label="Password"
           placeholder="Enter password"
+          onChange={(e) => {
+            updateLoginForm({ ...loginForm, password: e.nativeEvent.text });
+          }}
           icon={
             <Icon
               name="lock-outline"
               type={IconTypeEnum.MaterialCommunityIcons}
-              style={Style.icon}
+              style={{
+                ...Style.icon,
+                ...{
+                  color: !!loginFormErrors.password
+                    ? color("SystemError2")
+                    : color("SystemLabel1"),
+                },
+              }}
             />
           }
           secureTextEntry
         />
+        <FormError error={loginFormErrors.detail} />
         <ForgotPasswordLink to={linkToUrl(PageEnum.ResetPassword)}>
           {"Forgot Password?"}
         </ForgotPasswordLink>
@@ -88,7 +120,7 @@ const Login: React.FunctionComponent = () => {
         text={
           loading ? <ActivityIndicator size="small" color="white" /> : "Login"
         }
-        onPress={() => updateLoading(!loading)}
+        onPress={() => login()}
       />
       <SignUpTextContainer>
         <SignUpText>{"Don't have an Account?"}</SignUpText>

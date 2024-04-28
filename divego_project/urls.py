@@ -33,7 +33,6 @@ urlpatterns = [
     # Login
     url(r"api/login/", LoginView.as_view()),
     url(r"api/logout/", LogoutView.as_view()),
-    url(r"api/login-check/", LoginView.as_view()),
 
     # API
     path("api/", include(router.urls)),

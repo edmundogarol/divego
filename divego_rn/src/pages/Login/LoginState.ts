@@ -5,21 +5,29 @@ import { LoginForm } from "./LoginInterfaces";
 export interface LoginState {
   readonly loading: boolean;
   readonly user?: User;
-  readonly loginForm?: LoginForm;
+  readonly loginForm: LoginForm;
+  readonly loginFormErrors: { [key: string]: any };
 }
 
 const initialState: LoginState = {
   loading: false,
+  loginForm: {
+    email: "",
+    password: "",
+  },
+  loginFormErrors: {},
 };
 
 type UpdateLoadingAction = PayloadAction<boolean>;
 type UpdateUserAction = PayloadAction<User>;
-type UpdateLoginFormAction = PayloadAction<LoginForm>;
+type UpdateLoginFormAction = PayloadAction<{ [key: string]: any }>;
+type UpdateLoginFormErrorsAction = PayloadAction<{ [key: string]: any }>;
 
 export type LoginAction =
   | UpdateLoadingAction
   | UpdateUserAction
-  | UpdateLoginFormAction;
+  | UpdateLoginFormAction
+  | UpdateLoginFormErrorsAction;
 
 export const loginSlice = createSlice({
   name: "login",
@@ -34,11 +42,18 @@ export const loginSlice = createSlice({
     updateLoginForm: (state, action: UpdateLoginFormAction) => {
       state.loginForm = { ...state.loginForm, ...action.payload };
     },
+    updateLoginFormErrors: (state, action: UpdateLoginFormErrorsAction) => {
+      state.loginFormErrors = action.payload;
+    },
   },
 });
 
-export const { updateLoading, updateUser, updateLoginForm } =
-  loginSlice.actions;
+export const {
+  updateLoading,
+  updateUser,
+  updateLoginForm,
+  updateLoginFormErrors,
+} = loginSlice.actions;
 export const loginReducer = loginSlice.reducer;
 
 export default loginSlice.reducer;

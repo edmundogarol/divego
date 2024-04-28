@@ -4,15 +4,16 @@ import {
   LoginAction,
   updateLoading,
   updateLoginForm,
+  updateLoginFormErrors,
   updateUser,
 } from "../LoginState";
 import { User } from "@interfaces/CustomTypes";
-import { LoginForm } from "../LoginInterfaces";
 
 interface LoginDispatch {
   updateLoading(loading: boolean): void;
   updateUser(user: User): void;
-  updateLoginForm(loginForm: LoginForm): void;
+  updateLoginForm(loginForm: { [key: string]: any }): void;
+  updateLoginFormErrors(loginFormError: { [key: string]: any }): void;
 }
 
 export const useLoginDispatch = (): LoginDispatch => {
@@ -24,8 +25,11 @@ export const useLoginDispatch = (): LoginDispatch => {
     updateUser(user: User): void {
       dispatch(updateUser(user));
     },
-    updateLoginForm(loginForm: LoginForm): void {
+    updateLoginForm(loginForm: { [key: string]: any }): void {
       dispatch(updateLoginForm(loginForm));
+    },
+    updateLoginFormErrors(loginFormError: { [key: string]: any }): void {
+      dispatch(updateLoginFormErrors(loginFormError));
     },
   };
 };

@@ -21,14 +21,14 @@ export interface DiveGoResponse<T> extends Response {
 export const useFetch = <T>(): ((
   url: string,
   params?: {
+    body?: string;
     method?: string;
     contentType?: string;
     accept?: string;
     params?: { [key: string]: any };
   },
-  type?: any,
 ) => Promise<Response | DiveGoResponse<T>>) => {
-  return (url, params, type) => {
+  return (url, params) => {
     const inputParams = params || {};
     const {
       contentType = APPLICATION_JSON,
@@ -64,14 +64,18 @@ export const useFetch = <T>(): ((
       finalParams.body = JSON.stringify(finalParams.body);
     }
 
-    let responseAssign: Response | DiveGoResponse<typeof type>;
+    let responseAssign: Response | DiveGoResponse<T>;
 
     return fetch(composedURL, finalParams)
       .then((fetchResponse) => {
         const responseContentType = fetchResponse.headers.get("content-type");
-
         if (!responseContentType) {
           return fetchResponse;
+        }
+
+        if (fetchResponse.ok === false) {
+          responseAssign = fetchResponse;
+          return fetchResponse.json();
         }
 
         if (fetchResponse.ok && !responseContentType.startsWith(accept)) {
@@ -91,12 +95,11 @@ export const useFetch = <T>(): ((
         return fetchResponse.json();
       })
       .then((responseJson) => {
-        if (responseAssign.ok) {
-          set(responseAssign, "data", responseJson);
-        }
+        set(responseAssign, "data", responseJson);
         return responseAssign;
       })
       .catch((exc) => {
+        console.log({ exc });
         throw exc;
       });
   };

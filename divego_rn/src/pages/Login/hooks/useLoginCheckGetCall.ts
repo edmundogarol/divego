@@ -11,7 +11,7 @@ const useLoginCheckGetCall = (): (() => Promise<
 >) => {
   const api = useApi<LoginCheckGetCallData>();
 
-  return () => api("login-check/", { method: "GET" });
+  return () => api("login/", { method: "GET" });
 };
 
 export default useLoginCheckGetCall;

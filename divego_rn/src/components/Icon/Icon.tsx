@@ -58,7 +58,7 @@ const Icon: React.FunctionComponent<IconProps> = ({
     default:
       return (
         <FontAwesome
-          color={color}
+          color={12}
           size={size}
           style={style}
           name={name as GlyphFontAwesome}

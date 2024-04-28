@@ -13,9 +13,12 @@ const useLoginCheck = () => {
     if (!loading) {
       updateLoading(true);
 
-      loginCheckGetCall().then(({ data }) => {
-        if (data) {
-          updateUser(data as unknown as User);
+      loginCheckGetCall().then((response) => {
+        if (response.ok) {
+          updateUser(response.data as unknown as User);
+          updateLoading(false);
+        } else {
+          console.log("Login Check fetch error", JSON.stringify(response));
           updateLoading(false);
         }
       });

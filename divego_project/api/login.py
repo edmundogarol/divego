@@ -1,3 +1,5 @@
+import json
+
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.authentication import SessionAuthentication
@@ -51,8 +53,10 @@ class LoginView(APIView):
 
     def post(self, request):
 
-        email = request.data.get("email", None)
-        password = request.data.get("password", None)
+        request_data = json.loads(request.data)
+
+        email = request_data.get("email", None)
+        password = request_data.get("password", None)
         ip_data = visitor_ip_address(request)
 
         if not email or not password:

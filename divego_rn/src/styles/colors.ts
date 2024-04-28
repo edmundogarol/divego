@@ -3,7 +3,9 @@ export type ColorKey =
   | "SystemBlue2"
   | "SystemBlue3"
   | "SystemBlue4"
-  | "SystemLabel1";
+  | "SystemLabel1"
+  | "SystemError1"
+  | "SystemError2";
 
 const colorsMap = {
   SystemBlue1: "#1a2241",
@@ -11,6 +13,8 @@ const colorsMap = {
   SystemBlue3: "#658fb5",
   SystemBlue4: "#b7d3e8",
   SystemLabel1: "#adadad",
+  SystemError1: "#ff3c3c",
+  SystemError2: "#ff7575",
 };
 
 export const color = (colorKey: ColorKey): string => {

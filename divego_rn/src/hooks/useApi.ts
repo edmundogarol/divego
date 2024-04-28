@@ -6,6 +6,7 @@ import useFetch, { DiveGoResponse } from "./useFetch";
 export const useApi = <T>(): ((
   url: string,
   params?: {
+    body?: string;
     method?: string;
     contentType?: string;
     accept?: string;
@@ -24,7 +25,7 @@ export const useApi = <T>(): ((
         } else if (response.status === 503) {
           console.error("Timeout", response);
         } else {
-          console.error("Bad request", response);
+          console.error("Bad request", response.status, response.url);
         }
 
         return response;

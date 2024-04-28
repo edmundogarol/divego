@@ -1,4 +1,4 @@
-import styled from "styled-components/native";
+import styled, { css } from "styled-components/native";
 import {
   CONTAINER_MARGIN_DEFAULT,
   CONTAINER_MARGIN_SMALL,
@@ -9,12 +9,20 @@ import {
 } from "@styles/constants";
 import { color } from "@styles/colors";
 
-export const InputContainer = styled.View`
+export const InputContainer = styled.View<{ error?: boolean }>`
   background-color: white;
   border-bottom-width: 0.5px;
   border-color: #aaaaaa;
   flex-direction: row;
   margin-bottom: ${CONTAINER_MARGIN_DEFAULT}px;
+  ${({ error }): any => {
+    if (error) {
+      return css`
+        border-color: ${color("SystemError2")};
+        border-width: 1px;
+      `;
+    }
+  }}
 `;
 
 export const InputStyled = styled.TextInput`
@@ -25,9 +33,22 @@ export const InputStyled = styled.TextInput`
   padding-right: ${CONTAINER_PADDING_DEFAULT}px;
 `;
 
-export const Label = styled.Text`
-  color: ${color("SystemLabel1")};
+export const Label = styled.Text<{ error?: boolean }>`
+  color: ${({ error }) =>
+    error ? color("SystemError2") : color("SystemLabel1")};
   font-size: ${LABEL_SIZE}px;
   margin-left: ${CONTAINER_MARGIN_SMALL}px;
   margin-bottom: ${CONTAINER_MARGIN_SMALL}px;
+`;
+
+export const InputError = styled.Text`
+  color: ${color("SystemError2")};
+  font-size: ${LABEL_SIZE}px;
+  margin-left: ${CONTAINER_MARGIN_SMALL}px;
+  margin-bottom: ${CONTAINER_MARGIN_SMALL}px;
+`;
+
+export const ErrorContainer = styled.View`
+  flex-direction: row;
+  margin-bottom: ${CONTAINER_MARGIN_DEFAULT}px;
 `;
