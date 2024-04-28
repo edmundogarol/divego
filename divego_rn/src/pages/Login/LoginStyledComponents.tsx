@@ -38,7 +38,7 @@ export const SignUpLink = styled(Link)`
   font-weight: 800;
 `;
 
-export const ForgotPasswordLink = styled.Text`
+export const ForgotPasswordLink = styled(Link)`
   margin-left: auto;
 `;
 

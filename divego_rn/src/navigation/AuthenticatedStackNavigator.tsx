@@ -6,6 +6,7 @@ import {
 import Login from "@pages/Login/Login";
 import SignUp from "@pages/SignUp/SignUp";
 import { useCommonHeaderOptions } from "./hooks/useCommonHeaderOptions.native";
+import ResetPassword from "@pages/ResetPassword/ResetPassword";
 
 export const Stack = createStackNavigator<AuthenticatedStackNavigatorParams>();
 
@@ -26,6 +27,11 @@ const AuthenticatedStackNavigator: React.FunctionComponent =
           <Stack.Screen
             name={PageEnum.SignUp}
             component={SignUp}
+            options={{ ...headerOptions }}
+          />
+          <Stack.Screen
+            name={PageEnum.ResetPassword}
+            component={ResetPassword}
             options={{ ...headerOptions }}
           />
         </Stack.Group>

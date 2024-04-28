@@ -78,7 +78,9 @@ const Login: React.FunctionComponent = () => {
           }
           secureTextEntry
         />
-        <ForgotPasswordLink>{"Forgot Password?"}</ForgotPasswordLink>
+        <ForgotPasswordLink to={linkToUrl(PageEnum.ResetPassword)}>
+          {"Forgot Password?"}
+        </ForgotPasswordLink>
         <Gap level={1} />
       </LoginInputsContainer>
       <LoginButton
