@@ -1,4 +1,4 @@
-import BackButton from "@navigation/components/BackButton.native";
+import BackButton from "@navigation/components/BackButton";
 import { StackNavigationOptions } from "@react-navigation/stack/lib/typescript/src/types";
 import { deviceWidth, screenXs } from "@styles/media";
 import { Platform } from "react-native";

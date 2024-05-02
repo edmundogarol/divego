@@ -3,7 +3,7 @@ import { IconTypeEnum } from "@components/Icon/IconInterfaces";
 import useReactNavigation from "@navigation/hooks/useReactNavigation";
 import React from "react";
 import { Platform } from "react-native";
-import { Style } from "./BackButtonStyles.native";
+import { Style } from "./BackButtonStyles";
 
 interface BackButtonProps {
   onPress?: () => void;

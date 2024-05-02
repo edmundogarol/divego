@@ -46,9 +46,12 @@ export const InputError = styled.Text`
   font-size: ${LABEL_SIZE}px;
   margin-left: ${CONTAINER_MARGIN_SMALL}px;
   margin-bottom: ${CONTAINER_MARGIN_SMALL}px;
+  width: 90%;
 `;
 
 export const ErrorContainer = styled.View`
   flex-direction: row;
   margin-bottom: ${CONTAINER_MARGIN_DEFAULT}px;
+  height: 100px;
+  width: auto;
 `;

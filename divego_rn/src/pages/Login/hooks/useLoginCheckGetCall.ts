@@ -4,6 +4,7 @@ import { User } from "@interfaces/CustomTypes";
 
 interface LoginCheckGetCallData {
   user: User;
+  logged_in: boolean;
 }
 
 const useLoginCheckGetCall = (): (() => Promise<

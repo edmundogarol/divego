@@ -5,6 +5,7 @@ import useLoginState from "./useLoginState";
 
 interface LoginPostCallData {
   user: User;
+  logged_in: boolean;
 }
 
 const useLoginPostCall = (): (() => Promise<

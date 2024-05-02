@@ -1,10 +1,9 @@
-import { useEffect } from "react";
 import useLoginState from "./useLoginState";
 import useLoginDispatch from "./useLoginDispatch";
-import { User } from "@interfaces/CustomTypes";
 import useLoginPostCall from "./useLoginPostCall";
 import { isNotEmptyString } from "@utils/utils";
 import { set } from "lodash";
+import { initialState, updateLoginForm } from "../LoginState";
 
 const useLogin = (): (() => void) => {
   const { loading, loginForm } = useLoginState();
@@ -31,8 +30,12 @@ const useLogin = (): (() => void) => {
         updateLoading(false);
       } else {
         loginPostcall().then((response) => {
-          if (response.ok) {
-            updateUser(response.data as unknown as User);
+          if (response.ok && response.data?.user) {
+            updateUser({
+              ...response.data?.user,
+              logged_in: response.data?.logged_in,
+            });
+            updateLoginForm(initialState.loginForm);
             updateLoading(false);
           } else {
             if (response.data) {

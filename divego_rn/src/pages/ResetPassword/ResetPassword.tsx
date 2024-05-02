@@ -12,7 +12,7 @@ import Input from "@components/Input/Input";
 import Icon from "@components/Icon/Icon";
 import { IconTypeEnum } from "@components/Icon/IconInterfaces";
 import { Style } from "@components/Icon/IconStyle";
-import Gap from "@components/Gap/Gap.native";
+import Gap from "@components/Gap/Gap";
 import {
   ResetPasswordContainer,
   ResetPasswordHeader,
@@ -21,7 +21,7 @@ import {
 import useLoginDispatch from "@pages/Login/hooks/useLoginDispatch";
 import useLoginState from "@pages/Login/hooks/useLoginState";
 import useLoginLogoEntryAnimation from "@pages/Login/hooks/useLoginLogoEntryAnimation";
-import { useCommonHeaderOptions } from "@navigation/hooks/useCommonHeaderOptions.native";
+import { useCommonHeaderOptions } from "@navigation/hooks/useCommonHeaderOptions";
 import Button from "@components/Button/Button";
 
 const ResetPassword: React.FunctionComponent = () => {

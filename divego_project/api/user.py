@@ -1,3 +1,5 @@
+import datetime
+import json
 from secrets import token_urlsafe
 
 from rest_framework import status
@@ -8,7 +10,7 @@ from rest_framework.parsers import MultiPartParser, FormParser
 from django.core.validators import validate_email
 from django.core.exceptions import ValidationError
 from django.db.utils import IntegrityError
-from django.contrib.auth import password_validation
+from django.contrib.auth import password_validation, login
 from django.shortcuts import get_object_or_404
 
 from divego_project.api.permissions import UserPermissions
@@ -43,32 +45,52 @@ class UserViewSet(ModelViewSet):
 
     def create(self, validated_data):
         user = None
-
+        data = json.loads(validated_data.data)
         ip_data = visitor_ip_address(validated_data)
 
-        if not validated_data.data["password"] or not validated_data.data["email"]:
-            content = {"error": "Please provide both email and password."}
+        if not data["password"]:
+            content = {"password": "Please provide password."}
+            return Response(content, status=status.HTTP_406_NOT_ACCEPTABLE)
+        
+        if not data["email"]:
+            content = {"email": "Please provide email address"}
+            return Response(content, status=status.HTTP_406_NOT_ACCEPTABLE)
+        
+        if data["email"]:
+            try:
+                validate_email(data["email"])
+            except ValidationError as e:
+                content = {"error": e}
+                return Response(content, status=status.HTTP_406_NOT_ACCEPTABLE)
+        
+        if not data["first_name"] or not data["last_name"]:
+            content = {"first_name": "Please provide a first and last name."}
             return Response(content, status=status.HTTP_406_NOT_ACCEPTABLE)
 
         try:
-            password_validation.validate_password(validated_data.data["password"])
+            password_validation.validate_password(data["password"])
         except ValidationError as error:
             content = {"error": error}
             return Response(content, status=status.HTTP_406_NOT_ACCEPTABLE)
 
         try:
             user = User.objects.create_user(
-                email=validated_data.data["email"].lower(),
-                password=validated_data.data["password"],
+                email=data["email"].lower(),
+                password=data["password"],
             )
         except IntegrityError:
             content = {"error": "Duplicate email. User already exists."}
             return Response(content, status=status.HTTP_409_CONFLICT)
 
         user.last_ip = ip_data["ip"] if ip_data["valid"] else None
+        user.first_name = data["first_name"]
+        user.last_name = data["last_name"]
         user.verified = token_urlsafe(20)
-        user.set_password(validated_data.data["password"])
+        user.last_login = datetime.datetime.now()
+        user.set_password(data["password"])
         user.save()
+
+        login(validated_data, user)
 
         # Thread(
         #     target=send_account_verification_email,
@@ -78,9 +100,10 @@ class UserViewSet(ModelViewSet):
         #     ),
         # ).start()
 
+        serializer = UserSerializer(user)
         content = {
-            "user": str(user),
-            "logged_in": True,  # None
+            "user": serializer.data,           
+            "logged_in": True,
         }
 
         return Response(content)

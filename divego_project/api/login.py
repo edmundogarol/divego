@@ -1,3 +1,4 @@
+import datetime
 import json
 
 from rest_framework.views import APIView
@@ -21,7 +22,6 @@ class LogoutView(APIView):
         logout(request)
         content = {
             "logged_in": False,
-            "is_staff": False,
         }
         return Response(content)
 
@@ -67,15 +67,16 @@ class LoginView(APIView):
         except User.DoesNotExist:
             raise AuthenticationFailed("Invalid username/password.")
 
+        if not user.is_active:
+            raise AuthenticationFailed("User inactive or deleted.")
+        
         if user is None or not check_password(password, user.password):
             raise AuthenticationFailed("Invalid username/password.")
         else:
             login(request, user)
 
-        if not user.is_active:
-            raise AuthenticationFailed("User inactive or deleted.")
-
         user = User.objects.get(email=self.request.user)
+        user.last_login = datetime.datetime.now()
         user.last_ip = ip_data["ip"] if ip_data["valid"] else None
         user.save()
 

@@ -3,16 +3,13 @@ import {
   ActivityIndicator,
   Animated,
   StatusBar,
-  Text,
   useColorScheme,
 } from "react-native";
 import DiveGoLogo from "@assets/divego_logo_v2.svg";
 import globalStyles from "@styles/global";
 import Input from "@components/Input/Input";
-import Icon from "@components/Icon/Icon";
 import { IconTypeEnum } from "@components/Icon/IconInterfaces";
-import { Style } from "@components/Icon/IconStyle";
-import Gap from "@components/Gap/Gap.native";
+import Gap from "@components/Gap/Gap";
 import {
   SignUpButton,
   SignUpContainer,
@@ -22,99 +19,130 @@ import {
 import useLoginDispatch from "@pages/Login/hooks/useLoginDispatch";
 import useLoginState from "@pages/Login/hooks/useLoginState";
 import useLoginLogoEntryAnimation from "@pages/Login/hooks/useLoginLogoEntryAnimation";
-import { useCommonHeaderOptions } from "@navigation/hooks/useCommonHeaderOptions.native";
+import useRenderInputIcon from "@components/Input/hooks/useRenderInputIcon";
+import useCheckSignUpFormErrors from "@pages/Login/hooks/useCheckSignUpFormErrors";
+import useSignUp from "@pages/Login/hooks/useSignUp";
+import { ScrollView } from "react-native-gesture-handler";
+import FormError from "@components/Error/FormError/FormError";
 
 const SignUp: React.FunctionComponent = () => {
-  const { updateLoading } = useLoginDispatch();
-  const { loading } = useLoginState();
+  const { updateSignUpForm } = useLoginDispatch();
+  const { loading, signUpForm, signUpFormErrors } = useLoginState();
+  const signUp = useSignUp();
   const styles = globalStyles();
   const isDarkMode = useColorScheme() === "dark";
   const fadeAnimation = useRef(new Animated.Value(0)).current;
   const fallAnimation = useRef(new Animated.Value(-30)).current;
+  const renderInputIcon = useRenderInputIcon();
+
+  useCheckSignUpFormErrors();
   useLoginLogoEntryAnimation(fadeAnimation, fallAnimation);
 
   return (
     <SignUpContainer>
-      <StatusBar
-        barStyle={isDarkMode ? "light-content" : "dark-content"}
-        backgroundColor={styles.container.backgroundColor}
-      />
-      <Animated.View
-        style={{
-          opacity: fadeAnimation,
-          transform: [{ translateY: fallAnimation }],
-        }}>
-        <DiveGoLogo width={100} height={100} />
-      </Animated.View>
-      <Gap level={1} />
-      <SignUpHeader>{"Sign Up"}</SignUpHeader>
-      <Gap level={1} />
-      <SignUpInputsContainer>
-        <Input
-          label="First Name"
-          placeholder="Enter first name"
-          icon={
-            <Icon
-              name="user-o"
-              type={IconTypeEnum.FontAwesome}
-              style={Style.icon}
-            />
-          }
+      <ScrollView>
+        <StatusBar
+          barStyle={isDarkMode ? "light-content" : "dark-content"}
+          backgroundColor={styles.container.backgroundColor}
         />
-        <Input
-          label="Last Name"
-          placeholder="Enter last name"
-          icon={
-            <Icon
-              name="user-o"
-              type={IconTypeEnum.FontAwesome}
-              style={Style.icon}
-            />
+        <Gap level={3} />
+        <Animated.View
+          style={{
+            opacity: fadeAnimation,
+            transform: [{ translateY: fallAnimation }],
+          }}>
+          <DiveGoLogo width={100} height={100} />
+        </Animated.View>
+        <Gap level={1} />
+        <SignUpHeader>{"Sign Up"}</SignUpHeader>
+        <Gap level={1} />
+        <SignUpInputsContainer>
+          <Input
+            label="First Name"
+            placeholder="Enter first name"
+            value={signUpForm.first_name}
+            error={signUpFormErrors.first_name}
+            onChange={(e) => {
+              updateSignUpForm({ first_name: e.nativeEvent.text });
+            }}
+            icon={renderInputIcon(
+              "user-o",
+              IconTypeEnum.FontAwesome,
+              signUpFormErrors.first_name,
+            )}
+          />
+          <Input
+            label="Last Name"
+            placeholder="Enter last name"
+            value={signUpForm.last_name}
+            error={signUpFormErrors.last_name}
+            onChange={(e) => {
+              updateSignUpForm({ last_name: e.nativeEvent.text });
+            }}
+            icon={renderInputIcon(
+              "user-o",
+              IconTypeEnum.FontAwesome,
+              signUpFormErrors.last_name,
+            )}
+          />
+          <Input
+            label="Email"
+            placeholder="Enter email"
+            value={signUpForm.email}
+            error={signUpFormErrors.email}
+            onChange={(e) => {
+              updateSignUpForm({ email: e.nativeEvent.text });
+            }}
+            icon={renderInputIcon(
+              "mail",
+              IconTypeEnum.MaterialIcons,
+              signUpFormErrors.email,
+            )}
+          />
+          <Input
+            label="Password"
+            placeholder="Enter password"
+            value={signUpForm.password}
+            error={signUpFormErrors.password}
+            onChange={(e) => {
+              updateSignUpForm({ password: e.nativeEvent.text });
+            }}
+            icon={renderInputIcon(
+              "lock-outline",
+              IconTypeEnum.MaterialCommunityIcons,
+              signUpFormErrors.password,
+            )}
+            secureTextEntry
+          />
+          <Input
+            label="Confirm Password"
+            placeholder="Confirm password"
+            value={signUpForm.confirm_password}
+            error={signUpFormErrors.confirm_password}
+            onChange={(e) => {
+              updateSignUpForm({ confirm_password: e.nativeEvent.text });
+            }}
+            icon={renderInputIcon(
+              "lock-outline",
+              IconTypeEnum.MaterialCommunityIcons,
+              signUpFormErrors.confirm_password,
+            )}
+            secureTextEntry
+          />
+          <FormError error={signUpFormErrors.error} />
+        </SignUpInputsContainer>
+        <SignUpButton
+          loading={loading}
+          text={
+            loading ? (
+              <ActivityIndicator size="small" color="white" />
+            ) : (
+              "Submit"
+            )
           }
+          onPress={() => signUp()}
         />
-        <Input
-          label="Email"
-          placeholder="Enter email"
-          icon={
-            <Icon
-              name="mail"
-              type={IconTypeEnum.MaterialIcons}
-              style={Style.icon}
-            />
-          }
-        />
-        <Input
-          label="Password"
-          placeholder="Enter password"
-          icon={
-            <Icon
-              name="lock-outline"
-              type={IconTypeEnum.MaterialCommunityIcons}
-              style={Style.icon}
-            />
-          }
-          secureTextEntry
-        />
-        <Input
-          label="Confirm Password"
-          placeholder="Confirm password"
-          icon={
-            <Icon
-              name="lock-outline"
-              type={IconTypeEnum.MaterialCommunityIcons}
-              style={Style.icon}
-            />
-          }
-          secureTextEntry
-        />
-      </SignUpInputsContainer>
-      <SignUpButton
-        loading={loading}
-        text={
-          loading ? <ActivityIndicator size="small" color="white" /> : "Submit"
-        }
-        onPress={() => updateLoading(!loading)}
-      />
+      </ScrollView>
     </SignUpContainer>
   );
 };
