@@ -1,6 +1,7 @@
 from rest_framework import serializers
 
 from divego_project.models import (
+    ResetPasswordSession,
     User,
     Privileges,
 )
@@ -42,3 +43,9 @@ class UserSerializer(serializers.ModelSerializer):
             "image_public",
         )
         extra_kwargs = {"password": {"write_only": True}}
+
+        
+class ResetPasswordSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ResetPasswordSession
+        fields = ("id", "user", "token", "created_date")

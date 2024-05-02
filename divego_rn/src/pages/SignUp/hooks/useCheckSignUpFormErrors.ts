@@ -1,5 +1,5 @@
-import useLoginState from "./useLoginState";
-import useLoginDispatch from "./useLoginDispatch";
+import useLoginDispatch from "@pages/Login/hooks/useLoginDispatch";
+import useLoginState from "@pages/Login/hooks/useLoginState";
 import { isNotEmptyString } from "@utils/utils";
 import { useEffect } from "react";
 

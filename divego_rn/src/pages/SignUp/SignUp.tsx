@@ -20,8 +20,8 @@ import useLoginDispatch from "@pages/Login/hooks/useLoginDispatch";
 import useLoginState from "@pages/Login/hooks/useLoginState";
 import useLoginLogoEntryAnimation from "@pages/Login/hooks/useLoginLogoEntryAnimation";
 import useRenderInputIcon from "@components/Input/hooks/useRenderInputIcon";
-import useCheckSignUpFormErrors from "@pages/Login/hooks/useCheckSignUpFormErrors";
-import useSignUp from "@pages/Login/hooks/useSignUp";
+import useCheckSignUpFormErrors from "@pages/SignUp/hooks/useCheckSignUpFormErrors";
+import useSignUp from "@pages/SignUp/hooks/useSignUp";
 import { ScrollView } from "react-native-gesture-handler";
 import FormError from "@components/Error/FormError/FormError";
 

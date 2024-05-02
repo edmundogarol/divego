@@ -1,7 +1,7 @@
 import useApi from "@hooks/useApi";
 import { DiveGoResponse } from "@hooks/useFetch";
 import { User } from "@interfaces/CustomTypes";
-import useLoginState from "./useLoginState";
+import useLoginState from "@pages/Login/hooks/useLoginState";
 
 interface SignUpPostCallData {
   user: User;

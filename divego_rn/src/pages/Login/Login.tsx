@@ -33,8 +33,8 @@ import useRenderInputIcon from "../../components/Input/hooks/useRenderInputIcon"
 import { If } from "@components/If/If";
 
 const Login: React.FunctionComponent = () => {
-  const { updateLoginForm } = useLoginDispatch();
   const { user, loading, loginForm, loginFormErrors } = useLoginState();
+  const { updateLoginForm, updateResetPasswordFormSent } = useLoginDispatch();
   const login = useLogin();
   const styles = globalStyles();
   const isDarkMode = useColorScheme() === "dark";
@@ -99,7 +99,11 @@ const Login: React.FunctionComponent = () => {
             secureTextEntry
           />
           <FormError error={loginFormErrors.detail} />
-          <ForgotPasswordLink to={linkToUrl(PageEnum.ResetPassword)}>
+          <ForgotPasswordLink
+            to={linkToUrl(PageEnum.ResetPassword)}
+            onPress={() => {
+              updateResetPasswordFormSent(false);
+            }}>
             {"Forgot Password?"}
           </ForgotPasswordLink>
           <Gap level={1} />

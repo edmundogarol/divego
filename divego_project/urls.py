@@ -9,6 +9,7 @@ from drf_yasg import openapi
 
 from divego_project.api.user import UserViewSet
 from divego_project.api.login import LoginView, LogoutView
+from divego_project.api.reset_password import ResetPasswordViewSet
 
 
 schema_view = get_schema_view(
@@ -23,6 +24,7 @@ schema_view = get_schema_view(
 
 router = routers.DefaultRouter()
 router.register(r"user", UserViewSet, basename="user")
+router.register(r"reset-password", ResetPasswordViewSet, basename="reset-password")
 
 urlpatterns = [
     # Docs

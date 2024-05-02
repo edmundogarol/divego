@@ -52,6 +52,5 @@ export const InputError = styled.Text`
 export const ErrorContainer = styled.View`
   flex-direction: row;
   margin-bottom: ${CONTAINER_MARGIN_DEFAULT}px;
-  height: 100px;
   width: auto;
 `;

@@ -68,13 +68,14 @@ export const useFetch = <T>(): ((
 
     return fetch(composedURL, finalParams)
       .then((fetchResponse) => {
+        responseAssign = fetchResponse;
+
         const responseContentType = fetchResponse.headers.get("content-type");
         if (!responseContentType) {
           return fetchResponse;
         }
 
         if (fetchResponse.ok === false) {
-          responseAssign = fetchResponse;
           return fetchResponse.json();
         }
 
@@ -86,10 +87,6 @@ export const useFetch = <T>(): ((
             status: 406,
             statusText: "Not Acceptable",
           };
-        }
-
-        if (responseContentType.startsWith(APPLICATION_JSON)) {
-          responseAssign = fetchResponse;
         }
 
         return fetchResponse.json();

@@ -1,6 +1,6 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { User } from "@interfaces/CustomTypes";
-import { LoginForm, SignUpForm } from "./LoginInterfaces";
+import { LoginForm, ResetPasswordForm, SignUpForm } from "./LoginInterfaces";
 
 export interface LoginState {
   readonly loading: boolean;
@@ -9,6 +9,9 @@ export interface LoginState {
   readonly loginFormErrors: { [key: string]: any };
   readonly signUpForm: SignUpForm;
   readonly signUpFormErrors: { [key: string]: any };
+  readonly resetPasswordForm: ResetPasswordForm;
+  readonly resetPasswordFormErrors: { [key: string]: any };
+  readonly resetPasswordFormSent: boolean;
 }
 
 export const initialState: LoginState = {
@@ -39,6 +42,11 @@ export const initialState: LoginState = {
     confirm_password: "",
   },
   signUpFormErrors: {},
+  resetPasswordForm: {
+    email: "",
+  },
+  resetPasswordFormErrors: {},
+  resetPasswordFormSent: false,
 };
 
 type UpdateLoadingAction = PayloadAction<boolean>;
@@ -47,6 +55,9 @@ type UpdateLoginFormAction = PayloadAction<Partial<LoginForm>>;
 type UpdateLoginFormErrorsAction = PayloadAction<{ [key: string]: any }>;
 type UpdateSignUpFormAction = PayloadAction<Partial<SignUpForm>>;
 type UpdateSignUpFormErrorsAction = PayloadAction<{ [key: string]: any }>;
+type UpdateResetPasswordFormAction = PayloadAction<Partial<ResetPasswordForm>>;
+type UpdateResetPasswordErrorsAction = PayloadAction<{ [key: string]: any }>;
+type UpdateResetPasswordFormSentAction = PayloadAction<boolean>;
 
 export type LoginAction =
   | UpdateLoadingAction
@@ -54,7 +65,10 @@ export type LoginAction =
   | UpdateLoginFormAction
   | UpdateLoginFormErrorsAction
   | UpdateSignUpFormAction
-  | UpdateSignUpFormErrorsAction;
+  | UpdateSignUpFormErrorsAction
+  | UpdateResetPasswordFormAction
+  | UpdateResetPasswordErrorsAction
+  | UpdateResetPasswordFormSentAction;
 
 export const loginSlice = createSlice({
   name: "login",
@@ -78,6 +92,24 @@ export const loginSlice = createSlice({
     updateSignUpFormErrors: (state, action: UpdateSignUpFormErrorsAction) => {
       state.signUpFormErrors = action.payload;
     },
+    updateResetPasswordForm: (state, action: UpdateResetPasswordFormAction) => {
+      state.resetPasswordForm = {
+        ...state.resetPasswordForm,
+        ...action.payload,
+      };
+    },
+    updateResetPasswordErrors: (
+      state,
+      action: UpdateResetPasswordErrorsAction,
+    ) => {
+      state.resetPasswordFormErrors = action.payload;
+    },
+    updateResetPasswordFormSent: (
+      state,
+      action: UpdateResetPasswordFormSentAction,
+    ) => {
+      state.resetPasswordFormSent = action.payload;
+    },
   },
 });
 
@@ -88,6 +120,9 @@ export const {
   updateLoginFormErrors,
   updateSignUpForm,
   updateSignUpFormErrors,
+  updateResetPasswordForm,
+  updateResetPasswordErrors,
+  updateResetPasswordFormSent,
 } = loginSlice.actions;
 export const loginReducer = loginSlice.reducer;
 

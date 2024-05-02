@@ -1,6 +1,5 @@
 import styled from "styled-components/native";
 import { CONTAINER_PADDING_DEFAULT } from "@styles/constants";
-import Button from "@components/Button/Button";
 
 export const ResetPasswordContainer = styled.View`
   align-items: center;

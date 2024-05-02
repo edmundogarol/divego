@@ -8,3 +8,7 @@ export interface SignUpForm extends LoginForm {
   last_name: string;
   confirm_password: string;
 }
+
+export interface ResetPasswordForm {
+  email: string;
+}

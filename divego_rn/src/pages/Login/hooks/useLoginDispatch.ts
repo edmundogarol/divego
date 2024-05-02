@@ -5,12 +5,15 @@ import {
   updateLoading,
   updateLoginForm,
   updateLoginFormErrors,
+  updateResetPasswordErrors,
+  updateResetPasswordForm,
+  updateResetPasswordFormSent,
   updateSignUpForm,
   updateSignUpFormErrors,
   updateUser,
 } from "../LoginState";
 import { User } from "@interfaces/CustomTypes";
-import { LoginForm, SignUpForm } from "../LoginInterfaces";
+import { LoginForm, ResetPasswordForm, SignUpForm } from "../LoginInterfaces";
 
 interface LoginDispatch {
   updateLoading(loading: boolean): void;
@@ -19,6 +22,11 @@ interface LoginDispatch {
   updateLoginFormErrors(loginFormError: { [key: string]: any }): void;
   updateSignUpForm(signUpForm: Partial<SignUpForm>): void;
   updateSignUpFormErrors(signUpFormError: { [key: string]: any }): void;
+  updateResetPasswordForm(resetPasswordForm: Partial<ResetPasswordForm>): void;
+  updateResetPasswordErrors(resetPasswordFormErrors: {
+    [key: string]: any;
+  }): void;
+  updateResetPasswordFormSent(formSent: boolean): void;
 }
 
 export const useLoginDispatch = (): LoginDispatch => {
@@ -41,6 +49,19 @@ export const useLoginDispatch = (): LoginDispatch => {
     },
     updateSignUpFormErrors(signUpFormError: { [key: string]: any }): void {
       dispatch(updateSignUpFormErrors(signUpFormError));
+    },
+    updateResetPasswordForm(
+      resetPasswordForm: Partial<ResetPasswordForm>,
+    ): void {
+      dispatch(updateResetPasswordForm(resetPasswordForm));
+    },
+    updateResetPasswordErrors(resetPasswordFormErrors: {
+      [key: string]: any;
+    }): void {
+      dispatch(updateResetPasswordErrors(resetPasswordFormErrors));
+    },
+    updateResetPasswordFormSent(formSent): void {
+      dispatch(updateResetPasswordFormSent(formSent));
     },
   };
 };

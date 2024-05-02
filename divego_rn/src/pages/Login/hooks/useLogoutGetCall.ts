@@ -1,6 +1,5 @@
 import useApi from "@hooks/useApi";
 import { DiveGoResponse } from "@hooks/useFetch";
-import { User } from "@interfaces/CustomTypes";
 
 interface LogoutkGetCallData {
   logged_in: boolean;

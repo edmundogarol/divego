@@ -1,11 +1,11 @@
 # Shortcuts for running DiveGo App
 
-migrate:
-	DEVENV=development python manage.py migrate
-
 makemigrations:
-	DEVENV=development python manage.py makemigrations
+	source venv/bin/activate && DEVENV=development python manage.py makemigrations
 
+migrate:
+	source venv/bin/activate && DEVENV=development python manage.py migrate
+	
 server:
 	source venv/bin/activate && DEVENV=development python manage.py runserver
 
@@ -14,6 +14,9 @@ postgres:
 
 build:
 	pip install --upgrade pip && pip install -r requirements.txt && pip list
+
+mailserver:
+	mailhog
 
 nativeios:
 	./scripts/prepare.sh -t ios
@@ -39,12 +42,6 @@ gui:
 # 	DEPLOYENV=deployment python manage.py collectstatic --noinput 
 
 # migrations: makemigrations migrate
-
-# mailserver:
-# 	brew services start mailhog
-
-# stopmail:
-# 	brew services stop mailhog
 
 # buildrun: env server
 

@@ -3,15 +3,12 @@ import {
   ActivityIndicator,
   Animated,
   StatusBar,
-  Text,
   useColorScheme,
 } from "react-native";
 import DiveGoLogo from "@assets/divego_logo_v2.svg";
 import globalStyles from "@styles/global";
 import Input from "@components/Input/Input";
-import Icon from "@components/Icon/Icon";
 import { IconTypeEnum } from "@components/Icon/IconInterfaces";
-import { Style } from "@components/Icon/IconStyle";
 import Gap from "@components/Gap/Gap";
 import {
   ResetPasswordContainer,
@@ -21,16 +18,30 @@ import {
 import useLoginDispatch from "@pages/Login/hooks/useLoginDispatch";
 import useLoginState from "@pages/Login/hooks/useLoginState";
 import useLoginLogoEntryAnimation from "@pages/Login/hooks/useLoginLogoEntryAnimation";
-import { useCommonHeaderOptions } from "@navigation/hooks/useCommonHeaderOptions";
 import Button from "@components/Button/Button";
+import useCheckResetPasswordFormErrors from "./hooks/useCheckResetPasswordFormErrors";
+import useResetPassword from "./hooks/useResetPassword";
+import useRenderInputIcon from "@components/Input/hooks/useRenderInputIcon";
+import { If } from "@components/If/If";
+import FormSuccess from "@components/Error/FormSuccess/FormSuccess";
+import FormError from "@components/Error/FormError/FormError";
 
 const ResetPassword: React.FunctionComponent = () => {
-  const { updateLoading } = useLoginDispatch();
-  const { loading } = useLoginState();
+  const {
+    loading,
+    resetPasswordForm,
+    resetPasswordFormErrors,
+    resetPasswordFormSent,
+  } = useLoginState();
+  const { updateResetPasswordForm } = useLoginDispatch();
+  const resetPassword = useResetPassword();
   const styles = globalStyles();
   const isDarkMode = useColorScheme() === "dark";
   const fadeAnimation = useRef(new Animated.Value(0)).current;
   const fallAnimation = useRef(new Animated.Value(-30)).current;
+  const renderInputIcon = useRenderInputIcon();
+
+  useCheckResetPasswordFormErrors();
   useLoginLogoEntryAnimation(fadeAnimation, fallAnimation);
 
   return (
@@ -50,29 +61,44 @@ const ResetPassword: React.FunctionComponent = () => {
       <ResetPasswordHeader>{"Reset Password"}</ResetPasswordHeader>
       <Gap level={1} />
       <ResetPasswordInputsContainer>
-        <Input
-          label="Email"
-          placeholder="Enter email"
-          icon={
-            <Icon
-              name="mail"
-              type={IconTypeEnum.MaterialIcons}
-              style={Style.icon}
-            />
-          }
-        />
+        <If condition={!resetPasswordFormSent}>
+          <Input
+            label="Email"
+            placeholder="Enter email"
+            value={resetPasswordForm.email}
+            error={resetPasswordFormErrors.email}
+            onChange={(e) => {
+              updateResetPasswordForm({ email: e.nativeEvent.text });
+            }}
+            icon={renderInputIcon(
+              "mail",
+              IconTypeEnum.MaterialIcons,
+              resetPasswordFormErrors.email,
+            )}
+          />
+        </If>
+        <FormError error={resetPasswordFormErrors.error} />
+        <If condition={resetPasswordFormSent}>
+          <FormSuccess
+            detail={
+              "We've sent you an email with password reset instructions if there's an account with your email. Check your inbox and spam folder if you don't receive it soon."
+            }
+          />
+        </If>
       </ResetPasswordInputsContainer>
-      <Button
-        loading={loading}
-        text={
-          loading ? (
-            <ActivityIndicator size="small" color="white" />
-          ) : (
-            "Send Reset Link"
-          )
-        }
-        onPress={() => updateLoading(!loading)}
-      />
+      <If condition={!resetPasswordFormSent}>
+        <Button
+          loading={loading}
+          text={
+            loading ? (
+              <ActivityIndicator size="small" color="white" />
+            ) : (
+              "Send Reset Link"
+            )
+          }
+          onPress={() => resetPassword()}
+        />
+      </If>
     </ResetPasswordContainer>
   );
 };

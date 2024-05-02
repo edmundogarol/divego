@@ -1,10 +1,10 @@
-import useLoginState from "./useLoginState";
-import useLoginDispatch from "./useLoginDispatch";
 import { isNotEmptyString } from "@utils/utils";
 import { set } from "lodash";
-import useSignUpPostCall from "./useSignUpPostCall";
 import { PageEnum } from "@interfaces/NavigationTypes";
 import useReactNavigation from "@navigation/hooks/useReactNavigation";
+import useLoginState from "@pages/Login/hooks/useLoginState";
+import useLoginDispatch from "@pages/Login/hooks/useLoginDispatch";
+import useSignUpPostCall from "./useSignUpPostCall";
 
 const useSignUp = (): (() => void) => {
   const { loading, signUpForm } = useLoginState();
@@ -61,7 +61,7 @@ const useSignUp = (): (() => void) => {
         updateLoading(false);
       } else {
         signUpPostCall().then((response) => {
-          if (response.data?.user) {
+          if (response.ok && response.data?.user) {
             updateUser({
               ...response.data?.user,
               logged_in: response.data?.logged_in,
