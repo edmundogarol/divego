@@ -63,7 +63,7 @@ const Login: React.FunctionComponent = () => {
         {!user?.logged_in
           ? "Login"
           : `Welcome ${
-              user.username || user.first_name || user.last_name || user.email
+              user.first_name || user.last_name || user.username || user.email
             }!`}
       </LoginHeader>
       <Gap level={1} />

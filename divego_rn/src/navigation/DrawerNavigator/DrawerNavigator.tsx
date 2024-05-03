@@ -11,7 +11,7 @@ import { IconTypeEnum } from "@components/Icon/IconInterfaces";
 import {
   LeftDrawerMenuButtonContainer,
   MenuIcon,
-} from "./LeftDrawerStyledComponents";
+} from "./DrawerNavigatorStyledComponents";
 import { DrawerActions, useNavigation } from "@react-navigation/native";
 import useLoginState from "@pages/Login/hooks/useLoginState";
 import { If } from "@components/If/If";
@@ -50,7 +50,7 @@ const CustomDrawerContent = (props: any) => {
   );
 };
 
-const LeftMenuDrawer: React.FunctionComponent = (): React.ReactElement => {
+const DrawerNavigator: React.FunctionComponent = (): React.ReactElement => {
   const navigation = useNavigation();
   const { user } = useLoginState();
 
@@ -73,4 +73,4 @@ const LeftMenuDrawer: React.FunctionComponent = (): React.ReactElement => {
   );
 };
 
-export default LeftMenuDrawer;
+export default DrawerNavigator;

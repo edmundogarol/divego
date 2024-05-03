@@ -3,11 +3,8 @@ import {
   AuthenticatedStackNavigatorParams,
   PageEnum,
 } from "@interfaces/NavigationTypes";
-import Login from "@pages/Login/Login";
-import SignUp from "@pages/SignUp/SignUp";
 import { useCommonHeaderOptions } from "./hooks/useCommonHeaderOptions";
-import ResetPassword from "@pages/ResetPassword/ResetPassword";
-import LeftMenuDrawer from "./LeftDrawer/LeftDrawer";
+import DrawerNavigator from "./DrawerNavigator/DrawerNavigator";
 
 export const Stack = createStackNavigator<AuthenticatedStackNavigatorParams>();
 
@@ -21,17 +18,7 @@ const AuthenticatedStackNavigator: React.FunctionComponent =
           <Stack.Screen
             options={{ headerShown: false }}
             name={PageEnum.RootNavigator}
-            component={LeftMenuDrawer}
-          />
-          <Stack.Screen
-            name={PageEnum.SignUp}
-            component={SignUp}
-            options={{ ...headerOptions }}
-          />
-          <Stack.Screen
-            name={PageEnum.ResetPassword}
-            component={ResetPassword}
-            options={{ ...headerOptions }}
+            component={DrawerNavigator}
           />
         </Stack.Group>
       </Stack.Navigator>
