@@ -10,7 +10,7 @@ import {
   LoginHeader,
 } from "@pages/Login/LoginStyledComponents";
 
-const StartUP: React.FunctionComponent = () => {
+const StartUp: React.FunctionComponent = () => {
   const { user } = useLoginState();
   const styles = globalStyles();
   const isDarkMode = useColorScheme() === "dark";
@@ -42,4 +42,4 @@ const StartUP: React.FunctionComponent = () => {
   );
 };
 
-export default StartUP;
+export default StartUp;

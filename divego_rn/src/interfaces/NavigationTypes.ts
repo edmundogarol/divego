@@ -12,6 +12,7 @@ export enum PageEnum {
   SignUp = "SignUp",
   ResetPassword = "ResetPassword",
   Dashboard = "Dashboard",
+  StartUp = "Start Up",
 }
 
 export type AuthenticatedStackNavigatorParams = {
@@ -20,6 +21,7 @@ export type AuthenticatedStackNavigatorParams = {
   [PageEnum.SignUp]: undefined;
   [PageEnum.ResetPassword]: undefined;
   [PageEnum.Dashboard]: undefined;
+  [PageEnum.StartUp]: undefined;
 };
 
 export interface Navigation {

@@ -6,7 +6,6 @@ import {
 } from "@react-navigation/drawer";
 import React from "react";
 import { PageEnum } from "@interfaces/NavigationTypes";
-import Login from "@pages/Login/Login";
 import { IconTypeEnum } from "@components/Icon/IconInterfaces";
 import {
   LeftDrawerMenuButtonContainer,
@@ -17,6 +16,7 @@ import useLoginState from "@pages/Login/hooks/useLoginState";
 import { If } from "@components/If/If";
 import useLogout from "@pages/Login/hooks/useLogout";
 import { Alert } from "react-native";
+import StartUp from "@pages/StartUp/StartUp";
 
 const Drawer = createDrawerNavigator();
 
@@ -68,7 +68,7 @@ const DrawerNavigator: React.FunctionComponent = (): React.ReactElement => {
         ),
       }}
       useLegacyImplementation={false}>
-      <Drawer.Screen name={PageEnum.Login} component={Login} />
+      <Drawer.Screen name={PageEnum.StartUp} component={StartUp} />
     </Drawer.Navigator>
   );
 };
