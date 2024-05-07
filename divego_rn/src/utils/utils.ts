@@ -10,3 +10,14 @@ export const debugBorder = (color: string) => {
     border-width: 1px;
   `;
 };
+
+export const isJson = (item: any) => {
+  let value = typeof item !== "string" ? JSON.stringify(item) : item;
+  try {
+    value = JSON.parse(value);
+  } catch (e) {
+    return false;
+  }
+
+  return typeof value === "object" && value !== null;
+};

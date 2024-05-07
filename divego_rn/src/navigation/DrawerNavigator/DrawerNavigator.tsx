@@ -14,7 +14,7 @@ import {
 import { DrawerActions, useNavigation } from "@react-navigation/native";
 import useLoginState from "@pages/Login/hooks/useLoginState";
 import { If } from "@components/If/If";
-import useLogout from "@pages/Login/hooks/useLogout";
+import useLogoutHandler from "@pages/Login/hooks/useLogoutHandler";
 import { Alert } from "react-native";
 import StartUp from "@pages/StartUp/StartUp";
 
@@ -23,7 +23,7 @@ const Drawer = createDrawerNavigator();
 const CustomDrawerContent = (props: any) => {
   const navigation = useNavigation();
   const { user } = useLoginState();
-  const logout = useLogout();
+  const logout = useLogoutHandler();
 
   return (
     <DrawerContentScrollView {...props}>
@@ -36,11 +36,11 @@ const CustomDrawerContent = (props: any) => {
               {
                 text: "Cancel",
                 onPress: (): void =>
-                  navigation.dispatch(DrawerActions.closeDrawer()),
+                  navigation.dispatch(DrawerActions.toggleDrawer()),
               },
               {
                 text: "Logout",
-                onPress: (): void => logout(),
+                onPress: (): Promise<void> => logout(),
               },
             ])
           }
@@ -57,7 +57,7 @@ const DrawerNavigator: React.FunctionComponent = (): React.ReactElement => {
   return (
     <Drawer.Navigator
       drawerContent={CustomDrawerContent}
-      initialRouteName={PageEnum.Login}
+      initialRouteName={PageEnum.StartUp}
       screenOptions={{
         headerShown: user.logged_in,
         header: () => (

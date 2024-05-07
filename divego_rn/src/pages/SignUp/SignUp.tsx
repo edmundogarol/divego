@@ -21,14 +21,14 @@ import useLoginState from "@pages/Login/hooks/useLoginState";
 import useLoginLogoEntryAnimation from "@pages/Login/hooks/useLoginLogoEntryAnimation";
 import useRenderInputIcon from "@components/Input/hooks/useRenderInputIcon";
 import useCheckSignUpFormErrors from "@pages/SignUp/hooks/useCheckSignUpFormErrors";
-import useSignUp from "@pages/SignUp/hooks/useSignUp";
+import useSignUpHandler from "@pages/SignUp/hooks/useSignUpHandler";
 import { ScrollView } from "react-native-gesture-handler";
 import FormError from "@components/Error/FormError/FormError";
 
 const SignUp: React.FunctionComponent = () => {
   const { updateSignUpForm } = useLoginDispatch();
-  const { loading, signUpForm, signUpFormErrors } = useLoginState();
-  const signUp = useSignUp();
+  const { signUpForm, signUpFormErrors } = useLoginState();
+  const { signUp, loading } = useSignUpHandler();
   const styles = globalStyles();
   const isDarkMode = useColorScheme() === "dark";
   const fadeAnimation = useRef(new Animated.Value(0)).current;
@@ -129,7 +129,9 @@ const SignUp: React.FunctionComponent = () => {
             )}
             secureTextEntry
           />
-          <FormError error={signUpFormErrors.error} />
+          <FormError
+            error={signUpFormErrors["error"] || signUpFormErrors["detail"]}
+          />
         </SignUpInputsContainer>
         <SignUpButton
           loading={loading}

@@ -20,21 +20,17 @@ import useLoginState from "@pages/Login/hooks/useLoginState";
 import useLoginLogoEntryAnimation from "@pages/Login/hooks/useLoginLogoEntryAnimation";
 import Button from "@components/Button/Button";
 import useCheckResetPasswordFormErrors from "./hooks/useCheckResetPasswordFormErrors";
-import useResetPassword from "./hooks/useResetPassword";
+import useResetPasswordHandler from "./hooks/useResetPasswordHandler";
 import useRenderInputIcon from "@components/Input/hooks/useRenderInputIcon";
 import { If } from "@components/If/If";
 import FormSuccess from "@components/Error/FormSuccess/FormSuccess";
 import FormError from "@components/Error/FormError/FormError";
 
 const ResetPassword: React.FunctionComponent = () => {
-  const {
-    loading,
-    resetPasswordForm,
-    resetPasswordFormErrors,
-    resetPasswordFormSent,
-  } = useLoginState();
+  const { resetPasswordForm, resetPasswordFormErrors, resetPasswordFormSent } =
+    useLoginState();
   const { updateResetPasswordForm } = useLoginDispatch();
-  const resetPassword = useResetPassword();
+  const { resetPassword, loading } = useResetPasswordHandler();
   const styles = globalStyles();
   const isDarkMode = useColorScheme() === "dark";
   const fadeAnimation = useRef(new Animated.Value(0)).current;
@@ -77,7 +73,12 @@ const ResetPassword: React.FunctionComponent = () => {
             )}
           />
         </If>
-        <FormError error={resetPasswordFormErrors.error} />
+        <FormError
+          error={
+            resetPasswordFormErrors["error"] ||
+            resetPasswordFormErrors["detail"]
+          }
+        />
         <If condition={resetPasswordFormSent}>
           <FormSuccess
             detail={

@@ -22,28 +22,32 @@ import {
   SignUpText,
   SignUpTextContainer,
 } from "./LoginStyledComponents";
-import useLoginCheck from "./hooks/useLoginCheck";
+
 import Gap from "@components/Gap/Gap";
 import { PageEnum } from "@interfaces/NavigationTypes";
 import { linkToUrl } from "@navigation/hooks/link";
-import useLogin from "./hooks/useLogin";
 import useCheckLoginFormErrors from "./hooks/useCheckLoginFormErrors";
 import FormError from "@components/Error/FormError/FormError";
 import useRenderInputIcon from "../../components/Input/hooks/useRenderInputIcon";
 import { If } from "@components/If/If";
+import useLoginSubmitHandler from "./hooks/useLoginSubmitHandler";
+import { initialState, updateResetPasswordForm } from "./LoginState";
 
 const Login: React.FunctionComponent = () => {
-  const { user, loading, loginForm, loginFormErrors } = useLoginState();
-  const { updateLoginForm, updateResetPasswordFormSent } = useLoginDispatch();
-  const login = useLogin();
+  const { user, loginForm, loginFormErrors } = useLoginState();
+  const {
+    updateLoginForm,
+    updateResetPasswordFormSent,
+    updateResetPasswordErrors,
+  } = useLoginDispatch();
   const styles = globalStyles();
   const isDarkMode = useColorScheme() === "dark";
   const fadeAnimation = useRef(new Animated.Value(0)).current;
   const fallAnimation = useRef(new Animated.Value(-30)).current;
   const renderInputIcon = useRenderInputIcon();
+  const { login, loading } = useLoginSubmitHandler();
 
   useLoginLogoEntryAnimation(fadeAnimation, fallAnimation);
-  useLoginCheck();
   useCheckLoginFormErrors();
 
   return (
@@ -98,11 +102,15 @@ const Login: React.FunctionComponent = () => {
             )}
             secureTextEntry
           />
-          <FormError error={loginFormErrors.detail} />
+          <FormError
+            error={loginFormErrors["error"] || loginFormErrors["detail"]}
+          />
           <ForgotPasswordLink
             to={linkToUrl(PageEnum.ResetPassword)}
             onPress={() => {
               updateResetPasswordFormSent(false);
+              updateResetPasswordForm({ email: "" });
+              updateResetPasswordErrors({});
             }}>
             {"Forgot Password?"}
           </ForgotPasswordLink>
@@ -113,7 +121,7 @@ const Login: React.FunctionComponent = () => {
           text={
             loading ? <ActivityIndicator size="small" color="white" /> : "Login"
           }
-          onPress={() => login()}
+          onPress={login}
         />
         <SignUpTextContainer>
           <SignUpText>{"Don't have an Account?"}</SignUpText>

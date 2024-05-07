@@ -99,7 +99,7 @@ class ResetPasswordViewSet(viewsets.ModelViewSet):
     permission_classes = (PostOnly, )
 
     def create(self, request, *args, **kwargs):
-        data = json.loads(request.data)
+        data = request.data
         email = data['email']
 
         if email is None:

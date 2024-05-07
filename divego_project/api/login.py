@@ -53,10 +53,8 @@ class LoginView(APIView):
 
     def post(self, request):
 
-        request_data = json.loads(request.data)
-
-        email = request_data.get("email", None)
-        password = request_data.get("password", None)
+        email = request.data.get("email", None)
+        password = request.data.get("password", None)
         ip_data = visitor_ip_address(request)
 
         if not email or not password:

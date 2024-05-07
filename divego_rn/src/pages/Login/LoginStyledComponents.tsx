@@ -7,6 +7,7 @@ import {
 import { color } from "@styles/colors";
 import Button from "@components/Button/Button";
 import { Link } from "@react-navigation/native";
+import { debugBorder } from "@utils/utils";
 
 export const LoginContainer = styled.View`
   align-items: center;
@@ -24,6 +25,7 @@ export const LoginHeader = styled.Text`
   width: 250px;
   font-size: 30px;
   font-weight: 100;
+  text-align: center;
 `;
 
 export const SignUpTextContainer = styled.View`

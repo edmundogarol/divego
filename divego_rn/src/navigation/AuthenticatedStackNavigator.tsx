@@ -3,15 +3,12 @@ import {
   AuthenticatedStackNavigatorParams,
   PageEnum,
 } from "@interfaces/NavigationTypes";
-import { useCommonHeaderOptions } from "./hooks/useCommonHeaderOptions";
 import DrawerNavigator from "./DrawerNavigator/DrawerNavigator";
 
 export const Stack = createStackNavigator<AuthenticatedStackNavigatorParams>();
 
 const AuthenticatedStackNavigator: React.FunctionComponent =
   (): React.ReactElement => {
-    const headerOptions = useCommonHeaderOptions();
-
     return (
       <Stack.Navigator initialRouteName={PageEnum.RootNavigator}>
         <Stack.Group screenOptions={{ presentation: "modal" }}>

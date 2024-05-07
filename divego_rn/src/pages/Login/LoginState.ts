@@ -3,7 +3,6 @@ import { User } from "@interfaces/CustomTypes";
 import { LoginForm, ResetPasswordForm, SignUpForm } from "./LoginInterfaces";
 
 export interface LoginState {
-  readonly loading: boolean;
   readonly user: User;
   readonly loginForm: LoginForm;
   readonly loginFormErrors: { [key: string]: any };
@@ -28,7 +27,6 @@ export const initialState: LoginState = {
     is_staff: false,
     verified: false,
   },
-  loading: false,
   loginForm: {
     email: "",
     password: "",
@@ -49,7 +47,6 @@ export const initialState: LoginState = {
   resetPasswordFormSent: false,
 };
 
-type UpdateLoadingAction = PayloadAction<boolean>;
 type UpdateUserAction = PayloadAction<User>;
 type UpdateLoginFormAction = PayloadAction<Partial<LoginForm>>;
 type UpdateLoginFormErrorsAction = PayloadAction<{ [key: string]: any }>;
@@ -60,7 +57,6 @@ type UpdateResetPasswordErrorsAction = PayloadAction<{ [key: string]: any }>;
 type UpdateResetPasswordFormSentAction = PayloadAction<boolean>;
 
 export type LoginAction =
-  | UpdateLoadingAction
   | UpdateUserAction
   | UpdateLoginFormAction
   | UpdateLoginFormErrorsAction
@@ -74,9 +70,6 @@ export const loginSlice = createSlice({
   name: "login",
   initialState,
   reducers: {
-    updateLoading: (state, action: UpdateLoadingAction) => {
-      state.loading = action.payload;
-    },
     updateUser: (state, action: UpdateUserAction) => {
       state.user = { ...state.user, ...action.payload };
     },
@@ -114,7 +107,6 @@ export const loginSlice = createSlice({
 });
 
 export const {
-  updateLoading,
   updateUser,
   updateLoginForm,
   updateLoginFormErrors,

@@ -4,19 +4,29 @@ import { PageEnum } from "@interfaces/NavigationTypes";
 import useReactNavigation from "@navigation/hooks/useReactNavigation";
 import useLoginState from "@pages/Login/hooks/useLoginState";
 import useLoginDispatch from "@pages/Login/hooks/useLoginDispatch";
-import useSignUpPostCall from "./useSignUpPostCall";
+import useSignUpApiCall from "./useSignUpApiCall";
+import { useCallback } from "react";
+import { initialState } from "@pages/Login/LoginState";
 
-const useSignUp = (): (() => void) => {
-  const { loading, signUpForm } = useLoginState();
-  const { updateLoading, updateUser, updateSignUpFormErrors } =
-    useLoginDispatch();
-  const signUpPostCall = useSignUpPostCall();
+interface SignUpSubmitHandler {
+  signUp: () => void;
+  loading: boolean;
+}
+
+const useSignUpHandler = (): SignUpSubmitHandler => {
+  const { signUpForm } = useLoginState();
+  const {
+    updateUser,
+    updateSignUpFormErrors,
+    updateLoginFormErrors,
+    updateSignUpForm,
+  } = useLoginDispatch();
+  const signUpApiCall = useSignUpApiCall();
+  const { loading, fetch } = signUpApiCall();
   const navigation = useReactNavigation();
 
-  return () => {
-    if (!loading) {
-      updateLoading(true);
-
+  return {
+    signUp: useCallback(async () => {
       if (
         !isNotEmptyString(signUpForm.email) ||
         !isNotEmptyString(signUpForm.password) ||
@@ -58,28 +68,29 @@ const useSignUp = (): (() => void) => {
         }
 
         updateSignUpFormErrors(signUpFormErrorsLocal);
-        updateLoading(false);
       } else {
-        signUpPostCall().then((response) => {
-          if (response.ok && response.data?.user) {
-            updateUser({
-              ...response.data?.user,
-              logged_in: response.data?.logged_in,
-            });
-            updateLoading(false);
-            navigation.navigate(PageEnum.Login);
+        const { error, data } = await fetch();
+
+        if (data?.user) {
+          updateUser({
+            ...data?.user,
+            logged_in: data?.logged_in,
+          });
+          updateLoginFormErrors({});
+          updateSignUpFormErrors({});
+          updateSignUpForm({ ...initialState.signUpForm });
+          navigation.navigate(PageEnum.RootNavigator);
+        } else {
+          if (error) {
+            updateSignUpFormErrors({ ...error });
           } else {
-            if (response.data) {
-              updateSignUpFormErrors({ ...response.data });
-            } else {
-              console.log("Sign Up Post fetch error", JSON.stringify(response));
-            }
-            updateLoading(false);
+            console.log("Sign Up Post fetch error", JSON.stringify(error));
           }
-        });
+        }
       }
-    }
+    }, [loading, signUpForm]),
+    loading,
   };
 };
 
-export default useSignUp;
+export default useSignUpHandler;

@@ -45,7 +45,7 @@ class UserViewSet(ModelViewSet):
 
     def create(self, validated_data):
         user = None
-        data = json.loads(validated_data.data)
+        data = validated_data.data
         ip_data = visitor_ip_address(validated_data)
 
         if not data["password"]:

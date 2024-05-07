@@ -13,6 +13,8 @@ export const linking = {
       Login: PageEnum.Login,
       SignUp: PageEnum.SignUp,
       ResetPassword: PageEnum.ResetPassword,
+      DrawerNavigator: PageEnum.DrawerNavigator,
+      StartUp: PageEnum.StartUp,
     },
   },
 };

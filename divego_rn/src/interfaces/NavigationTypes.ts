@@ -7,6 +7,7 @@ import {
 
 export enum PageEnum {
   RootNavigator = "RootNavigator",
+  DrawerNavigator = "DrawerNavigator",
   BottomTabNavigator = "BottomTabNavigator",
   Login = "Login",
   SignUp = "SignUp",
@@ -17,11 +18,15 @@ export enum PageEnum {
 
 export type AuthenticatedStackNavigatorParams = {
   [PageEnum.RootNavigator]: undefined;
+  [PageEnum.DrawerNavigator]: undefined;
+  [PageEnum.Dashboard]: undefined;
+  [PageEnum.StartUp]: undefined;
+};
+
+export type UnauthenticatedStackNavigatorParams = {
   [PageEnum.Login]: undefined;
   [PageEnum.SignUp]: undefined;
   [PageEnum.ResetPassword]: undefined;
-  [PageEnum.Dashboard]: undefined;
-  [PageEnum.StartUp]: undefined;
 };
 
 export interface Navigation {
