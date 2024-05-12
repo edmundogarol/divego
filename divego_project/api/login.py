@@ -1,5 +1,4 @@
 import datetime
-import json
 
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -13,7 +12,6 @@ from django.contrib.auth.hashers import check_password
 from divego_project.utils import visitor_ip_address
 from divego_project.models import User
 from divego_project.serializers import UserSerializer
-
 
 class LogoutView(APIView):
     authentication_classes = (SessionAuthentication,)

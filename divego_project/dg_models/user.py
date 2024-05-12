@@ -18,6 +18,24 @@ from storages.backends.s3boto3 import S3Boto3Storage
 
 from divego_project.constants import *
 
+DIVER = "diver"
+INSTRUCTOR = "instructor"
+STORE = "store"
+STAFF = "staff"
+ROLES = (
+    (DIVER, "Diver"),
+    (INSTRUCTOR, "Instructor"),
+    (STORE, "Store"),
+    (STAFF, "Staff"),
+)
+
+FREEDIVER = "freediver"
+SCUBA_DIVER = "scuba_diver"
+DIVER_TYPE = (
+    (FREEDIVER, "Freediver"),
+    (SCUBA_DIVER, "Scuba Diver")
+)
+
 class UserManager(BaseUserManager):
     use_in_migrations = True
 
@@ -54,7 +72,7 @@ class UserManager(BaseUserManager):
 
 class User(AbstractBaseUser, PermissionsMixin):
     id = models.AutoField(primary_key=True)
-    email = models.TextField(max_length=50, blank=False, unique=True)
+    email = models.TextField(max_length=90, blank=False, unique=True)
     first_name = models.TextField(max_length=50, blank=True)
     last_name = models.TextField(max_length=50, blank=True)
     username = models.TextField(max_length=50, blank=True)
@@ -62,6 +80,8 @@ class User(AbstractBaseUser, PermissionsMixin):
     location = models.CharField(max_length=30, blank=True)
     birth_date = models.DateTimeField(null=True, blank=True)
     active_role = models.TextField(choices=ROLES, blank=True)
+    diver_type = models.TextField(choices=DIVER_TYPE, blank=True)
+    phone = models.TextField(max_length=50, blank=True)
     is_staff = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
     date_joined = models.DateTimeField(default=timezone.now)
