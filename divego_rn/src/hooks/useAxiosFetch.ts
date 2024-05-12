@@ -4,6 +4,8 @@ import environmentConfig from "@utils/environmentConfig";
 import { isJson } from "@utils/utils";
 
 export const APPLICATION_JSON = "application/json";
+axios.defaults.xsrfHeaderName = "X-CSRFTOKEN";
+axios.defaults.xsrfCookieName = "csrftoken";
 
 export interface AxiosFetchWrapperResponse<T> {
   fetch: () => Promise<{ data: T | undefined; error: object | undefined }>;

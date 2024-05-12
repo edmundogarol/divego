@@ -17,6 +17,7 @@ import { If } from "@components/If/If";
 import useLogoutHandler from "@pages/Login/hooks/useLogoutHandler";
 import { Alert } from "react-native";
 import StartUp from "@pages/StartUp/StartUp";
+import Dashboard from "@pages/Dashboard/Dashboard";
 
 const Drawer = createDrawerNavigator();
 
@@ -57,7 +58,7 @@ const DrawerNavigator: React.FunctionComponent = (): React.ReactElement => {
   return (
     <Drawer.Navigator
       drawerContent={CustomDrawerContent}
-      initialRouteName={PageEnum.StartUp}
+      initialRouteName={PageEnum.Dashboard}
       screenOptions={{
         headerShown: user.logged_in,
         header: () => (
@@ -68,7 +69,7 @@ const DrawerNavigator: React.FunctionComponent = (): React.ReactElement => {
         ),
       }}
       useLegacyImplementation={false}>
-      <Drawer.Screen name={PageEnum.StartUp} component={StartUp} />
+      <Drawer.Screen name={PageEnum.Dashboard} component={Dashboard} />
     </Drawer.Navigator>
   );
 };

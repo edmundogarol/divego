@@ -1,5 +1,4 @@
 import datetime
-import json
 from secrets import token_urlsafe
 
 from rest_framework import status

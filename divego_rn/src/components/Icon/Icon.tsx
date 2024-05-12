@@ -10,6 +10,7 @@ import GlyphFontAwesome5 from "./libraries/GlyphFontAwesome5";
 import GlyphFontAwesome from "./libraries/GlyphFontAwesome";
 import GlyphMaterialIcons from "./libraries/GlyphMaterialIcons";
 import GlyphMaterialCommunityIcons from "./libraries/GlyphMaterialCommunityIcons";
+import CustomSvgIcon, { CustomSvgIconName } from "./libraries/CustomSvgIcon";
 
 const Icon: React.FunctionComponent<IconProps> = ({
   name,
@@ -53,6 +54,15 @@ const Icon: React.FunctionComponent<IconProps> = ({
           size={size}
           style={style}
           name={name as GlyphMaterialCommunityIcons}
+        />
+      );
+    case IconTypeEnum.CustomSvgIcon:
+      return (
+        <CustomSvgIcon
+          color={color}
+          size={size}
+          style={style}
+          name={name as CustomSvgIconName}
         />
       );
     default:

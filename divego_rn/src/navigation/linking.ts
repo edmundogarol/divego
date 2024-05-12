@@ -14,6 +14,7 @@ export const linking = {
       SignUp: PageEnum.SignUp,
       ResetPassword: PageEnum.ResetPassword,
       DrawerNavigator: PageEnum.DrawerNavigator,
+      Dashboard: PageEnum.Dashboard,
       StartUp: PageEnum.StartUp,
     },
   },

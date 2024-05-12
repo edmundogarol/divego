@@ -4,13 +4,15 @@ import GlyphFontAwesome from "./libraries/GlyphFontAwesome";
 import GlyphFontAwesome5 from "./libraries/GlyphFontAwesome5";
 import GlyphMaterialIcons from "./libraries/GlyphMaterialIcons";
 import GlyphMaterialCommunityIcons from "./libraries/GlyphMaterialCommunityIcons";
+import { CustomSvgIconName } from "./libraries/CustomSvgIcon";
 
 export type IconGlyph =
   | GlyphFontAwesome
   | GlyphFontAwesome5
   | GlyphIonIcons
   | GlyphMaterialIcons
-  | GlyphMaterialCommunityIcons;
+  | GlyphMaterialCommunityIcons
+  | CustomSvgIconName;
 
 export enum IconTypeEnum {
   FontAwesome = "FontAwesome",
@@ -18,6 +20,7 @@ export enum IconTypeEnum {
   Ionicons = "Ionicons",
   MaterialIcons = "MaterialIcons",
   MaterialCommunityIcons = "MaterialCommunityIcons",
+  CustomSvgIcon = "CustomSvgIconName",
 }
 
 export interface IconProps {

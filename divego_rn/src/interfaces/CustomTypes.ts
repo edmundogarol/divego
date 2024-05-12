@@ -1,3 +1,6 @@
+import { CustomSvgIconName } from "@components/Icon/libraries/CustomSvgIcon";
+import { ColorKey } from "@styles/colors";
+
 export interface CustomWindow extends Window {
   host: string;
   navigator: any;
@@ -16,4 +19,15 @@ export interface User {
   logged_in: boolean;
   is_staff: boolean;
   verified: boolean;
+}
+
+export interface RoleDetails {
+  roleId: string;
+  title: string;
+  confirmMessage: string;
+}
+
+export interface RoleData extends RoleDetails {
+  iconName: CustomSvgIconName | undefined;
+  buttonColor: ColorKey | undefined;
 }

@@ -31,7 +31,7 @@ import FormError from "@components/Error/FormError/FormError";
 import useRenderInputIcon from "../../components/Input/hooks/useRenderInputIcon";
 import { If } from "@components/If/If";
 import useLoginSubmitHandler from "./hooks/useLoginSubmitHandler";
-import { initialState, updateResetPasswordForm } from "./LoginState";
+import { updateResetPasswordForm } from "./LoginState";
 
 const Login: React.FunctionComponent = () => {
   const { user, loginForm, loginFormErrors } = useLoginState();
