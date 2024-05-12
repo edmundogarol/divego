@@ -10,6 +10,7 @@ from django.contrib.auth.models import (
     PermissionsMixin,
 )
 from django.utils import timezone
+from django.contrib.postgres.fields import ArrayField
 
 from rest_framework import exceptions
 
@@ -51,43 +52,6 @@ class UserManager(BaseUserManager):
         return self._create_user(email, password, **extra_fields)
 
 
-class Roles(models.Model):
-
-    DIVER = 1
-    INSTRUCTOR = 2
-    STORE = 3
-    STAFF = 4
-
-    ROLES = (
-        (DIVER, "diver"),
-        (INSTRUCTOR, "instructor"),
-        (STORE, "store"),
-        (STAFF, "staff"),
-    )
-
-    id = models.PositiveSmallIntegerField(choices=ROLES, primary_key=True)
-    name = models.TextField(max_length=20, blank=True)
-
-    def __str__(self):
-        return self.get_id_display()
-
-
-class Privileges(models.Model):
-
-    SUPER = 1
-    ADMIN = 2
-
-    PRIVILEGES = (
-        (SUPER, "super"),
-        (ADMIN, "admin"),
-    )
-
-    id = models.PositiveSmallIntegerField(choices=PRIVILEGES, primary_key=True)
-    name = models.TextField(max_length=20, blank=True)
-
-    def __str__(self):
-        return self.get_id_display()
-
 class User(AbstractBaseUser, PermissionsMixin):
     id = models.AutoField(primary_key=True)
     email = models.TextField(max_length=50, blank=False, unique=True)
@@ -97,12 +61,16 @@ class User(AbstractBaseUser, PermissionsMixin):
     bio = models.TextField(max_length=500, blank=True)
     location = models.CharField(max_length=30, blank=True)
     birth_date = models.DateTimeField(null=True, blank=True)
-    roles = models.ManyToManyField(Roles, blank=True)
+    active_role = models.TextField(choices=ROLES, blank=True)
     is_staff = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
     date_joined = models.DateTimeField(default=timezone.now)
     last_login = models.DateTimeField(null=True)
-    privileges = models.ManyToManyField(Privileges, blank=True)
+    privileges = ArrayField(
+        models.TextField(blank=True, choices=PRIVILEGES),
+        default=list,
+        blank=True,
+    )
     verified = models.TextField(max_length=50, blank=False, null=True)
     last_ip = models.TextField(max_length=30, blank=False, null=True)
     image = models.ImageField(upload_to="user_profile", null=True)
