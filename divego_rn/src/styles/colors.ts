@@ -24,7 +24,7 @@ const colorsMap = {
   SystemError2: "#ff7575",
   SystemSuccess1: "#7dc770",
   SystemSuccess2: "#5e9f53",
-  SystemTeal: "#5bc38f",
+  SystemTeal: "#66d3bf",
   SystemPurple: "#c298e3",
   SystemWhite: "#ffffff",
 };

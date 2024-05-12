@@ -36,7 +36,7 @@ export const UserRoleButtonLabel = styled.Text`
   font-size: 12px;
   text-transform: uppercase;
   margin-top: 10px;
-  color: white;
+  color: #ffffff;
   letter-spacing: 1.5px;
   font-weight: 400;
 `;
