@@ -3,7 +3,7 @@ import { RoleData, RoleDetails } from "@interfaces/CustomTypes";
 import { ColorKey, color } from "@styles/colors";
 import useRenderRoleButton from "./useRenderRoleButton";
 
-const useGetRoleButtons = (): (() => JSX.Element[]) => {
+const useGetRoleButtons = (): ((scuba: boolean) => JSX.Element[]) => {
   const roleDetails: RoleDetails[] = [
     {
       roleId: "diver",
@@ -25,23 +25,38 @@ const useGetRoleButtons = (): (() => JSX.Element[]) => {
     },
   ];
 
-  const getRoleRenderData: RoleData[] = roleDetails.map(
-    ({ roleId, title, confirmMessage }) => {
+  const getRoleRenderData: (scuba: boolean) => RoleData[] = (scuba: boolean) =>
+    roleDetails.map(({ roleId, title, confirmMessage }) => {
       let iconName;
       let buttonColor;
 
       switch (roleId) {
         case "diver":
-          iconName = "UserDiverIcon" as CustomSvgIconName;
-          buttonColor = color("SystemBlue3") as ColorKey;
+          if (scuba) {
+            iconName = "ScubaUserDiverIcon" as CustomSvgIconName;
+            buttonColor = color("SystemScubaDiver") as ColorKey;
+          } else {
+            iconName = "UserDiverIcon" as CustomSvgIconName;
+            buttonColor = color("SystemBlue2") as ColorKey;
+          }
           break;
         case "instructor":
-          iconName = "BuoyIcon" as CustomSvgIconName;
-          buttonColor = color("SystemPurple") as ColorKey;
+          if (scuba) {
+            iconName = "ScubaTanksIcon" as CustomSvgIconName;
+            buttonColor = color("SystemScubaInstructor") as ColorKey;
+          } else {
+            iconName = "BuoyIcon" as CustomSvgIconName;
+            buttonColor = color("SystemPurple") as ColorKey;
+          }
           break;
         case "shop":
-          iconName = "FinsIcon" as CustomSvgIconName;
-          buttonColor = color("SystemTeal") as ColorKey;
+          if (scuba) {
+            iconName = "ScubaFinsIcon" as CustomSvgIconName;
+            buttonColor = color("SystemScubaShop") as ColorKey;
+          } else {
+            iconName = "FinsIcon" as CustomSvgIconName;
+            buttonColor = color("SystemTeal") as ColorKey;
+          }
           break;
       }
 
@@ -52,10 +67,10 @@ const useGetRoleButtons = (): (() => JSX.Element[]) => {
         iconName,
         buttonColor,
       };
-    },
-  );
+    });
 
-  return () => getRoleRenderData.map((role) => useRenderRoleButton(role));
+  return (scuba: boolean) =>
+    getRoleRenderData(scuba).map((role) => useRenderRoleButton(role));
 };
 
 export default useGetRoleButtons;

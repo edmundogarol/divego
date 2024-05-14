@@ -1,6 +1,7 @@
 import Icon from "@components/Icon/Icon";
 import { color } from "@styles/colors";
 import { CONTAINER_PADDING_DEFAULT } from "@styles/constants";
+import { debugBorder } from "@utils/utils";
 import styled from "styled-components/native";
 
 export const UserRolesContainer = styled.View`
@@ -22,7 +23,6 @@ export const UserRolesContainerTitle = styled.Text`
 export const UserRolesContainerSubtitle = styled.Text`
   max-width: 250px;
   font-size: 12px;
-
   letter-spacing: 1.2px;
   color: ${color("SystemLabel2")};
   font-weight: 300;
@@ -55,4 +55,20 @@ export const UserRoleButtonIcon = styled(Icon)`
   text-align: center;
   justify-content: center;
   align-items: center;
+`;
+
+export const FreediveScubaSwitchContainer = styled.View`
+  /* ${debugBorder("red")} */
+  align-items: center;
+  position: absolute;
+  right: ${CONTAINER_PADDING_DEFAULT}px;
+  top: ${CONTAINER_PADDING_DEFAULT}px;
+`;
+
+export const FreediveScubaSwitchText = styled.Text`
+  padding: ${CONTAINER_PADDING_DEFAULT}px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-size: 12px;
+  /* ${debugBorder("red")} */
 `;
