@@ -15,7 +15,7 @@ const useRenderRoleButton = (roleData: RoleData): JSX.Element => {
       { text: "Cancel" },
       {
         text: "Confirm",
-        onPress: () => alert(`Update user with "${roleData.roleId}" role`),
+        onPress: () => roleData.onConfirm(),
       },
     ]);
 

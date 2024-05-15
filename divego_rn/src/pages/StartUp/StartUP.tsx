@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { StatusBar, Switch, Text, useColorScheme } from "react-native";
+import { Alert, StatusBar, Switch, Text, useColorScheme } from "react-native";
 import globalStyles from "@styles/global";
 import Gap from "@components/Gap/Gap";
 import { LoginContainer } from "@pages/Login/LoginStyledComponents";
@@ -12,10 +12,26 @@ import {
 } from "./StartUpStyledComponents";
 import useGetRoleButtons from "./hooks/useGetRoleButtons";
 import { color } from "@styles/colors";
+import { delay } from "@utils/utils";
 
 const StartUp: React.FunctionComponent = () => {
   const [isScuba, setIsScuba] = useState(false);
-  const toggleSwitch = () => setIsScuba((previousState) => !previousState);
+  const toggleSwitch = async () => {
+    setIsScuba((previousState) => !previousState);
+    if (!isScuba) {
+      await delay(1000);
+      Alert.alert(
+        `Coming Soon`,
+        " This feature is currently under development and will be available in future updates. Stay tuned for exciting new additions!",
+        [
+          {
+            text: "Ok",
+            onPress: () => setIsScuba(false),
+          },
+        ],
+      );
+    }
+  };
   const styles = globalStyles();
   const isDarkMode = useColorScheme() === "dark";
   const getRoleButtons = useGetRoleButtons();
@@ -48,7 +64,7 @@ const StartUp: React.FunctionComponent = () => {
       <UserRolesContainer>{getRoleButtons(isScuba)}</UserRolesContainer>
       <Gap level={2} />
       <UserRolesContainerSubtitle>
-        {"*Changing later may require further verification."}
+        {"*Changing this later may require further verification."}
       </UserRolesContainerSubtitle>
     </LoginContainer>
   );

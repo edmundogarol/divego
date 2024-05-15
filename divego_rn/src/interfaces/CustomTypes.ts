@@ -30,4 +30,5 @@ export interface RoleDetails {
 export interface RoleData extends RoleDetails {
   iconName: CustomSvgIconName | undefined;
   buttonColor: ColorKey | undefined;
+  onConfirm: () => void;
 }

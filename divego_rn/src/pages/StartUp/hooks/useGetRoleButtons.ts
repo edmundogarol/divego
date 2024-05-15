@@ -66,6 +66,7 @@ const useGetRoleButtons = (): ((scuba: boolean) => JSX.Element[]) => {
         confirmMessage,
         iconName,
         buttonColor,
+        onConfirm: () => alert(`Update user with "${roleId}" role`),
       };
     });
 

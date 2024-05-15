@@ -21,3 +21,5 @@ export const isJson = (item: any) => {
 
   return typeof value === "object" && value !== null;
 };
+
+export const delay = (ms: number) => new Promise((res) => setTimeout(res, ms));
