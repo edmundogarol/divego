@@ -1,5 +1,5 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { User } from "@interfaces/CustomTypes";
+import { DiverType, Roles, User } from "@interfaces/CustomTypes";
 import { LoginForm, ResetPasswordForm, SignUpForm } from "./LoginInterfaces";
 
 export interface LoginState {
@@ -26,6 +26,8 @@ export const initialState: LoginState = {
     logged_in: false,
     is_staff: false,
     verified: false,
+    active_role: Roles.Diver,
+    diver_type: DiverType.Freediver,
   },
   loginForm: {
     email: "",

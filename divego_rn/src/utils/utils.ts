@@ -7,7 +7,7 @@ export const isNotEmptyString = (value: string): boolean => {
 export const debugBorder = (color: string) => {
   return css`
     border-color: ${color};
-    border-width: 1px;
+    border-width: 2px;
   `;
 };
 

@@ -4,12 +4,15 @@ import {
   CONTAINER_MARGIN_SMALL,
   CONTAINER_PADDING_DEFAULT,
   CONTAINER_PADDING_SMALL,
+  INPUT_SIZE,
   LABEL_SIZE,
   TEXT_SIZE,
 } from "@styles/constants";
 import { color } from "@styles/colors";
 
 export const InputContainer = styled.View<{ error?: boolean }>`
+  width: 100%;
+  height: ${INPUT_SIZE}px;
   background-color: white;
   border-bottom-width: 0.5px;
   border-color: #aaaaaa;

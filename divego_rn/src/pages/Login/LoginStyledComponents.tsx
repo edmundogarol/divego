@@ -3,20 +3,21 @@ import {
   CONTAINER_MARGIN_DEFAULT,
   CONTAINER_MARGIN_SMALL,
   CONTAINER_PADDING_DEFAULT,
+  CONTAINER_PADDING_LARGE,
 } from "@styles/constants";
 import { color } from "@styles/colors";
 import Button from "@components/Button/Button";
 import { Link } from "@react-navigation/native";
-import { debugBorder } from "@utils/utils";
 
 export const LoginContainer = styled.View`
   align-items: center;
   justify-content: center;
+  padding-left: ${CONTAINER_PADDING_LARGE}px;
+  padding-right: ${CONTAINER_PADDING_LARGE}px;
   height: 100%;
 `;
 
 export const LoginInputsContainer = styled.View`
-  width: 250px;
   padding: ${CONTAINER_PADDING_DEFAULT}px 0 ${CONTAINER_PADDING_DEFAULT}px 0;
   justify-content: space-between;
 `;

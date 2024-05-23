@@ -95,6 +95,7 @@ def delete_all_unexpired_sessions_for_user(user):
 
 
 class ResetPasswordViewSet(viewsets.ModelViewSet):
+    queryset = ResetPasswordSession.objects.all()
     serializer_class = ResetPasswordSerializer
     permission_classes = (PostOnly, )
 

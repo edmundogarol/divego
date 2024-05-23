@@ -61,6 +61,7 @@ const useGetRoleButtons = (): ((scuba: boolean) => JSX.Element[]) => {
       }
 
       return {
+        type: scuba ? "scuba" : "freediver",
         roleId,
         title,
         confirmMessage,

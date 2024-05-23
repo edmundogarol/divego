@@ -14,7 +14,9 @@ import {
   SignUpButton,
   SignUpContainer,
   SignUpHeader,
+  SignUpHeaderContainer,
   SignUpInputsContainer,
+  SignUpScrollView,
 } from "./SignUpStyledComponents";
 import useLoginDispatch from "@pages/Login/hooks/useLoginDispatch";
 import useLoginState from "@pages/Login/hooks/useLoginState";
@@ -40,21 +42,23 @@ const SignUp: React.FunctionComponent = () => {
 
   return (
     <SignUpContainer>
-      <ScrollView>
+      <SignUpScrollView>
         <StatusBar
           barStyle={isDarkMode ? "light-content" : "dark-content"}
           backgroundColor={styles.container.backgroundColor}
         />
         <Gap level={3} />
-        <Animated.View
-          style={{
-            opacity: fadeAnimation,
-            transform: [{ translateY: fallAnimation }],
-          }}>
-          <DiveGoLogo width={100} height={100} />
-        </Animated.View>
-        <Gap level={1} />
-        <SignUpHeader>{"Sign Up"}</SignUpHeader>
+        <SignUpHeaderContainer>
+          <Animated.View
+            style={{
+              opacity: fadeAnimation,
+              transform: [{ translateY: fallAnimation }],
+            }}>
+            <DiveGoLogo width={100} height={100} />
+          </Animated.View>
+          <Gap level={1} />
+          <SignUpHeader>{"Sign Up"}</SignUpHeader>
+        </SignUpHeaderContainer>
         <Gap level={1} />
         <SignUpInputsContainer>
           <Input
@@ -144,7 +148,7 @@ const SignUp: React.FunctionComponent = () => {
           }
           onPress={() => signUp()}
         />
-      </ScrollView>
+      </SignUpScrollView>
     </SignUpContainer>
   );
 };

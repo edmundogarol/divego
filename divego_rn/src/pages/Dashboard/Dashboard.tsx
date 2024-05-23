@@ -12,6 +12,7 @@ import {
 import useReactNavigation from "@navigation/hooks/useReactNavigation";
 import { PageEnum } from "@interfaces/NavigationTypes";
 import Button from "@components/Button/Button";
+import { If } from "@components/If/If";
 
 const Dashboard: React.FunctionComponent = () => {
   const navigation = useReactNavigation();
@@ -42,10 +43,12 @@ const Dashboard: React.FunctionComponent = () => {
         }!`}
       </LoginHeader>
       <Gap level={3} />
-      <Button
-        text={"Start diving!"}
-        onPress={() => navigation.navigate(PageEnum.StartUp)}
-      />
+      <If condition={!user.active_role}>
+        <Button
+          text={"Start diving!"}
+          onPress={() => navigation.navigate(PageEnum.StartUp)}
+        />
+      </If>
     </LoginContainer>
   );
 };

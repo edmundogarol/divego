@@ -4,10 +4,24 @@ import { CONTAINER_PADDING_DEFAULT } from "@styles/constants";
 import { debugBorder } from "@utils/utils";
 import styled from "styled-components/native";
 
+export const StartUpContainer = styled.View`
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+`;
+
+export const ScreenContentsContainer = styled.View<{ width: number }>`
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: ${({ width }) => width}px;
+  margin: auto;
+`;
+
 export const UserRolesContainer = styled.View`
   display: flex;
   flex-direction: row;
-  width: 90%;
+  width: 300px;
   height: auto;
   justify-content: center;
   flex-wrap: wrap;
@@ -58,7 +72,6 @@ export const UserRoleButtonIcon = styled(Icon)`
 `;
 
 export const FreediveScubaSwitchContainer = styled.View`
-  /* ${debugBorder("red")} */
   align-items: center;
   position: absolute;
   right: ${CONTAINER_PADDING_DEFAULT}px;
@@ -70,5 +83,4 @@ export const FreediveScubaSwitchText = styled.Text`
   text-transform: uppercase;
   letter-spacing: 1px;
   font-size: 12px;
-  /* ${debugBorder("red")} */
 `;

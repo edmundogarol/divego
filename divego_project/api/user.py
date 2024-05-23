@@ -14,9 +14,8 @@ from django.shortcuts import get_object_or_404
 
 from divego_project.api.permissions import UserPermissions
 from divego_project.utils import visitor_ip_address
-from divego_project.models import User
+from divego_project.models import User, FREEDIVER
 from divego_project.serializers import UserSerializer
-
 from divego_project.settings import LOCAL_DEV
 
 
@@ -117,27 +116,19 @@ class UserViewSet(ModelViewSet):
         password = request.data.get("password", None)
         email = request.data.get("email", None)
         username = request.data.get("username", None)
-        cover = request.data.get("cover", None)
-        image_avatar = request.data.get("avatar", None)
-
         user_id = request.data.get("user_id", None)
+        active_role = request.data.get("active_role", None)
+        diver_type = request.data.get("diver_type", None)
 
-        if str(cover) == "remove":
+        if active_role is not None:
             user = User.objects.get(id=user_id)
-            user.cover.delete()
-
-            return Response({"success": "Removed user cover."})
-
-        if str(image_avatar) == "remove":
-            user = User.objects.get(id=user_id)
-            user.image.delete()
-
+            user.active_role = active_role
+            user.diver_type = diver_type
+            user.save()
+            
             serializer = UserSerializer(user)
-            return Response({"success": "Removed user avatar."})
-
-        if request.data.get("image", None):
-            parser_classes = (MultiPartParser, FormParser)
-
+            return Response(serializer.data)
+            
         if password is not None:
             try:
                 password_validation.validate_password(request.data["password"])
@@ -155,25 +146,13 @@ class UserViewSet(ModelViewSet):
         if username is not None and username != "":
             try:
                 user = User.objects.get(username=username)
-                content = {"Error": "User with this username already exists."}
+                content = {"Error": "This username is unavailable."}
                 return Response(content, status=status.HTTP_406_NOT_ACCEPTABLE)
             except User.DoesNotExist:
                 pass
 
         queryset = User.objects.all()
         user = queryset.get(pk=user_id if user_id else kwargs.get("pk"))
-
-        # if request.data.get("image", None) and user.image:
-        #     if S3_STORAGE:
-        #         user.image.delete()
-        #     else:
-        #         os.remove(os.path.join(MEDIA_ROOT, user.image.name))
-
-        # if cover and user.cover:
-        #     if S3_STORAGE:
-        #         user.cover.delete()
-        #     else:
-        #         os.remove(os.path.join(MEDIA_ROOT, user.cover.name))
 
         if LOCAL_DEV:
             request.data["image_public"] = None

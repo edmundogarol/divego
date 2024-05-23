@@ -1,72 +1,64 @@
-import React, { useState } from "react";
-import { Alert, StatusBar, Switch, Text, useColorScheme } from "react-native";
-import globalStyles from "@styles/global";
-import Gap from "@components/Gap/Gap";
-import { LoginContainer } from "@pages/Login/LoginStyledComponents";
-import {
-  FreediveScubaSwitchContainer,
-  FreediveScubaSwitchText,
-  UserRolesContainer,
-  UserRolesContainerSubtitle,
-  UserRolesContainerTitle,
-} from "./StartUpStyledComponents";
-import useGetRoleButtons from "./hooks/useGetRoleButtons";
+import React from "react";
+import { Animated, Dimensions, FlatList } from "react-native";
+import { ScalingDot } from "react-native-animated-pagination-dots";
+import StartUp1ChooseRole from "./screens/StartUp1ChooseRole";
+import { StartUpContainer } from "./StartUpStyledComponents";
 import { color } from "@styles/colors";
-import { delay } from "@utils/utils";
+
+interface ScreenProps {
+  key: string;
+  title: string;
+  component: JSX.Element;
+}
+
+const startUpScreens = [
+  {
+    key: "1",
+    title: "Choose Role",
+    component: <StartUp1ChooseRole />,
+  },
+];
+
+const { width } = Dimensions.get("screen");
 
 const StartUp: React.FunctionComponent = () => {
-  const [isScuba, setIsScuba] = useState(false);
-  const toggleSwitch = async () => {
-    setIsScuba((previousState) => !previousState);
-    if (!isScuba) {
-      await delay(1000);
-      Alert.alert(
-        `Coming Soon`,
-        " This feature is currently under development and will be available in future updates. Stay tuned for exciting new additions!",
-        [
-          {
-            text: "Ok",
-            onPress: () => setIsScuba(false),
-          },
-        ],
-      );
-    }
-  };
-  const styles = globalStyles();
-  const isDarkMode = useColorScheme() === "dark";
-  const getRoleButtons = useGetRoleButtons();
+  const scrollX = React.useRef(new Animated.Value(0)).current;
+  const keyExtractor = React.useCallback((item: ScreenProps) => item.key, []);
+
+  const renderItem = React.useCallback(
+    ({ item }: { item: ScreenProps }) => {
+      return item.component;
+    },
+    [width],
+  );
 
   return (
-    <LoginContainer>
-      <FreediveScubaSwitchContainer>
-        <Switch
-          trackColor={{
-            false: color("SystemGrey1"),
-            true: color("SystemGrey1"),
-          }}
-          thumbColor={
-            isScuba ? color("SystemScubaDiver") : color("SystemBlue2")
-          }
-          ios_backgroundColor={color("SystemGrey1")}
-          onValueChange={toggleSwitch}
-          value={isScuba}
-        />
-        <FreediveScubaSwitchText>
-          {isScuba ? "Scuba" : "Freedive"}
-        </FreediveScubaSwitchText>
-      </FreediveScubaSwitchContainer>
-      <StatusBar
-        barStyle={isDarkMode ? "light-content" : "dark-content"}
-        backgroundColor={styles.container.backgroundColor}
+    <StartUpContainer>
+      <FlatList
+        data={startUpScreens}
+        keyExtractor={keyExtractor}
+        showsHorizontalScrollIndicator={false}
+        onScroll={Animated.event(
+          [{ nativeEvent: { contentOffset: { x: scrollX } } }],
+          {
+            useNativeDriver: false,
+          },
+        )}
+        pagingEnabled
+        horizontal
+        decelerationRate={"normal"}
+        scrollEventThrottle={16}
+        renderItem={renderItem}
+        contentContainerStyle={{ overflow: "visible" }}
       />
-      <UserRolesContainerTitle>{"Choose your role"}</UserRolesContainerTitle>
-      <Gap level={2} />
-      <UserRolesContainer>{getRoleButtons(isScuba)}</UserRolesContainer>
-      <Gap level={2} />
-      <UserRolesContainerSubtitle>
-        {"*Changing this later may require further verification."}
-      </UserRolesContainerSubtitle>
-    </LoginContainer>
+      <ScalingDot
+        data={startUpScreens}
+        scrollX={scrollX}
+        containerStyle={{}}
+        inActiveDotColor={color("SystemBlue3")}
+        activeDotColor={color("SystemBlue3")}
+      />
+    </StartUpContainer>
   );
 };
 

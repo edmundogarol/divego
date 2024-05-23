@@ -21,7 +21,7 @@ const useRenderRoleButton = (roleData: RoleData): JSX.Element => {
 
   return (
     <UserRoleButtonLabelContainer
-      onPress={() => confirmAlert()}
+      onPress={() => (roleData.type === "scuba" ? null : confirmAlert())}
       key={roleData.roleId}>
       <UserRoleButton color={roleData.buttonColor}>
         <UserRoleButtonIcon

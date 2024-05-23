@@ -1,5 +1,5 @@
 import { color } from "@styles/colors";
-import { CONTAINER_PADDING_DEFAULT } from "@styles/constants";
+import { BUTTON_SIZE, CONTAINER_PADDING_DEFAULT } from "@styles/constants";
 import styled from "styled-components/native";
 
 export const PressableWrapper = styled.Pressable<{
@@ -19,7 +19,8 @@ export const PressableWrapper = styled.Pressable<{
     return color("SystemBlue3");
   }};
   padding: ${CONTAINER_PADDING_DEFAULT}px;
-  width: 250px;
+  width: 100%;
+  height: ${BUTTON_SIZE}px;
   border-radius: 5px;
   align-items: center;
 `;
