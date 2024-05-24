@@ -24,7 +24,6 @@ import useLoginLogoEntryAnimation from "@pages/Login/hooks/useLoginLogoEntryAnim
 import useRenderInputIcon from "@components/Input/hooks/useRenderInputIcon";
 import useCheckSignUpFormErrors from "@pages/SignUp/hooks/useCheckSignUpFormErrors";
 import useSignUpHandler from "@pages/SignUp/hooks/useSignUpHandler";
-import { ScrollView } from "react-native-gesture-handler";
 import FormError from "@components/Error/FormError/FormError";
 
 const SignUp: React.FunctionComponent = () => {

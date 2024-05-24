@@ -1,11 +1,5 @@
 import React, { useState } from "react";
-import {
-  Alert,
-  StatusBar,
-  Dimensions,
-  Switch,
-  useColorScheme,
-} from "react-native";
+import { Alert, StatusBar, Switch, useColorScheme } from "react-native";
 import globalStyles from "@styles/global";
 import Gap from "@components/Gap/Gap";
 import {
@@ -20,13 +14,14 @@ import { color } from "@styles/colors";
 import { delay } from "@utils/utils";
 import useGetRoleButtons from "../hooks/useGetRoleButtons";
 
-const { width } = Dimensions.get("screen");
-
-const StartUp1ChooseRole: React.FunctionComponent = () => {
+const StartUp1ChooseRole: React.FunctionComponent<{
+  gotoNextPage: (screen: string) => void;
+  gotoPrevPage: () => void;
+}> = ({ gotoNextPage }) => {
   const [isScuba, setIsScuba] = useState(false);
   const styles = globalStyles();
   const isDarkMode = useColorScheme() === "dark";
-  const getRoleButtons = useGetRoleButtons();
+  const getRoleButtons = useGetRoleButtons(gotoNextPage);
 
   const toggleSwitch = async () => {
     setIsScuba((previousState) => !previousState);
@@ -47,7 +42,7 @@ const StartUp1ChooseRole: React.FunctionComponent = () => {
   };
 
   return (
-    <ScreenContentsContainer width={width}>
+    <ScreenContentsContainer>
       <FreediveScubaSwitchContainer>
         <Switch
           trackColor={{

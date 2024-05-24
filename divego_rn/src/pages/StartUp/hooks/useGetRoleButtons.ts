@@ -2,8 +2,11 @@ import { CustomSvgIconName } from "@components/Icon/libraries/CustomSvgIcon";
 import { RoleData, RoleDetails } from "@interfaces/CustomTypes";
 import { ColorKey, color } from "@styles/colors";
 import useRenderRoleButton from "./useRenderRoleButton";
+import { Dispatch, SetStateAction } from "react";
 
-const useGetRoleButtons = (): ((scuba: boolean) => JSX.Element[]) => {
+const useGetRoleButtons = (
+  onConfirm: (screen: string) => void,
+): ((scuba: boolean) => JSX.Element[]) => {
   const roleDetails: RoleDetails[] = [
     {
       roleId: "diver",
@@ -29,24 +32,29 @@ const useGetRoleButtons = (): ((scuba: boolean) => JSX.Element[]) => {
     roleDetails.map(({ roleId, title, confirmMessage }) => {
       let iconName;
       let buttonColor;
+      let screenSet: string;
 
       switch (roleId) {
         case "diver":
           if (scuba) {
             iconName = "ScubaUserDiverIcon" as CustomSvgIconName;
             buttonColor = color("SystemScubaDiver") as ColorKey;
+            screenSet = "scubaDiver";
           } else {
             iconName = "UserDiverIcon" as CustomSvgIconName;
             buttonColor = color("SystemBlue2") as ColorKey;
+            screenSet = "freediver";
           }
           break;
         case "instructor":
           if (scuba) {
             iconName = "ScubaTanksIcon" as CustomSvgIconName;
             buttonColor = color("SystemScubaInstructor") as ColorKey;
+            screenSet = "scubaInstructor";
           } else {
             iconName = "BuoyIcon" as CustomSvgIconName;
             buttonColor = color("SystemPurple") as ColorKey;
+            screenSet = "freediveInstructor";
           }
           break;
         case "shop":
@@ -57,6 +65,7 @@ const useGetRoleButtons = (): ((scuba: boolean) => JSX.Element[]) => {
             iconName = "FinsIcon" as CustomSvgIconName;
             buttonColor = color("SystemTeal") as ColorKey;
           }
+          screenSet = "shop";
           break;
       }
 
@@ -67,7 +76,7 @@ const useGetRoleButtons = (): ((scuba: boolean) => JSX.Element[]) => {
         confirmMessage,
         iconName,
         buttonColor,
-        onConfirm: () => alert(`Update user with "${roleId}" role`),
+        onConfirm: () => onConfirm(screenSet),
       };
     });
 

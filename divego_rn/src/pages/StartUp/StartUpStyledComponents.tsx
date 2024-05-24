@@ -1,8 +1,13 @@
 import Icon from "@components/Icon/Icon";
 import { color } from "@styles/colors";
-import { CONTAINER_PADDING_DEFAULT } from "@styles/constants";
-import { debugBorder } from "@utils/utils";
+import {
+  CONTAINER_PADDING_DEFAULT,
+  CONTAINER_PADDING_LARGE,
+  FORM_HEADER_SIZE,
+} from "@styles/constants";
+import { Dimensions } from "react-native";
 import styled from "styled-components/native";
+const { width } = Dimensions.get("screen");
 
 export const StartUpContainer = styled.View`
   align-items: center;
@@ -10,12 +15,22 @@ export const StartUpContainer = styled.View`
   height: 100%;
 `;
 
-export const ScreenContentsContainer = styled.View<{ width: number }>`
+export const ScreenContentsContainer = styled.View`
   align-items: center;
   justify-content: center;
   height: 100%;
-  width: ${({ width }) => width}px;
+  width: ${width}px;
   margin: auto;
+`;
+
+export const BackButton = styled.Pressable`
+  position: absolute;
+  padding: ${CONTAINER_PADDING_LARGE}px;
+  z-index: 1;
+`;
+
+export const BackButtonText = styled.Text`
+  font-size: 16px;
 `;
 
 export const UserRolesContainer = styled.View`
@@ -83,4 +98,24 @@ export const FreediveScubaSwitchText = styled.Text`
   text-transform: uppercase;
   letter-spacing: 1px;
   font-size: 12px;
+`;
+
+export const DiverDetailsFormContainer = styled.View`
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: start;
+  flex-wrap: wrap;
+  padding: ${CONTAINER_PADDING_LARGE}px;
+  width: ${width}px;
+`;
+
+export const HeaderContainer = styled.View``;
+
+export const DiverDetailsFormHeader = styled.Text`
+  width: 200px;
+  margin-left: auto;
+  margin-right: auto;
+  font-size: ${FORM_HEADER_SIZE}px;
+  text-align: center;
 `;
