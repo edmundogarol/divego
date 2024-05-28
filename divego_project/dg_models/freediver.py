@@ -95,7 +95,7 @@ class Freediver(models.Model):
         default=list,
         blank=True,
     )
-    diver_type = models.TextField(choices=FREEDIVER_TYPE, blank=True)
+    freediver_type = models.TextField(choices=FREEDIVER_TYPE, blank=True)
     certification = models.TextField(choices=CERTIFICATIONS, blank=True)
     certification_verified = models.TextField(max_length=50, blank=False, null=True)
     image = models.ImageField(upload_to="diver_profile", null=True)

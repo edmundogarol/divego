@@ -1,23 +1,24 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { DiverType, Roles, User } from "@interfaces/CustomTypes";
 import {
-  LoginForm,
-  ResetPasswordForm,
-  SignUpForm,
-} from "./StartUpInterfaces.ts";
+  FreediveAgencyEnum,
+  FreediverType,
+  User,
+} from "@interfaces/CustomTypes";
+import { StartUpScreensGroup } from "./StartUpInterfaces";
 
 export interface StartUpState {
+  readonly active_index: number;
+  readonly screens_group: StartUpScreensGroup;
+  readonly agency?: FreediveAgencyEnum | null;
   readonly user: User;
-  readonly loginForm: LoginForm;
-  readonly loginFormErrors: { [key: string]: any };
-  readonly signUpForm: SignUpForm;
-  readonly signUpFormErrors: { [key: string]: any };
-  readonly resetPasswordForm: ResetPasswordForm;
-  readonly resetPasswordFormErrors: { [key: string]: any };
-  readonly resetPasswordFormSent: boolean;
+  readonly freediver_type: FreediverType | null;
+  readonly certifications_list: Array<Array<string>> | null;
 }
 
 export const initialState: StartUpState = {
+  active_index: 0,
+  screens_group: StartUpScreensGroup.Freediver,
+  agency: null,
   user: {
     id: undefined,
     first_name: "",
@@ -30,97 +31,61 @@ export const initialState: StartUpState = {
     logged_in: false,
     is_staff: false,
     verified: false,
-    active_role: Roles.Diver,
-    diver_type: DiverType.Freediver,
+    active_role: null,
+    diver_type: null,
   },
-  loginForm: {
-    email: "",
-    password: "",
-  },
-  loginFormErrors: {},
-  signUpForm: {
-    first_name: "",
-    last_name: "",
-    email: "",
-    password: "",
-    confirm_password: "",
-  },
-  signUpFormErrors: {},
-  resetPasswordForm: {
-    email: "",
-  },
-  resetPasswordFormErrors: {},
-  resetPasswordFormSent: false,
+  freediver_type: null,
+  certifications_list: null,
 };
 
-type UpdateUserAction = PayloadAction<User>;
-type UpdateLoginFormAction = PayloadAction<Partial<LoginForm>>;
-type UpdateLoginFormErrorsAction = PayloadAction<{ [key: string]: any }>;
-type UpdateSignUpFormAction = PayloadAction<Partial<SignUpForm>>;
-type UpdateSignUpFormErrorsAction = PayloadAction<{ [key: string]: any }>;
-type UpdateResetPasswordFormAction = PayloadAction<Partial<ResetPasswordForm>>;
-type UpdateResetPasswordErrorsAction = PayloadAction<{ [key: string]: any }>;
-type UpdateResetPasswordFormSentAction = PayloadAction<boolean>;
+type UpdateStartUpActiveIndex = PayloadAction<number>;
 
-export type LoginAction =
-  | UpdateUserAction
-  | UpdateLoginFormAction
-  | UpdateLoginFormErrorsAction
-  | UpdateSignUpFormAction
-  | UpdateSignUpFormErrorsAction
-  | UpdateResetPasswordFormAction
-  | UpdateResetPasswordErrorsAction
-  | UpdateResetPasswordFormSentAction;
+type UpdateStartUpAgency = PayloadAction<FreediveAgencyEnum | null>;
+
+type UpdateStartUpScreensGroup = PayloadAction<StartUpScreensGroup>;
+
+type UpdateStartUpDetails = PayloadAction<{
+  user: User;
+  freediver_type: FreediverType;
+}>;
+
+type UpdateCertificationsList = PayloadAction<Array<Array<string>>>;
+
+export type StartUpAction =
+  | UpdateStartUpActiveIndex
+  | UpdateStartUpAgency
+  | UpdateStartUpScreensGroup
+  | UpdateStartUpDetails
+  | UpdateCertificationsList;
 
 export const startUpSlice = createSlice({
-  name: "login",
+  name: "startUp",
   initialState,
   reducers: {
-    updateUser: (state, action: UpdateUserAction) => {
-      state.user = { ...state.user, ...action.payload };
+    updateStartUpActiveIndex: (state, action: UpdateStartUpActiveIndex) => {
+      state.active_index = action.payload;
     },
-    updateLoginForm: (state, action: UpdateLoginFormAction) => {
-      state.loginForm = { ...state.loginForm, ...action.payload };
+    updateStartUpAgency: (state, action: UpdateStartUpAgency) => {
+      state.agency = action.payload;
     },
-    updateLoginFormErrors: (state, action: UpdateLoginFormErrorsAction) => {
-      state.loginFormErrors = action.payload;
+    updateStartUpScreensGroup: (state, action: UpdateStartUpScreensGroup) => {
+      state.screens_group = action.payload;
     },
-    updateSignUpForm: (state, action: UpdateSignUpFormAction) => {
-      state.signUpForm = { ...state.signUpForm, ...action.payload };
+    updateStartUpDetails: (state, action: UpdateStartUpDetails) => {
+      state = { ...state, ...action.payload };
     },
-    updateSignUpFormErrors: (state, action: UpdateSignUpFormErrorsAction) => {
-      state.signUpFormErrors = action.payload;
-    },
-    updateResetPasswordForm: (state, action: UpdateResetPasswordFormAction) => {
-      state.resetPasswordForm = {
-        ...state.resetPasswordForm,
-        ...action.payload,
-      };
-    },
-    updateResetPasswordErrors: (
-      state,
-      action: UpdateResetPasswordErrorsAction,
-    ) => {
-      state.resetPasswordFormErrors = action.payload;
-    },
-    updateResetPasswordFormSent: (
-      state,
-      action: UpdateResetPasswordFormSentAction,
-    ) => {
-      state.resetPasswordFormSent = action.payload;
+    updateCertificationsList: (state, action: UpdateCertificationsList) => {
+      state.certifications_list = action.payload;
     },
   },
 });
 
 export const {
-  updateUser,
-  updateLoginForm,
-  updateLoginFormErrors,
-  updateSignUpForm,
-  updateSignUpFormErrors,
-  updateResetPasswordForm,
-  updateResetPasswordErrors,
-  updateResetPasswordFormSent,
+  updateStartUpActiveIndex,
+  updateStartUpAgency,
+  updateStartUpScreensGroup,
+  updateStartUpDetails,
+  updateCertificationsList,
 } = startUpSlice.actions;
 
 export const startUpReducer = startUpSlice.reducer;

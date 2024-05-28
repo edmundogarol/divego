@@ -11,8 +11,8 @@ import {
 import { IconTypeEnum } from "@components/Icon/IconInterfaces";
 import Gap from "@components/Gap/Gap";
 
-const StartUp2FreediveInstructorDetails: React.FunctionComponent<{
-  gotoNextPage: (screen: string) => void;
+const StartUp1FreediveInstructorDetails: React.FunctionComponent<{
+  gotoNextPage: () => void;
   gotoPrevPage: () => void;
 }> = ({ gotoPrevPage }) => {
   const renderInputIcon = useRenderInputIcon();
@@ -65,4 +65,4 @@ const StartUp2FreediveInstructorDetails: React.FunctionComponent<{
   );
 };
 
-export default StartUp2FreediveInstructorDetails;
+export default StartUp1FreediveInstructorDetails;

@@ -4,38 +4,41 @@ import { ScalingDot } from "react-native-animated-pagination-dots";
 import { StartUpContainer } from "./StartUpStyledComponents";
 import { color } from "@styles/colors";
 import useRoleScreens, { ScreenProps } from "./hooks/useRoleScreens";
+import { If } from "@components/If/If";
+import useStartUpState from "./hooks/useStartUpState";
+import useStartUpDispatch from "./hooks/useStartUpDispatch";
 
 const { width } = Dimensions.get("screen");
 
-let activeIndex = 0;
-
 const StartUp: React.FunctionComponent = () => {
-  const [screensGroup, changeScreensGroup] = useState("freediver");
-  const startUpScreens = useRoleScreens();
+  const { active_index, screens_group } = useStartUpState();
+  const { updateStartUpActiveIndex } = useStartUpDispatch();
+  const roleScreens = useRoleScreens();
+  const startUpScreens = roleScreens();
   const scrollX = React.useRef(new Animated.Value(0)).current;
   const keyExtractor = React.useCallback((item: ScreenProps) => item.key, []);
   const viewConfigRef = React.useRef({ viewAreaCoveragePercentThreshold: 50 });
   let flatListRef = React.useRef(null);
   const onViewRef = React.useRef(({ viewableItems }: any) => {
-    activeIndex = viewableItems[0].index;
+    updateStartUpActiveIndex(viewableItems[0].index);
   });
 
-  const gotoNextPage = (screen: string) => {
-    if (activeIndex + 1 < startUpScreens[screensGroup].length) {
+  const gotoNextPage = () => {
+    console.log({ gotoNextPage: active_index });
+    if (active_index + 1 < startUpScreens[screens_group].length) {
       // @ts-ignore
       flatListRef.current.scrollToIndex({
-        index: activeIndex + 1,
+        index: active_index + 1,
         animated: true,
       });
-      changeScreensGroup(screen);
     }
   };
 
   const gotoPrevPage = () => {
-    if (activeIndex !== 0) {
+    if (active_index !== 0) {
       // @ts-ignore
       flatListRef.current.scrollToIndex({
-        index: activeIndex - 1,
+        index: active_index - 1,
         animated: true,
       });
     }
@@ -48,7 +51,7 @@ const StartUp: React.FunctionComponent = () => {
         <Component gotoNextPage={gotoNextPage} gotoPrevPage={gotoPrevPage} />
       );
     },
-    [width],
+    [width, active_index],
   );
 
   return (
@@ -57,7 +60,7 @@ const StartUp: React.FunctionComponent = () => {
         ref={flatListRef}
         onViewableItemsChanged={onViewRef.current}
         viewabilityConfig={viewConfigRef.current}
-        data={startUpScreens[screensGroup]}
+        data={startUpScreens[screens_group]}
         keyExtractor={keyExtractor}
         showsHorizontalScrollIndicator={false}
         onScroll={Animated.event(
@@ -74,13 +77,15 @@ const StartUp: React.FunctionComponent = () => {
         renderItem={renderItem}
         contentContainerStyle={{}}
       />
-      <ScalingDot
-        data={startUpScreens[screensGroup]}
-        scrollX={scrollX}
-        containerStyle={{}}
-        inActiveDotColor={color("SystemBlue3")}
-        activeDotColor={color("SystemBlue3")}
-      />
+      <If condition={active_index !== 0}>
+        <ScalingDot
+          data={startUpScreens[screens_group]}
+          scrollX={scrollX}
+          containerStyle={{}}
+          inActiveDotColor={color("SystemBlue3")}
+          activeDotColor={color("SystemBlue3")}
+        />
+      </If>
     </StartUpContainer>
   );
 };

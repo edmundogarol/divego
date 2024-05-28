@@ -32,7 +32,7 @@ export const SelectContainer = styled.View<{ error?: boolean }>`
 
 export const Label = styled.Text<{ error?: boolean }>`
   color: ${({ error }) =>
-    error ? color("SystemError2") : color("SystemLabel1")};
+    error ? color("SystemError2") : color("SystemLabel2")};
   font-size: ${LABEL_SIZE_LARGE}px;
   margin-bottom: ${CONTAINER_MARGIN_DEFAULT}px;
 `;

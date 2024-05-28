@@ -1,5 +1,6 @@
 
 from rest_framework import status
+from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.mixins import UpdateModelMixin
 from rest_framework.viewsets import ViewSet
@@ -7,9 +8,8 @@ from rest_framework.viewsets import ViewSet
 from django.shortcuts import get_object_or_404
 
 from divego_project.dg_models.freedive_instructor import FreediveInstructor
-from divego_project.dg_models.freediver import Freediver
+from divego_project.dg_models.freediver import CERTIFICATIONS, Freediver
 from divego_project.dg_serializers.freediving import FreediverSerializer, FreediveInstructorSerializer
-
 
 class FreediverView(UpdateModelMixin, ViewSet):
 
@@ -51,3 +51,12 @@ class FreediveInstructorView(UpdateModelMixin, ViewSet):
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response(serializer.data)
+
+
+class GetFreediveCertifications(APIView):
+
+    def get(self, request, format=None):
+        return Response(
+            CERTIFICATIONS,
+            status=status.HTTP_200_OK
+        )

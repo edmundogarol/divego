@@ -48,7 +48,7 @@ const Select: React.FunctionComponent<SelectWrapperProps> = ({
             {...props}
             placeholder={{
               ...styles.placeholder,
-              label: "Select a number or add another...",
+              label: placeholder || "Select option",
             }}
             textInputProps={{
               selectionColor: "green",

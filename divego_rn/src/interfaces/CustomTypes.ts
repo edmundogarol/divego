@@ -19,6 +19,11 @@ export enum DiverType {
   ScubaDiver = "scuba_diver",
 }
 
+export enum FreediverType {
+  Freediver = "freediver",
+  ScubaDiver = "scuba_diver",
+}
+
 export interface User {
   id?: number;
   first_name: string;
@@ -31,8 +36,8 @@ export interface User {
   logged_in: boolean;
   is_staff: boolean;
   verified: boolean;
-  active_role: Roles;
-  diver_type: DiverType;
+  active_role: Roles | null;
+  diver_type: DiverType | null;
 }
 
 export interface RoleDetails {
@@ -46,4 +51,10 @@ export interface RoleData extends RoleDetails {
   iconName: CustomSvgIconName | undefined;
   buttonColor: ColorKey | undefined;
   onConfirm: () => void;
+}
+
+export enum FreediveAgencyEnum {
+  Molchanovs = "molchanovs",
+  Aida = "aida",
+  Padi = "padi",
 }

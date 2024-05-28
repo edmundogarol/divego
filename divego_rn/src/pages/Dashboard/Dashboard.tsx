@@ -45,7 +45,7 @@ const Dashboard: React.FunctionComponent = () => {
       <Gap level={3} />
       <If condition={!user.active_role}>
         <Button
-          text={"Start diving!"}
+          text={"Start diving"}
           onPress={() => navigation.navigate(PageEnum.StartUp)}
         />
       </If>

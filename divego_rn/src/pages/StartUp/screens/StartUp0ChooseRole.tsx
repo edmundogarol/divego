@@ -14,8 +14,8 @@ import { color } from "@styles/colors";
 import { delay } from "@utils/utils";
 import useGetRoleButtons from "../hooks/useGetRoleButtons";
 
-const StartUp1ChooseRole: React.FunctionComponent<{
-  gotoNextPage: (screen: string) => void;
+const StartUp0ChooseRole: React.FunctionComponent<{
+  gotoNextPage: () => void;
   gotoPrevPage: () => void;
 }> = ({ gotoNextPage }) => {
   const [isScuba, setIsScuba] = useState(false);
@@ -75,4 +75,4 @@ const StartUp1ChooseRole: React.FunctionComponent<{
   );
 };
 
-export default StartUp1ChooseRole;
+export default StartUp0ChooseRole;

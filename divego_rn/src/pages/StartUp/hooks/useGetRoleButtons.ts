@@ -2,11 +2,13 @@ import { CustomSvgIconName } from "@components/Icon/libraries/CustomSvgIcon";
 import { RoleData, RoleDetails } from "@interfaces/CustomTypes";
 import { ColorKey, color } from "@styles/colors";
 import useRenderRoleButton from "./useRenderRoleButton";
-import { Dispatch, SetStateAction } from "react";
+import useStartUpDispatch from "./useStartUpDispatch";
+import { StartUpScreensGroup } from "../StartUpInterfaces";
 
 const useGetRoleButtons = (
-  onConfirm: (screen: string) => void,
+  onConfirm: () => void,
 ): ((scuba: boolean) => JSX.Element[]) => {
+  const { updateStartUpScreensGroup } = useStartUpDispatch();
   const roleDetails: RoleDetails[] = [
     {
       roleId: "diver",
@@ -32,29 +34,29 @@ const useGetRoleButtons = (
     roleDetails.map(({ roleId, title, confirmMessage }) => {
       let iconName;
       let buttonColor;
-      let screenSet: string;
+      let screenSet: StartUpScreensGroup;
 
       switch (roleId) {
         case "diver":
           if (scuba) {
             iconName = "ScubaUserDiverIcon" as CustomSvgIconName;
             buttonColor = color("SystemScubaDiver") as ColorKey;
-            screenSet = "scubaDiver";
+            screenSet = StartUpScreensGroup.ScubaDiver;
           } else {
             iconName = "UserDiverIcon" as CustomSvgIconName;
             buttonColor = color("SystemBlue2") as ColorKey;
-            screenSet = "freediver";
+            screenSet = StartUpScreensGroup.Freediver;
           }
           break;
         case "instructor":
           if (scuba) {
             iconName = "ScubaTanksIcon" as CustomSvgIconName;
             buttonColor = color("SystemScubaInstructor") as ColorKey;
-            screenSet = "scubaInstructor";
+            screenSet = StartUpScreensGroup.ScubaInstructor;
           } else {
             iconName = "BuoyIcon" as CustomSvgIconName;
             buttonColor = color("SystemPurple") as ColorKey;
-            screenSet = "freediveInstructor";
+            screenSet = StartUpScreensGroup.FreediveInstructor;
           }
           break;
         case "shop":
@@ -65,7 +67,7 @@ const useGetRoleButtons = (
             iconName = "FinsIcon" as CustomSvgIconName;
             buttonColor = color("SystemTeal") as ColorKey;
           }
-          screenSet = "shop";
+          screenSet = StartUpScreensGroup.Shop;
           break;
       }
 
@@ -76,7 +78,10 @@ const useGetRoleButtons = (
         confirmMessage,
         iconName,
         buttonColor,
-        onConfirm: () => onConfirm(screenSet),
+        onConfirm: () => {
+          updateStartUpScreensGroup(screenSet);
+          onConfirm();
+        },
       };
     });
 

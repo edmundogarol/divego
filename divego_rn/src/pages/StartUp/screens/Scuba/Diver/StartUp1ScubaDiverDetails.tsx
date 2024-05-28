@@ -5,14 +5,13 @@ import {
   BackButtonText,
   DiverDetailsFormContainer,
   DiverDetailsFormHeader,
-  HeaderContainer,
   ScreenContentsContainer,
 } from "@pages/StartUp/StartUpStyledComponents";
 import { IconTypeEnum } from "@components/Icon/IconInterfaces";
 import Gap from "@components/Gap/Gap";
 
-const StartUp2FreediverDetails: React.FunctionComponent<{
-  gotoNextPage: (screen: string) => void;
+const StartUp1ScubaDiverDetails: React.FunctionComponent<{
+  gotoNextPage: () => void;
   gotoPrevPage: () => void;
 }> = ({ gotoPrevPage }) => {
   const renderInputIcon = useRenderInputIcon();
@@ -23,12 +22,10 @@ const StartUp2FreediverDetails: React.FunctionComponent<{
         <BackButton onPress={() => gotoPrevPage()}>
           <BackButtonText>{"Back"}</BackButtonText>
         </BackButton>
-        <HeaderContainer>
-          <DiverDetailsFormHeader>{"Freediver Details"}</DiverDetailsFormHeader>
-        </HeaderContainer>
+        <DiverDetailsFormHeader>{"Scuba Diver Details"}</DiverDetailsFormHeader>
         <Gap level={3} />
         <Select
-          label="Freedive Certification"
+          label="Scuba Certification"
           endIcon={renderInputIcon(
             "chevron-down",
             IconTypeEnum.FontAwesome,
@@ -47,4 +44,4 @@ const StartUp2FreediverDetails: React.FunctionComponent<{
   );
 };
 
-export default StartUp2FreediverDetails;
+export default StartUp1ScubaDiverDetails;

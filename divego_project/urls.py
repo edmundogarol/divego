@@ -7,6 +7,7 @@ from rest_framework import permissions
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 
+from divego_project.api.freediving import GetFreediveCertifications
 from divego_project.api.user import UserViewSet
 from divego_project.api.login import LoginView, LogoutView
 from divego_project.api.reset_password import ResetPasswordViewSet
@@ -38,4 +39,5 @@ urlpatterns = [
 
     # API
     path("api/", include(router.urls)),
+    url(r"api/freedive/certifications/", GetFreediveCertifications.as_view()),
 ]

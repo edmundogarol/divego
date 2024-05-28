@@ -1,62 +1,68 @@
-import StartUp2FreediverDetails from "../screens/Freediving/Diver/StartUp2FreediverDetails";
-import StartUp2FreediveInstructorDetails from "../screens/Freediving/Instructor/StartUp2FreediveInstructorDetails";
-import StartUp2ScubaDiverDetails from "../screens/Scuba/Diver/StartUp2ScubaDiverDetails";
-import StartUp1ChooseRole from "../screens/StartUp1ChooseRole";
+import { useCallback } from "react";
+import StartUp1FreediverDetails from "../screens/Freediving/Diver/StartUp1FreediverDetails";
+import StartUp1FreediveInstructorDetails from "../screens/Freediving/Instructor/StartUp1FreediveInstructorDetails";
+import StartUp1ScubaDiverDetails from "../screens/Scuba/Diver/StartUp1ScubaDiverDetails";
+import StartUp0ChooseRole from "../screens/StartUp0ChooseRole";
+import useStartUpState from "./useStartUpState";
 
 export interface ScreenProps {
   key: string;
   title: string;
   component: React.FunctionComponent<{
-    gotoNextPage: (screen: string) => void;
+    gotoNextPage: () => void;
     gotoPrevPage: () => void;
   }>;
 }
 
 const freediverScreens = [
   {
-    key: "1",
+    key: "0",
     title: "Choose Role",
-    component: StartUp1ChooseRole,
+    component: StartUp0ChooseRole,
   },
   {
-    key: "2",
+    key: "1",
     title: "Diver Details",
-    component: StartUp2FreediverDetails,
+    component: StartUp1FreediverDetails,
   },
 ];
 
 const scubaDiverScreens = [
   {
-    key: "1",
+    key: "0",
     title: "Choose Role",
-    component: StartUp1ChooseRole,
+    component: StartUp0ChooseRole,
   },
   {
-    key: "2",
+    key: "1",
     title: "Scuba Diver Details",
-    component: StartUp2ScubaDiverDetails,
+    component: StartUp1ScubaDiverDetails,
   },
 ];
 
 const freediveInstructorScreens = [
   {
-    key: "1",
+    key: "0",
     title: "Choose Role",
-    component: StartUp1ChooseRole,
+    component: StartUp0ChooseRole,
   },
   {
-    key: "2",
+    key: "1",
     title: "Freedive Instructor Details",
-    component: StartUp2FreediveInstructorDetails,
+    component: StartUp1FreediveInstructorDetails,
   },
 ];
 
-const useRoleScreens = (): { [key: string]: ScreenProps[] } => {
-  return {
-    freediver: freediverScreens,
-    scubaDiver: scubaDiverScreens,
-    freediveInstructor: freediveInstructorScreens,
-  };
+const useRoleScreens = (): (() => { [key: string]: ScreenProps[] }) => {
+  const { agency } = useStartUpState();
+  return useCallback(
+    () => ({
+      freediver: freediverScreens,
+      scubaDiver: scubaDiverScreens,
+      freediveInstructor: freediveInstructorScreens,
+    }),
+    [agency],
+  );
 };
 
 export default useRoleScreens;
