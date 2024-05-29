@@ -7,21 +7,21 @@ export interface CustomWindow extends Window {
   baseURL: string;
 }
 
-export enum Roles {
+export enum RolesEnum {
   Diver = "diver",
   Instructor = "instructor",
   Store = "store",
   Staff = "staff",
 }
 
-export enum DiverType {
+export enum DiverTypeEnum {
   Freediver = "freediver",
   ScubaDiver = "scuba_diver",
 }
 
-export enum FreediverType {
-  Freediver = "freediver",
-  ScubaDiver = "scuba_diver",
+export enum FreediverTypeEnum {
+  FUN_DIVER = "fun_diver",
+  LINE_DIVER = "line_diver",
 }
 
 export interface User {
@@ -36,8 +36,8 @@ export interface User {
   logged_in: boolean;
   is_staff: boolean;
   verified: boolean;
-  active_role: Roles | null;
-  diver_type: DiverType | null;
+  active_role: RolesEnum | null;
+  diver_type: DiverTypeEnum | null;
 }
 
 export interface RoleDetails {
@@ -57,4 +57,50 @@ export enum FreediveAgencyEnum {
   Molchanovs = "molchanovs",
   Aida = "aida",
   Padi = "padi",
+  NonCertified = "non",
+  Other = "other",
+}
+
+export enum FreediveCertificationEnum {
+  NON_CERT = "non_cert",
+  OTHER_CERT = "other_cert",
+  MOLCHANOVS_WD = "molchanovs_waveD",
+  MOLCHANOVS_W1 = "molchanovs_wave1",
+  MOLCHANOVS_W2 = "molchanovs_wave2",
+  MOLCHANOVS_W3 = "molchanovs_wave3",
+  MOLCHANOVS_W4 = "molchanovs_wave4",
+  MOLCHANOVS_W2I = "molchanovs_wave2i",
+  MOLCHANOVS_W3I = "molchanovs_wave3i",
+  MOLCHANOVS_W4I = "molchanovs_wave4i",
+  MOLCHANOVS_IT = "molchanovs_it",
+  MOLCHANOVS_W3IT = "molchanovs_w3it",
+  MOLCHANOVS_W4IT = "molchanovs_w4it",
+  MOLCHANOVS_ITD = "molchanovs_itd",
+  AIDA_1 = "aida1",
+  AIDA_2 = "aida2",
+  AIDA_3 = "aida3",
+  AIDA_4 = "aida4",
+  AIDA_I = "aida_instructor",
+  AIDA_MI = "aida_master_instructor",
+  AIDA_IT = "aida_instructor_trainer",
+  PADI_B = "padi_basic",
+  PADI_F = "padi_freediver",
+  PADI_AF = "padi_advanced_freediver",
+  PADI_MF = "padi_master_freediver",
+  PADI_FI = "padi_freediver_instructor",
+  PADI_AFI = "padi_advanced_freediver_instructor",
+  PADI_MFI = "padi_master_freediver_instructor",
+  PADI_IT = "padi_freediver_instructor_trainer",
+}
+
+export interface Freediver {
+  id?: number;
+  user?: User;
+  location?: string;
+  preferred_dive_locations: string[];
+  freediver_type: FreediverTypeEnum;
+  certification?: FreediveCertificationEnum | null;
+  certification_verified: boolean;
+  image?: string;
+  image_public?: string;
 }

@@ -46,6 +46,7 @@ const Select: React.FunctionComponent<SelectWrapperProps> = ({
         <SelectInputContainer>
           <RNPickerSelect
             {...props}
+            disabled={disabled}
             placeholder={{
               ...styles.placeholder,
               label: placeholder || "Select option",
@@ -62,6 +63,9 @@ const Select: React.FunctionComponent<SelectWrapperProps> = ({
             }}
             style={{
               inputIOS: styles.inputIOS,
+              placeholder: {
+                color: disabled ? color("SystemLabel1") : color("SystemLabel2"),
+              },
             }}
             onValueChange={onValueChange}
             items={items}

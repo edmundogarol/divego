@@ -2,7 +2,8 @@ import { Dispatch } from "react";
 import { useDispatch } from "react-redux";
 import {
   FreediveAgencyEnum,
-  FreediverType,
+  Freediver,
+  FreediverTypeEnum,
   User,
 } from "@interfaces/CustomTypes";
 import {
@@ -10,6 +11,7 @@ import {
   updateCertificationsList,
   updateStartUpActiveIndex,
   updateStartUpAgency,
+  updateStartUpFreediver,
   updateStartUpDetails,
   updateStartUpScreensGroup,
 } from "../StartUpState";
@@ -18,13 +20,14 @@ import { StartUpScreensGroup } from "../StartUpInterfaces";
 interface StartUpDispatch {
   updateStartUpActiveIndex(index: number): void;
   updateStartUpAgency(agency: FreediveAgencyEnum | null): void;
+  updateStartUpFreediver(freediver: Freediver): void;
   updateStartUpScreensGroup(screens_group: StartUpScreensGroup): void;
   updateStartUpDetails({
     user,
     freediver_type,
   }: {
     user: User;
-    freediver_type: FreediverType;
+    freediver_type: FreediverTypeEnum;
   }): void;
   updateCertificationsList(certifications_list: Array<Array<string>>): void;
 }
@@ -38,6 +41,9 @@ export const useStartUpDispatch = (): StartUpDispatch => {
     updateStartUpAgency(agency: FreediveAgencyEnum | null): void {
       dispatch(updateStartUpAgency(agency));
     },
+    updateStartUpFreediver(freediver: Freediver): void {
+      dispatch(updateStartUpFreediver(freediver));
+    },
     updateStartUpScreensGroup(screens_group: StartUpScreensGroup): void {
       dispatch(updateStartUpScreensGroup(screens_group));
     },
@@ -46,7 +52,7 @@ export const useStartUpDispatch = (): StartUpDispatch => {
       freediver_type,
     }: {
       user: User;
-      freediver_type: FreediverType;
+      freediver_type: FreediverTypeEnum;
     }): void {
       dispatch(
         updateStartUpDetails({
