@@ -22,6 +22,7 @@ export enum DiverTypeEnum {
 export enum FreediverTypeEnum {
   FUN_DIVER = "fun_diver",
   LINE_DIVER = "line_diver",
+  SPEAR_FISHER = "spear_fisher",
 }
 
 export interface User {
@@ -98,8 +99,9 @@ export interface Freediver {
   user?: User;
   location?: string;
   preferred_dive_locations: string[];
-  freediver_type: FreediverTypeEnum;
+  freediver_type: FreediverTypeEnum | null;
   certification?: FreediveCertificationEnum | null;
+  certification_number?: string;
   certification_verified: boolean;
   image?: string;
   image_public?: string;

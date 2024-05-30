@@ -13,6 +13,7 @@ export const ResetPasswordContainer = styled.View`
 `;
 
 export const ResetPasswordInputsContainer = styled.View`
+  width: 100%;
   padding: ${CONTAINER_PADDING_DEFAULT}px 0 ${CONTAINER_PADDING_DEFAULT}px 0;
   justify-content: space-between;
 `;

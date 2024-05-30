@@ -18,8 +18,10 @@ import { useFreedivingCertificationsListByAgency } from "@pages/StartUp/hooks/us
 import {
   FreediveAgencyEnum,
   FreediveCertificationEnum,
+  FreediverTypeEnum,
 } from "@interfaces/CustomTypes";
 import DiverBadge from "@components/DiverBadge/DiverBadge";
+import Input from "@components/Input/Input";
 
 const StartUp1FreediverDetails: React.FunctionComponent<{
   gotoNextPage: () => void;
@@ -102,6 +104,44 @@ const StartUp1FreediverDetails: React.FunctionComponent<{
           }}
           items={freedivingCertificationsListByAgency()}
         />
+        <Gap level={1} />
+        <Input
+          placeholder={
+            !freediver.certification
+              ? "Enter Certification Number"
+              : freediver.certification === FreediveCertificationEnum.NON_CERT
+              ? "N/A"
+              : "Enter Certification Number"
+          }
+          disabled={
+            !freediver.certification ||
+            freediver.certification === FreediveCertificationEnum.NON_CERT
+          }
+          label="Certification Number"
+          value={freediver.certification_number}
+        />
+        <Gap level={1} />
+        <Select
+          value={freediver?.freediver_type}
+          disabled={!agency}
+          label="Diver Type"
+          placeholder={"Choose your Freediver Type"}
+          endIcon={renderInputIcon(
+            "chevron-down",
+            IconTypeEnum.FontAwesome,
+            false,
+          )}
+          icon={renderInputIcon("user-o", IconTypeEnum.FontAwesome, false)}
+          onValueChange={(type: FreediverTypeEnum) => {
+            updateStartUpFreediver({ ...freediver, freediver_type: type });
+          }}
+          items={[
+            { value: FreediverTypeEnum.FUN_DIVER, label: "Fun Diver" },
+            { value: FreediverTypeEnum.LINE_DIVER, label: "Line Diver" },
+            { value: FreediverTypeEnum.SPEAR_FISHER, label: "Spear Fisher" },
+          ]}
+        />
+        <Gap level={1} />
       </DiverDetailsFormContainer>
     </ScreenContentsContainer>
   );

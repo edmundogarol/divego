@@ -81,9 +81,11 @@ CERTIFICATIONS = OTHER_CERTIFICATIONS + MOLCHANOVS_CERTIFICATIONS + AIDA_CERTIFI
 
 FUN_DIVER = "fun_diver"
 LINE_DIVER = "line_diver"
+SPEAR_FISHER = "spear_fisher"
 FREEDIVER_TYPE = (
     (FUN_DIVER, "Fun Diver"),
-    (LINE_DIVER, "Line Diver")
+    (LINE_DIVER, "Line Diver"),
+    (SPEAR_FISHER, "Spear Fisher")
 )
 
 class Freediver(models.Model):
@@ -97,7 +99,8 @@ class Freediver(models.Model):
     )
     freediver_type = models.TextField(choices=FREEDIVER_TYPE, blank=True)
     certification = models.TextField(choices=CERTIFICATIONS, blank=True)
-    certification_verified = models.TextField(max_length=50, blank=False, null=True)
+    certification_number = models.TextField(max_length=50, blank=False, null=True)
+    certification_verified = models.BooleanField(default=False)
     image = models.ImageField(upload_to="diver_profile", null=True)
     image_public = models.ImageField(
         storage=S3Boto3Storage(bucket_name="divego-resources"),

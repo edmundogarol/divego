@@ -6,13 +6,18 @@ import {
   CONTAINER_PADDING_SMALL,
   INPUT_SIZE,
   LABEL_SIZE,
+  LABEL_SIZE_LARGE,
   TEXT_SIZE,
 } from "@styles/constants";
 import { color } from "@styles/colors";
+import { debugBorder } from "@utils/utils";
+
+export const InputWrapper = styled.View`
+  width: 100%;
+`;
 
 export const InputContainer = styled.View<{ error?: boolean }>`
   align-items: center;
-  width: 100%;
   height: ${INPUT_SIZE}px;
   background-color: white;
   border-bottom-width: 0.5px;
@@ -36,12 +41,15 @@ export const InputStyled = styled.TextInput`
   padding-right: ${CONTAINER_PADDING_SMALL}px;
 `;
 
-export const Label = styled.Text<{ error?: boolean }>`
-  color: ${({ error }) =>
-    error ? color("SystemError2") : color("SystemLabel1")};
-  font-size: ${LABEL_SIZE}px;
-  margin-left: ${CONTAINER_MARGIN_SMALL}px;
-  margin-bottom: ${CONTAINER_MARGIN_SMALL}px;
+export const Label = styled.Text<{ error?: boolean; disabled?: boolean }>`
+  color: ${({ error, disabled }) =>
+    error
+      ? color("SystemError2")
+      : disabled
+      ? color("SystemLabel1")
+      : color("SystemLabel2")};
+  font-size: ${LABEL_SIZE_LARGE}px;
+  margin-bottom: ${CONTAINER_MARGIN_DEFAULT}px;
 `;
 
 export const InputError = styled.Text`

@@ -18,6 +18,7 @@ export const LoginContainer = styled.View`
 `;
 
 export const LoginInputsContainer = styled.View`
+  width: 100%;
   padding: ${CONTAINER_PADDING_DEFAULT}px 0 ${CONTAINER_PADDING_DEFAULT}px 0;
   justify-content: space-between;
 `;

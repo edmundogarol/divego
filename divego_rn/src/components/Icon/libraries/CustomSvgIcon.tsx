@@ -6,6 +6,9 @@ import FinsIcon from "@assets/fins-icon.svg";
 import ScubaUserDiverIcon from "@assets/user-scuba-icon.svg";
 import ScubaFinsIcon from "@assets/scuba-fins.svg";
 import ScubaTanksIcon from "@assets/scuba-tanks-icon.svg";
+import BuoyBadgeIcon from "@assets/buoy_badge_icon.svg";
+import CoralBadgeIcon from "@assets/coral_badge_icon.svg";
+import SpearfishBadgeIcon from "@assets/spearfish_badge_icon.svg";
 import { color as colorLibrary } from "@styles/colors";
 
 export type CustomSvgIconName =
@@ -14,7 +17,10 @@ export type CustomSvgIconName =
   | "FinsIcon"
   | "ScubaUserDiverIcon"
   | "ScubaFinsIcon"
-  | "ScubaTanksIcon";
+  | "ScubaTanksIcon"
+  | "BuoyBadgeIcon"
+  | "CoralBadgeIcon"
+  | "SpearfishBadgeIcon";
 
 interface CustomSvgIconProps {
   name: CustomSvgIconName;
@@ -90,6 +96,36 @@ const CustomSvgIcon: React.FunctionComponent<CustomSvgIconProps> = ({
     case "ScubaTanksIcon":
       return (
         <ScubaTanksIcon
+          style={style}
+          fontSize={size}
+          fill={color}
+          width={w}
+          height={h}
+        />
+      );
+    case "BuoyBadgeIcon":
+      return (
+        <BuoyBadgeIcon
+          style={style}
+          fontSize={size}
+          fill={color}
+          width={w}
+          height={h}
+        />
+      );
+    case "CoralBadgeIcon":
+      return (
+        <CoralBadgeIcon
+          style={style}
+          fontSize={size}
+          fill={color}
+          width={w}
+          height={h}
+        />
+      );
+    case "SpearfishBadgeIcon":
+      return (
+        <SpearfishBadgeIcon
           style={style}
           fontSize={size}
           fill={color}

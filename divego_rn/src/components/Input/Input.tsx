@@ -5,6 +5,7 @@ import {
   InputStyled,
   InputError,
   ErrorContainer,
+  InputWrapper,
 } from "./InputStyledComponents";
 import { TextInputProps } from "react-native";
 import { If } from "@components/If/If";
@@ -28,8 +29,10 @@ const Input: React.FunctionComponent<InputWrapperProps> = ({
   ...props
 }) => {
   return (
-    <>
-      <Label error={!!error}>{label}</Label>
+    <InputWrapper>
+      <Label disabled={disabled} error={!!error}>
+        {label}
+      </Label>
       <InputContainer error={!!error}>
         <If condition={!!icon}>{icon}</If>
         <InputStyled
@@ -51,7 +54,7 @@ const Input: React.FunctionComponent<InputWrapperProps> = ({
           <InputError>{error}</InputError>
         </ErrorContainer>
       </If>
-    </>
+    </InputWrapper>
   );
 };
 export default Input;

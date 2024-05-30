@@ -2,10 +2,12 @@ import {
   FreediveAgencyEnum,
   FreediveCertificationEnum,
   Freediver,
+  FreediverTypeEnum,
 } from "@interfaces/CustomTypes";
 import { color } from "@styles/colors";
 import {
   AgencyIconText,
+  BadgeBackgroundIcon,
   CertificationIconText,
   DiverIconBackground,
   DiverIconContainer,
@@ -45,9 +47,30 @@ const DiverBadge: React.FunctionComponent<{
     }
   };
 
+  const getBackgroundIcon = () => {
+    switch (freediver.freediver_type) {
+      case FreediverTypeEnum.FUN_DIVER:
+        return "CoralBadgeIcon";
+      case FreediverTypeEnum.LINE_DIVER:
+        return "BuoyBadgeIcon";
+      case FreediverTypeEnum.SPEAR_FISHER:
+        return "SpearfishBadgeIcon";
+      default:
+        return "question-mark";
+    }
+  };
+
   return (
     <DiverIconBackground>
       <DiverIconContainer clr={getIconBackgroundColor()}>
+        <If condition={!!freediver.freediver_type}>
+          <BadgeBackgroundIcon
+            name={getBackgroundIcon()}
+            type={IconTypeEnum.CustomSvgIcon}
+            size={100}
+            color={color("SystemBlue4")}
+          />
+        </If>
         <Icon
           name={"UserDiverIcon"}
           type={IconTypeEnum.CustomSvgIcon}

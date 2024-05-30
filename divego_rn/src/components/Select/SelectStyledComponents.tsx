@@ -7,6 +7,7 @@ import {
   LABEL_SIZE_LARGE,
 } from "@styles/constants";
 import { color } from "@styles/colors";
+import { debugBorder } from "@utils/utils";
 
 export const SelectWrapper = styled.View`
   width: 100%;
@@ -30,9 +31,13 @@ export const SelectContainer = styled.View<{ error?: boolean }>`
   }}
 `;
 
-export const Label = styled.Text<{ error?: boolean }>`
-  color: ${({ error }) =>
-    error ? color("SystemError2") : color("SystemLabel2")};
+export const Label = styled.Text<{ error?: boolean; disabled?: boolean }>`
+  color: ${({ error, disabled }) =>
+    error
+      ? color("SystemError2")
+      : disabled
+      ? color("SystemLabel1")
+      : color("SystemLabel2")};
   font-size: ${LABEL_SIZE_LARGE}px;
   margin-bottom: ${CONTAINER_MARGIN_DEFAULT}px;
 `;

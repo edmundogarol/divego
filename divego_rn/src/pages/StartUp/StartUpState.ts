@@ -40,7 +40,7 @@ export const initialState: StartUpState = {
     user: undefined,
     location: undefined,
     preferred_dive_locations: [],
-    freediver_type: FreediverTypeEnum.FUN_DIVER,
+    freediver_type: null,
     certification: null,
     certification_verified: false,
     image: undefined,
