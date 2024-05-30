@@ -1,5 +1,6 @@
 import styled, { css } from "styled-components/native";
 import {
+  CONTAINER_BORDER_RADIUS,
   CONTAINER_MARGIN_DEFAULT,
   CONTAINER_MARGIN_SMALL,
   CONTAINER_PADDING_DEFAULT,
@@ -10,7 +11,6 @@ import {
   TEXT_SIZE,
 } from "@styles/constants";
 import { color } from "@styles/colors";
-import { debugBorder } from "@utils/utils";
 
 export const InputWrapper = styled.View`
   width: 100%;
@@ -23,6 +23,7 @@ export const InputContainer = styled.View<{ error?: boolean }>`
   border-bottom-width: 0.5px;
   border-color: #aaaaaa;
   flex-direction: row;
+  border-radius: ${CONTAINER_BORDER_RADIUS}px;
   margin-bottom: ${CONTAINER_MARGIN_DEFAULT}px;
   ${({ error }): any => {
     if (error) {
@@ -49,6 +50,11 @@ export const Label = styled.Text<{ error?: boolean; disabled?: boolean }>`
       ? color("SystemLabel1")
       : color("SystemLabel2")};
   font-size: ${LABEL_SIZE_LARGE}px;
+  margin-bottom: ${CONTAINER_MARGIN_DEFAULT}px;
+`;
+
+export const Subtext = styled.Text`
+  color: ${color("SystemLabel3")};
   margin-bottom: ${CONTAINER_MARGIN_DEFAULT}px;
 `;
 

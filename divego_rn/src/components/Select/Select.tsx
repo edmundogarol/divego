@@ -38,9 +38,11 @@ const Select: React.FunctionComponent<SelectWrapperProps> = ({
 }) => {
   return (
     <SelectWrapper>
-      <Label disabled={disabled} error={!!error}>
-        {label}
-      </Label>
+      <If condition={!!label}>
+        <Label disabled={disabled} error={!!error}>
+          {label}
+        </Label>
+      </If>
       <SelectContainer error={!!error}>
         <If condition={!!icon}>
           <IconContainer>{icon}</IconContainer>

@@ -106,6 +106,11 @@ const StartUp1FreediverDetails: React.FunctionComponent<{
         />
         <Gap level={1} />
         <Input
+          icon={renderInputIcon(
+            "drivers-license-o",
+            IconTypeEnum.FontAwesome,
+            false,
+          )}
           placeholder={
             !freediver.certification
               ? "Enter Certification Number"
@@ -118,6 +123,12 @@ const StartUp1FreediverDetails: React.FunctionComponent<{
             freediver.certification === FreediveCertificationEnum.NON_CERT
           }
           label="Certification Number"
+          subtext={
+            !freediver.certification ||
+            freediver.certification === FreediveCertificationEnum.NON_CERT
+              ? undefined
+              : "This will be used to verify your profile certification."
+          }
           value={freediver.certification_number}
         />
         <Gap level={1} />

@@ -1,5 +1,6 @@
 import styled, { css } from "styled-components/native";
 import {
+  CONTAINER_BORDER_RADIUS,
   CONTAINER_MARGIN_DEFAULT,
   CONTAINER_MARGIN_SMALL,
   INPUT_SIZE,
@@ -20,6 +21,7 @@ export const SelectContainer = styled.View<{ error?: boolean }>`
   border-bottom-width: 0.5px;
   border-color: #aaaaaa;
   flex-direction: row;
+  border-radius: ${CONTAINER_BORDER_RADIUS}px;
   margin-bottom: ${CONTAINER_MARGIN_DEFAULT}px;
   ${({ error }): any => {
     if (error) {
@@ -57,7 +59,7 @@ export const ErrorContainer = styled.View`
 `;
 
 export const IconContainer = styled.View`
-  width: 9%;
+  width: 7%;
 `;
 
 export const SelectInputContainer = styled.View`

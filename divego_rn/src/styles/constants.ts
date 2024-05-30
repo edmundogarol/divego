@@ -6,6 +6,7 @@ export const CONTAINER_MARGIN_DEFAULT = 10;
 
 export const CONTAINER_MARGIN_SMALL = 5;
 export const CONTAINER_PADDING_SMALL = 5;
+export const CONTAINER_BORDER_RADIUS = 8;
 
 export const INPUT_PADDING_W_ICON = 10;
 
