@@ -127,7 +127,7 @@ const StartUp1FreediverDetails: React.FunctionComponent<{
             !freediver.certification ||
             freediver.certification === FreediveCertificationEnum.NON_CERT
               ? undefined
-              : "This will be used to verify your profile certification."
+              : "This will be used to verify your diver certification. If verification fails, your profile will be reverted to Non-Certified."
           }
           value={freediver.certification_number}
         />
