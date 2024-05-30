@@ -15,7 +15,13 @@ export type ColorKey =
   | "SystemWhite"
   | "SystemScubaDiver"
   | "SystemScubaInstructor"
-  | "SystemScubaShop";
+  | "SystemScubaShop"
+  | "MolchanovsBlue"
+  | "MolchanovsBlueLowerOp"
+  | "AidaBlue"
+  | "AidaBlueLowerOp"
+  | "PadiRed"
+  | "PadiRedLowerOp";
 
 const colorsMap = {
   SystemBlue1: "#1a2241",
@@ -36,6 +42,13 @@ const colorsMap = {
   SystemScubaShop: "#00b9b9",
 
   SystemWhite: "#ffffff",
+
+  MolchanovsBlue: "#009dc1",
+  AidaBlue: "#00507e",
+  PadiRed: "#e61b23",
+  MolchanovsBlueLowerOp: "#07c2ec",
+  AidaBlueLowerOp: "#007ec6",
+  PadiRedLowerOp: "#ff5258",
 };
 
 export const color = (colorKey: ColorKey): string => {
