@@ -64,13 +64,16 @@ type UpdateStartUpDetails = PayloadAction<{
 
 type UpdateCertificationsList = PayloadAction<Array<Array<string>>>;
 
+type ResetStartUpFreediver = PayloadAction;
+
 export type StartUpAction =
   | UpdateStartUpActiveIndex
   | UpdateStartUpAgency
   | UpdateStartUpFreediver
   | UpdateStartUpScreensGroup
   | UpdateStartUpDetails
-  | UpdateCertificationsList;
+  | UpdateCertificationsList
+  | ResetStartUpFreediver;
 
 export const startUpSlice = createSlice({
   name: "startUp",
@@ -94,6 +97,11 @@ export const startUpSlice = createSlice({
     updateCertificationsList: (state, action: UpdateCertificationsList) => {
       state.certifications_list = action.payload;
     },
+    resetStartUpFreediver: (state) => {
+      console.log({ resetting: state });
+      state.freediver = initialState.freediver;
+      state.agency = initialState.agency;
+    },
   },
 });
 
@@ -104,6 +112,7 @@ export const {
   updateStartUpScreensGroup,
   updateStartUpDetails,
   updateCertificationsList,
+  resetStartUpFreediver,
 } = startUpSlice.actions;
 
 export const startUpReducer = startUpSlice.reducer;

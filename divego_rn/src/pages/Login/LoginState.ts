@@ -1,9 +1,15 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { DiverTypeEnum, RolesEnum, User } from "@interfaces/CustomTypes";
+import {
+  DiverTypeEnum,
+  Freediver,
+  RolesEnum,
+  User,
+} from "@interfaces/CustomTypes";
 import { LoginForm, ResetPasswordForm, SignUpForm } from "./LoginInterfaces";
 
 export interface LoginState {
   readonly user: User;
+  readonly freediver: Freediver | null;
   readonly loginForm: LoginForm;
   readonly loginFormErrors: { [key: string]: any };
   readonly signUpForm: SignUpForm;
@@ -29,6 +35,7 @@ export const initialState: LoginState = {
     active_role: RolesEnum.Diver,
     diver_type: DiverTypeEnum.Freediver,
   },
+  freediver: null,
   loginForm: {
     email: "",
     password: "",

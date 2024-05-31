@@ -22,16 +22,28 @@ import {
 } from "@interfaces/CustomTypes";
 import DiverBadge from "@components/DiverBadge/DiverBadge";
 import Input from "@components/Input/Input";
+import useCheckStartUpFreediverIncomplete from "@pages/StartUp/hooks/useCheckStartUpFreediverIncomplete";
+import useUnsavedChanges from "@utils/hooks/useUnsavedChanges";
 
 const StartUp1FreediverDetails: React.FunctionComponent<{
   gotoNextPage: () => void;
   gotoPrevPage: () => void;
 }> = ({ gotoPrevPage }) => {
   const { active_index, freediver, agency } = useStartUpState();
-  const { updateStartUpAgency, updateStartUpFreediver } = useStartUpDispatch();
+  const { updateStartUpAgency, updateStartUpFreediver, resetStartUpFreediver } =
+    useStartUpDispatch();
   const renderInputIcon = useRenderInputIcon();
   const freedivingCertificationsListByAgency =
     useFreedivingCertificationsListByAgency();
+  const checkStartUpFreediverIncomplete = useCheckStartUpFreediverIncomplete();
+  const unsavedChanges = useUnsavedChanges(
+    checkStartUpFreediverIncomplete(),
+    () => {
+      gotoPrevPage();
+      resetStartUpFreediver();
+    },
+    gotoPrevPage,
+  );
 
   useGetFreedivingCertificationsListHandler(active_index.toString() === "1");
 
@@ -40,7 +52,11 @@ const StartUp1FreediverDetails: React.FunctionComponent<{
       <DiverDetailsFormContainer>
         <BackButton
           onPress={() => {
-            gotoPrevPage();
+            if (active_index === 1) {
+              unsavedChanges();
+            } else {
+              gotoPrevPage();
+            }
           }}>
           <BackButtonText>{"Back"}</BackButtonText>
         </BackButton>
