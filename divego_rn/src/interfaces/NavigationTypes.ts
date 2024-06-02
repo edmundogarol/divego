@@ -43,6 +43,6 @@ export interface NativeNavigation extends Navigation {
   ) => void;
   backToFirstScreen?: () => void;
   isFocused?: () => boolean;
-  setOptions?: (options: any) => void;
+  setOptions: (options: any) => void;
   canGoBack: () => boolean;
 }

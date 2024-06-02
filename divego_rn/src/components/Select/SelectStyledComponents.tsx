@@ -8,11 +8,8 @@ import {
   LABEL_SIZE_LARGE,
 } from "@styles/constants";
 import { color } from "@styles/colors";
-import { debugBorder } from "@utils/utils";
 
-export const SelectWrapper = styled.View`
-  width: 100%;
-`;
+export const SelectWrapper = styled.View``;
 
 export const SelectContainer = styled.View<{ error?: boolean }>`
   align-items: center;
@@ -23,6 +20,7 @@ export const SelectContainer = styled.View<{ error?: boolean }>`
   flex-direction: row;
   border-radius: ${CONTAINER_BORDER_RADIUS}px;
   margin-bottom: ${CONTAINER_MARGIN_DEFAULT}px;
+
   ${({ error }): any => {
     if (error) {
       return css`
@@ -59,9 +57,9 @@ export const ErrorContainer = styled.View`
 `;
 
 export const IconContainer = styled.View`
-  width: 7%;
+  width: 9%;
 `;
 
 export const SelectInputContainer = styled.View`
-  width: 80%;
+  width: 82%;
 `;

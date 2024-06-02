@@ -1,8 +1,6 @@
 import useRenderInputIcon from "@components/Input/hooks/useRenderInputIcon";
 import Select from "@components/Select/Select";
 import {
-  BackButton,
-  BackButtonText,
   DiverDetailsFormContainer,
   DiverDetailsFormHeader,
   HeaderContainer,
@@ -22,22 +20,26 @@ import {
 } from "@interfaces/CustomTypes";
 import DiverBadge from "@components/DiverBadge/DiverBadge";
 import Input from "@components/Input/Input";
-import useCheckStartUpFreediverIncomplete from "@pages/StartUp/hooks/useCheckStartUpFreediverIncomplete";
+import useCheckStartUpFreediverHasUnsaved from "@pages/StartUp/hooks/useCheckStartUpFreediverHasUnsaved";
 import useUnsavedChanges from "@utils/hooks/useUnsavedChanges";
+import useCustomScreenOptions from "@navigation/hooks/useCustomScreenOptions";
+import useStartUp1FreediverDetailsComplete from "@pages/StartUp/hooks/useStartUp1FreediverDetailsComplete";
 
 const StartUp1FreediverDetails: React.FunctionComponent<{
   gotoNextPage: () => void;
   gotoPrevPage: () => void;
-}> = ({ gotoPrevPage }) => {
+}> = ({ gotoPrevPage, gotoNextPage }) => {
   const { active_index, freediver, agency } = useStartUpState();
   const { updateStartUpAgency, updateStartUpFreediver, resetStartUpFreediver } =
     useStartUpDispatch();
   const renderInputIcon = useRenderInputIcon();
   const freedivingCertificationsListByAgency =
     useFreedivingCertificationsListByAgency();
-  const checkStartUpFreediverIncomplete = useCheckStartUpFreediverIncomplete();
+  const checkStartUpFreediverHasUnsaved = useCheckStartUpFreediverHasUnsaved();
+  const startUp1FreediverDetailsComplete =
+    useStartUp1FreediverDetailsComplete();
   const unsavedChanges = useUnsavedChanges(
-    checkStartUpFreediverIncomplete(),
+    checkStartUpFreediverHasUnsaved(),
     () => {
       gotoPrevPage();
       resetStartUpFreediver();
@@ -46,24 +48,26 @@ const StartUp1FreediverDetails: React.FunctionComponent<{
   );
 
   useGetFreedivingCertificationsListHandler(active_index.toString() === "1");
+  useCustomScreenOptions({
+    title: "Freediver Details",
+    backButtonOnPress: () => {
+      if (active_index === 1) {
+        unsavedChanges();
+      } else {
+        gotoPrevPage();
+      }
+    },
+    rightButtonOnPress: () => alert("Next"),
+    rightButtonDisabled: !startUp1FreediverDetailsComplete(),
+    rightButtonText: "Next",
+    depList: [active_index],
+    loadCondition: active_index === 1,
+  });
 
   return (
     <ScreenContentsContainer>
       <DiverDetailsFormContainer>
-        <BackButton
-          onPress={() => {
-            if (active_index === 1) {
-              unsavedChanges();
-            } else {
-              gotoPrevPage();
-            }
-          }}>
-          <BackButtonText>{"Back"}</BackButtonText>
-        </BackButton>
-        <HeaderContainer>
-          <DiverDetailsFormHeader>{"Freediver Details"}</DiverDetailsFormHeader>
-        </HeaderContainer>
-        <Gap level={2} />
+        <Gap level={1} />
         <DiverBadge agency={agency} freediver={freediver} />
         <Gap level={2} />
         <Select
@@ -90,7 +94,6 @@ const StartUp1FreediverDetails: React.FunctionComponent<{
                 certification: FreediveCertificationEnum.OTHER_CERT,
               });
             } else {
-              console.log("set cert as undefined");
               updateStartUpFreediver({
                 ...freediver,
                 certification: null,
@@ -107,7 +110,7 @@ const StartUp1FreediverDetails: React.FunctionComponent<{
             freediver.certification === FreediveCertificationEnum.NON_CERT ||
             freediver.certification === FreediveCertificationEnum.OTHER_CERT
           }
-          label="Freedive Certification"
+          label="Freediving Certification"
           placeholder={"Choose your Freediving Certification"}
           endIcon={renderInputIcon(
             "chevron-down",
@@ -122,6 +125,12 @@ const StartUp1FreediverDetails: React.FunctionComponent<{
         />
         <Gap level={1} />
         <Input
+          onChange={(e) => {
+            updateStartUpFreediver({
+              ...freediver,
+              certification_number: e.nativeEvent.text,
+            });
+          }}
           icon={renderInputIcon(
             "drivers-license-o",
             IconTypeEnum.FontAwesome,
@@ -167,6 +176,12 @@ const StartUp1FreediverDetails: React.FunctionComponent<{
             { value: FreediverTypeEnum.LINE_DIVER, label: "Line Diver" },
             { value: FreediverTypeEnum.SPEAR_FISHER, label: "Spear Fisher" },
           ]}
+          subtext={
+            !freediver.certification ||
+            freediver.certification === FreediveCertificationEnum.NON_CERT
+              ? undefined
+              : "This will be used to verify your diver certification. If verification fails, your profile will be reverted to Non-Certified."
+          }
         />
         <Gap level={1} />
       </DiverDetailsFormContainer>

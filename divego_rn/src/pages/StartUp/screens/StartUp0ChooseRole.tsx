@@ -13,15 +13,24 @@ import {
 import { color } from "@styles/colors";
 import { delay } from "@utils/utils";
 import useGetRoleButtons from "../hooks/useGetRoleButtons";
+import useCustomScreenOptions from "@navigation/hooks/useCustomScreenOptions";
+import useStartUpState from "../hooks/useStartUpState";
 
 const StartUp0ChooseRole: React.FunctionComponent<{
   gotoNextPage: () => void;
   gotoPrevPage: () => void;
 }> = ({ gotoNextPage }) => {
+  const { active_index } = useStartUpState();
   const [isScuba, setIsScuba] = useState(false);
   const styles = globalStyles();
   const isDarkMode = useColorScheme() === "dark";
   const getRoleButtons = useGetRoleButtons(gotoNextPage);
+
+  useCustomScreenOptions({
+    title: "Choose Role",
+    depList: [active_index],
+    loadCondition: active_index === 0,
+  });
 
   const toggleSwitch = async () => {
     setIsScuba((previousState) => !previousState);

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Animated, Dimensions, FlatList } from "react-native";
 import { ScalingDot } from "react-native-animated-pagination-dots";
 import { StartUpContainer } from "./StartUpStyledComponents";
@@ -24,7 +24,6 @@ const StartUp: React.FunctionComponent = () => {
   });
 
   const gotoNextPage = () => {
-    console.log({ gotoNextPage: active_index });
     if (active_index + 1 < startUpScreens[screens_group].length) {
       // @ts-ignore
       flatListRef.current.scrollToIndex({

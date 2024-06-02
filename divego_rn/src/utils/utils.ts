@@ -11,6 +11,13 @@ export const debugBorder = (color: string) => {
   `;
 };
 
+export const debugStylesBorder = (color: string) => {
+  return {
+    borderColor: color,
+    borderWidth: 5,
+  };
+};
+
 export const isJson = (item: any) => {
   let value = typeof item !== "string" ? JSON.stringify(item) : item;
   try {

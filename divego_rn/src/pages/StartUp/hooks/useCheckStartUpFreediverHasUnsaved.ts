@@ -1,7 +1,7 @@
 import useLoginState from "@pages/Login/hooks/useLoginState";
 import useStartUpState from "./useStartUpState";
 
-const useCheckStartUpFreediverIncomplete = (): (() => boolean) => {
+const useCheckStartUpFreediverHasUnsaved = (): (() => boolean) => {
   const { freediver: accFreediver } = useLoginState();
   const { freediver: startUpFreediver, agency } = useStartUpState();
 
@@ -18,4 +18,4 @@ const useCheckStartUpFreediverIncomplete = (): (() => boolean) => {
   };
 };
 
-export default useCheckStartUpFreediverIncomplete;
+export default useCheckStartUpFreediverHasUnsaved;

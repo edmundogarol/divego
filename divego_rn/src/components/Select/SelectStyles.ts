@@ -18,7 +18,5 @@ export const styles = StyleSheet.create({
   inputIOS: {
     fontSize: TEXT_SIZE,
     color: color("SystemLabel2"),
-    paddingLeft: CONTAINER_PADDING_SMALL,
-    paddingRight: CONTAINER_PADDING_SMALL,
   },
 });

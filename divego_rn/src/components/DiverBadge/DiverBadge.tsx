@@ -67,14 +67,14 @@ const DiverBadge: React.FunctionComponent<{
           <BadgeBackgroundIcon
             name={getBackgroundIcon()}
             type={IconTypeEnum.CustomSvgIcon}
-            size={100}
+            size={130}
             color={color("SystemBlue4")}
           />
         </If>
         <Icon
           name={"UserDiverIcon"}
           type={IconTypeEnum.CustomSvgIcon}
-          size={130}
+          size={100}
           color={getIconColor()}
         />
         <If condition={agency === FreediveAgencyEnum.Molchanovs}>

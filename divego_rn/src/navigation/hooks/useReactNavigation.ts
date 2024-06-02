@@ -9,10 +9,7 @@ import {
   ParamListBase,
 } from "@react-navigation/routers";
 import { useRef } from "react";
-import {
-  StackNavigationOptions,
-  StackNavigationProp,
-} from "@react-navigation/stack";
+import { StackNavigationProp } from "@react-navigation/stack";
 import { NavigationProp } from "@react-navigation/core/src/types";
 import { NativeNavigation, PageEnum } from "@interfaces/NavigationTypes";
 

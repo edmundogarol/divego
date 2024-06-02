@@ -5,11 +5,16 @@ import {
 } from "@interfaces/NavigationTypes";
 import DrawerNavigator from "./DrawerNavigator/DrawerNavigator";
 import StartUp from "@pages/StartUp/StartUp";
+import useStartUpState from "@pages/StartUp/hooks/useStartUpState";
+import { useCommonHeaderOptions } from "./hooks/useCommonHeaderOptions";
 
 export const Stack = createStackNavigator<AuthenticatedStackNavigatorParams>();
 
 const AuthenticatedStackNavigator: React.FunctionComponent =
   (): React.ReactElement => {
+    const headerOptions = useCommonHeaderOptions();
+    const { active_index } = useStartUpState();
+
     return (
       <Stack.Navigator initialRouteName={PageEnum.Dashboard}>
         <Stack.Group screenOptions={{ presentation: "modal" }}>
@@ -19,7 +24,10 @@ const AuthenticatedStackNavigator: React.FunctionComponent =
             component={DrawerNavigator}
           />
           <Stack.Screen
-            options={{ headerShown: false }}
+            options={{
+              ...headerOptions,
+              gestureEnabled: active_index.toString() === "0",
+            }}
             name={PageEnum.StartUp}
             component={StartUp}
           />

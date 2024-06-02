@@ -16,6 +16,7 @@ import { IconTypeEnum } from "@components/Icon/IconInterfaces";
 import { styles } from "./SelectStyles";
 const { width } = Dimensions.get("screen");
 import RNPickerSelect, { PickerSelectProps } from "react-native-picker-select";
+import { Subtext } from "@components/Input/InputStyledComponents";
 
 export interface SelectWrapperProps extends PickerSelectProps {
   label?: string;
@@ -23,6 +24,7 @@ export interface SelectWrapperProps extends PickerSelectProps {
   icon?: React.ReactElement;
   endIcon?: React.ReactElement;
   error?: string;
+  subtext?: string;
 }
 
 const Select: React.FunctionComponent<SelectWrapperProps> = ({
@@ -34,6 +36,7 @@ const Select: React.FunctionComponent<SelectWrapperProps> = ({
   error,
   items,
   onValueChange,
+  subtext,
   ...props
 }) => {
   return (
@@ -88,6 +91,9 @@ const Select: React.FunctionComponent<SelectWrapperProps> = ({
           />
           <SelectError>{error}</SelectError>
         </ErrorContainer>
+      </If>
+      <If condition={!!subtext}>
+        <Subtext>{subtext}</Subtext>
       </If>
     </SelectWrapper>
   );

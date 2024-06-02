@@ -9,7 +9,7 @@ const useUnsavedChanges = (
     if (unsavedCondition) {
       Alert.alert(
         "Unsaved Changes",
-        "You have unsaved changes. Save them first or all information provided will be lost if you leave.",
+        "You have unsaved changes. Save them first or all your progress will be lost.",
         [
           {
             text: "Cancel",

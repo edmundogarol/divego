@@ -98,7 +98,6 @@ export const startUpSlice = createSlice({
       state.certifications_list = action.payload;
     },
     resetStartUpFreediver: (state) => {
-      console.log({ resetting: state });
       state.freediver = initialState.freediver;
       state.agency = initialState.agency;
     },

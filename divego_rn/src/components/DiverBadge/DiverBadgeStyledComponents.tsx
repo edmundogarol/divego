@@ -1,21 +1,26 @@
 import { color } from "@styles/colors";
 import styled from "styled-components/native";
-import { CONTAINER_MARGIN_SMALL } from "@styles/constants";
+import {
+  CONTAINER_MARGIN_DEFAULT,
+  CONTAINER_MARGIN_SMALL,
+} from "@styles/constants";
 import Icon from "@components/Icon/Icon";
 import { debugBorder } from "@utils/utils";
 
 export const DiverIconBackground = styled.View``;
 
 export const DiverIconContainer = styled.View<{ clr?: string }>`
-  height: 150px;
+  height: 120px;
   width: 180px;
   background-color: ${({ clr }) => clr || color("SystemBlue4")};
   align-items: center;
-  justify-content: center;
+  justify-content: start;
   margin-left: auto;
   margin-right: auto;
   border-radius: 10px;
   overflow: hidden;
+  display: flex;
+  flex-direction: row;
 `;
 
 export const AgencyIconText = styled.Text`
@@ -29,16 +34,15 @@ export const AgencyIconText = styled.Text`
 
 export const CertificationIconText = styled.Text`
   position: absolute;
-  font-size: 25px;
-  font-weight: 900;
+  font-size: 55px;
+  font-weight: 700;
   color: ${color("SystemLabel2")};
   top: ${CONTAINER_MARGIN_SMALL}px;
-  right: ${CONTAINER_MARGIN_SMALL}px;
+  right: ${CONTAINER_MARGIN_DEFAULT}px;
 `;
 
 export const BadgeBackgroundIcon = styled(Icon)`
   position: absolute;
-  transform: rotate(-10deg);
-  top: -30px;
-  left: -10px;
+  bottom: -30px;
+  right: -10px;
 `;
