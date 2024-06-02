@@ -42,6 +42,7 @@ const Input: React.FunctionComponent<InputWrapperProps> = ({
         <If condition={!!icon}>{icon}</If>
         <InputStyled
           {...props}
+          disabled={disabled}
           placeholder={placeholder}
           placeholderTextColor={
             !!error ? color("SystemError2") : color("SystemLabel1")

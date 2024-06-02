@@ -5,7 +5,7 @@ import Gap from "@components/Gap/Gap";
 import {
   FreediveScubaSwitchContainer,
   FreediveScubaSwitchText,
-  ScreenContentsContainer,
+  ScreenContentsContainerCenter,
   UserRolesContainer,
   UserRolesContainerSubtitle,
   UserRolesContainerTitle,
@@ -51,7 +51,7 @@ const StartUp0ChooseRole: React.FunctionComponent<{
   };
 
   return (
-    <ScreenContentsContainer>
+    <ScreenContentsContainerCenter>
       <FreediveScubaSwitchContainer>
         <Switch
           trackColor={{
@@ -80,7 +80,7 @@ const StartUp0ChooseRole: React.FunctionComponent<{
       <UserRolesContainerSubtitle>
         {"*Changing this later may require further verification."}
       </UserRolesContainerSubtitle>
-    </ScreenContentsContainer>
+    </ScreenContentsContainerCenter>
   );
 };
 

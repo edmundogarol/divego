@@ -2,8 +2,6 @@ import useRenderInputIcon from "@components/Input/hooks/useRenderInputIcon";
 import Select from "@components/Select/Select";
 import {
   DiverDetailsFormContainer,
-  DiverDetailsFormHeader,
-  HeaderContainer,
   ScreenContentsContainer,
 } from "@pages/StartUp/StartUpStyledComponents";
 import { IconTypeEnum } from "@components/Icon/IconInterfaces";
@@ -57,7 +55,7 @@ const StartUp1FreediverDetails: React.FunctionComponent<{
         gotoPrevPage();
       }
     },
-    rightButtonOnPress: () => alert("Next"),
+    rightButtonOnPress: () => gotoNextPage(),
     rightButtonDisabled: !startUp1FreediverDetailsComplete(),
     rightButtonText: "Next",
     depList: [active_index],
@@ -180,7 +178,7 @@ const StartUp1FreediverDetails: React.FunctionComponent<{
             !freediver.certification ||
             freediver.certification === FreediveCertificationEnum.NON_CERT
               ? undefined
-              : "This will be used to verify your diver certification. If verification fails, your profile will be reverted to Non-Certified."
+              : "This will be the main diver type associated with your profile. Later you can assign multiple dive types to planned dives."
           }
         />
         <Gap level={1} />

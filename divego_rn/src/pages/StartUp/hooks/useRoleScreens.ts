@@ -4,6 +4,7 @@ import StartUp1FreediveInstructorDetails from "../screens/Freediving/Instructor/
 import StartUp1ScubaDiverDetails from "../screens/Scuba/Diver/StartUp1ScubaDiverDetails";
 import StartUp0ChooseRole from "../screens/StartUp0ChooseRole";
 import useStartUpState from "./useStartUpState";
+import StartUp2ContactDetails from "../screens/Freediving/common/StartUp2ContactDetails";
 
 export interface ScreenProps {
   key: string;
@@ -24,6 +25,11 @@ const freediverScreens = [
     key: "1",
     title: "Diver Details",
     component: StartUp1FreediverDetails,
+  },
+  {
+    key: "2",
+    title: "Contact Details",
+    component: StartUp2ContactDetails,
   },
 ];
 

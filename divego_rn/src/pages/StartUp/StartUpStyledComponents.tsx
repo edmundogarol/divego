@@ -19,6 +19,13 @@ export const ScreenContentsContainer = styled.View`
   position: relative;
 `;
 
+export const ScreenContentsContainerCenter = styled.View`
+  align-items: center;
+  justify-content: center;
+  width: ${width}px;
+  position: relative;
+`;
+
 export const UserRolesContainer = styled.View`
   display: flex;
   flex-direction: row;
@@ -91,15 +98,4 @@ export const DiverDetailsFormContainer = styled.View`
   flex-direction: column;
   width: 100%;
   padding: ${CONTAINER_PADDING_DEFAULT}px;
-`;
-
-export const HeaderContainer = styled.View``;
-
-export const DiverDetailsFormHeader = styled.Text`
-  width: 200px;
-  margin-top: ${CONTAINER_PADDING_DEFAULT}px;
-  margin-left: auto;
-  margin-right: auto;
-  font-size: ${FORM_HEADER_SIZE}px;
-  text-align: center;
 `;

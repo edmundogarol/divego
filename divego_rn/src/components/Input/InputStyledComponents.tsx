@@ -16,7 +16,9 @@ export const InputWrapper = styled.View`
   width: 100%;
 `;
 
-export const InputContainer = styled.View<{ error?: boolean }>`
+export const InputContainer = styled.View<{
+  error?: boolean;
+}>`
   align-items: center;
   height: ${INPUT_SIZE}px;
   background-color: white;
@@ -35,11 +37,19 @@ export const InputContainer = styled.View<{ error?: boolean }>`
   }}
 `;
 
-export const InputStyled = styled.TextInput`
+export const InputStyled = styled.TextInput<{
+  disabled?: boolean;
+}>`
   flex: 1;
   font-size: ${TEXT_SIZE}px;
   padding-left: ${CONTAINER_PADDING_SMALL}px;
   padding-right: ${CONTAINER_PADDING_SMALL}px;
+  ${({ disabled }): any => {
+    if (disabled)
+      return css`
+        color: ${color("SystemLabel1")};
+      `;
+  }}
 `;
 
 export const Label = styled.Text<{ error?: boolean; disabled?: boolean }>`

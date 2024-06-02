@@ -1,10 +1,6 @@
 import { color } from "@styles/colors";
 import styled from "styled-components/native";
-import {
-  CONTAINER_MARGIN_DEFAULT,
-  CONTAINER_MARGIN_LARGE,
-  CONTAINER_MARGIN_SMALL,
-} from "@styles/constants";
+import { CONTAINER_MARGIN_SMALL } from "@styles/constants";
 import Icon from "@components/Icon/Icon";
 import { debugBorder } from "@utils/utils";
 
