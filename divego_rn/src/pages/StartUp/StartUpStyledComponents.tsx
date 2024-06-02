@@ -14,7 +14,7 @@ export const StartUpContainer = styled.View`
 
 export const ScreenContentsContainer = styled.View`
   align-items: center;
-  justify-content: center;
+  justify-content: start;
   width: ${width}px;
   position: relative;
 `;
@@ -86,7 +86,7 @@ export const FreediveScubaSwitchText = styled.Text`
   font-size: 12px;
 `;
 
-export const DiverDetailsFormContainer = styled.ScrollView`
+export const DiverDetailsFormContainer = styled.View`
   display: flex;
   flex-direction: column;
   width: 100%;

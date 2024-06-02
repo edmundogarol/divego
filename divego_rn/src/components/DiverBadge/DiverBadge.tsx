@@ -60,6 +60,53 @@ const DiverBadge: React.FunctionComponent<{
     }
   };
 
+  const getAgencyText = () => {
+    switch (agency) {
+      case FreediveAgencyEnum.Molchanovs:
+        return "MOLCH";
+      case FreediveAgencyEnum.Padi:
+        return "PADI";
+      case FreediveAgencyEnum.Aida:
+        return "AIDA";
+      case FreediveAgencyEnum.Other:
+        return "OTHER";
+      case FreediveAgencyEnum.NonCertified:
+        return "NON-C";
+      default:
+        return "AGENCY";
+    }
+  };
+
+  const getAgencyFontSize = () => {
+    switch (agency) {
+      case FreediveAgencyEnum.Molchanovs:
+        return 50;
+      case FreediveAgencyEnum.Padi:
+        return 50;
+      case FreediveAgencyEnum.Aida:
+        return 50;
+      case FreediveAgencyEnum.Other:
+        return 50;
+      case FreediveAgencyEnum.NonCertified:
+        return 50;
+      default:
+        return 40;
+    }
+  };
+
+  const getAgencyFontSpacing = () => {
+    switch (agency) {
+      case FreediveAgencyEnum.Molchanovs:
+        return -4;
+      case FreediveAgencyEnum.Padi:
+      case FreediveAgencyEnum.Aida:
+      case FreediveAgencyEnum.Other:
+      case FreediveAgencyEnum.NonCertified:
+      default:
+        return 0;
+    }
+  };
+
   return (
     <DiverIconBackground>
       <DiverIconContainer clr={getIconBackgroundColor()}>
@@ -67,31 +114,21 @@ const DiverBadge: React.FunctionComponent<{
           <BadgeBackgroundIcon
             name={getBackgroundIcon()}
             type={IconTypeEnum.CustomSvgIcon}
-            size={130}
+            size={180}
             color={color("SystemBlue4")}
           />
         </If>
         <Icon
           name={"UserDiverIcon"}
           type={IconTypeEnum.CustomSvgIcon}
-          size={100}
+          size={50}
           color={getIconColor()}
         />
-        <If condition={agency === FreediveAgencyEnum.Molchanovs}>
-          <AgencyIconText>{"MOLCHANOVS"}</AgencyIconText>
-        </If>
-        <If condition={agency === FreediveAgencyEnum.Aida}>
-          <AgencyIconText>{"AIDA"}</AgencyIconText>
-        </If>
-        <If condition={agency === FreediveAgencyEnum.Padi}>
-          <AgencyIconText>{"PADI"}</AgencyIconText>
-        </If>
-        <If condition={agency === FreediveAgencyEnum.NonCertified}>
-          <AgencyIconText>{"NOT-CERTIFIED"}</AgencyIconText>
-        </If>
-        <If condition={agency === FreediveAgencyEnum.Other}>
-          <AgencyIconText>{"OTHER"}</AgencyIconText>
-        </If>
+        <AgencyIconText
+          fontSize={getAgencyFontSize()}
+          fontSpacing={getAgencyFontSpacing()}>
+          {getAgencyText()}
+        </AgencyIconText>
         <If condition={!!agency && !!freediver.certification}>
           <CertificationIconText>
             {
