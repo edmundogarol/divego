@@ -13,10 +13,12 @@ from django.utils import timezone
 from django.contrib.postgres.fields import ArrayField
 
 from rest_framework import exceptions
+from rest_framework.response import Response
 
 from storages.backends.s3boto3 import S3Boto3Storage
 
 from divego_project.constants import *
+
 
 DIVER = "diver"
 INSTRUCTOR = "instructor"
@@ -77,11 +79,11 @@ class User(AbstractBaseUser, PermissionsMixin):
     last_name = models.TextField(max_length=50, blank=True)
     username = models.TextField(max_length=50, blank=True)
     bio = models.TextField(max_length=500, blank=True)
-    location = models.CharField(max_length=30, blank=True)
     birth_date = models.DateTimeField(null=True, blank=True)
     active_role = models.TextField(choices=ROLES, blank=True)
     diver_type = models.TextField(choices=DIVER_TYPE, blank=True)
     phone = models.TextField(max_length=50, blank=True)
+    current_location_id = models.TextField(max_length=10, blank=True)
     is_staff = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
     date_joined = models.DateTimeField(default=timezone.now)
@@ -124,7 +126,41 @@ class User(AbstractBaseUser, PermissionsMixin):
             "time": local_dt.strftime("%I:%M %p"),
         }
     
+    @property
+    def locations(self):
+        locations = Location.objects.filter(user__id=self.id)
+        locations_data = []
+        for loc in locations:
+            locations_data.append({
+                "id": loc.id,
+                "place_id": loc.place_id,
+                "description": loc.description
+            })
+
+        return locations_data
     
+    @property
+    def current_location(self):        
+        if self.current_location_id:
+            try:
+                location = Location.objects.get(pk=self.current_location_id)
+                return {    
+                        "id": location.id,
+                        "place_id": location.place_id,
+                        "description": location.description
+                }
+            except Location.DoesNotExist:
+                return None
+        else:
+            return None
+
+        
+    
+class Location(models.Model):
+    user = models.ManyToManyField(User, blank=True)
+    description = models.TextField(max_length=70, blank=False)
+    place_id = models.TextField(max_length=70, blank=False)
+
 class ResetPasswordSession(models.Model):
     user = models.ForeignKey(User, on_delete=models.PROTECT, blank=False, null=True)
     token = models.TextField(max_length=70, blank=False)

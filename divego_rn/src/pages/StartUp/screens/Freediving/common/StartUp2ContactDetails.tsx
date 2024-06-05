@@ -7,13 +7,11 @@ import { IconTypeEnum } from "@components/Icon/IconInterfaces";
 import Gap from "@components/Gap/Gap";
 import useStartUpState from "@pages/StartUp/hooks/useStartUpState";
 import Input from "@components/Input/Input";
-import useCheckStartUpFreediverHasUnsaved from "@pages/StartUp/hooks/useCheckStartUpFreediverHasUnsaved";
-import useUnsavedChanges from "@utils/hooks/useUnsavedChanges";
 import useCustomScreenOptions from "@navigation/hooks/useCustomScreenOptions";
-import useStartUp1FreediverDetailsComplete from "@pages/StartUp/hooks/useStartUp1FreediverDetailsComplete";
 import useLoginState from "@pages/Login/hooks/useLoginState";
 import useLoginDispatch from "@pages/Login/hooks/useLoginDispatch";
 import ProfilePictureUploader from "@components/ProfilePicture/ProfilePictureUploader";
+import InputInternationalPhone from "@components/Input/InputInternationalPhone";
 
 const StartUp2ContactDetails: React.FunctionComponent<{
   gotoNextPage: () => void;
@@ -21,30 +19,17 @@ const StartUp2ContactDetails: React.FunctionComponent<{
 }> = ({ gotoPrevPage, gotoNextPage }) => {
   const { user } = useLoginState();
   const { updateUser } = useLoginDispatch();
-  const { active_index } = useStartUpState();
+  const { active_index, freediver } = useStartUpState();
   const renderInputIcon = useRenderInputIcon();
-  const checkStartUpFreediverHasUnsaved = useCheckStartUpFreediverHasUnsaved();
-  const startUp1FreediverDetailsComplete =
-    useStartUp1FreediverDetailsComplete();
-  const unsavedChanges = useUnsavedChanges(
-    checkStartUpFreediverHasUnsaved(),
-    () => {
-      gotoPrevPage();
-    },
-    gotoPrevPage,
-  );
 
   useCustomScreenOptions({
     title: "Contact Details",
     backButtonOnPress: () => {
-      if (active_index === 1) {
-        unsavedChanges();
-      } else {
-        gotoPrevPage();
-      }
+      gotoPrevPage();
     },
-    rightButtonOnPress: () => alert("Next"),
-    rightButtonDisabled: !startUp1FreediverDetailsComplete(),
+    rightButtonOnPress: () => console.log({ user, freediver }),
+    rightButtonDisabled:
+      !user.current_location?.place_id || !user.first_name || !user.last_name,
     rightButtonText: "Next",
     depList: [active_index],
     loadCondition: active_index === 2,
@@ -60,7 +45,6 @@ const StartUp2ContactDetails: React.FunctionComponent<{
           label="First Name"
           placeholder={"Enter First Name"}
           value={user.first_name}
-          disabled={!!user.first_name}
           icon={renderInputIcon("user-o", IconTypeEnum.FontAwesome, false)}
           onChange={(e) => {
             updateUser({
@@ -74,7 +58,6 @@ const StartUp2ContactDetails: React.FunctionComponent<{
           label="Last Name"
           placeholder={"Enter Last Name"}
           value={user.last_name}
-          disabled={!!user.last_name}
           icon={renderInputIcon("user-o", IconTypeEnum.FontAwesome, false)}
           onChange={(e) => {
             updateUser({
@@ -84,6 +67,44 @@ const StartUp2ContactDetails: React.FunctionComponent<{
           }}
         />
         <Gap level={1} />
+
+        <InputInternationalPhone
+          label="Contact Number"
+          value={user.phone}
+          onChangePhoneNumber={(number) => {
+            updateUser({
+              ...user,
+              phone: number,
+            });
+          }}
+          country={user.phoneCountry}
+          onChangeSelectedCountry={(country) => {
+            updateUser({
+              ...user,
+              phoneCountry: country,
+            });
+          }}
+          subtext="This will remain hidden until you choose to make it visible to new dive buddy connections"
+        />
+
+        <Gap level={1} />
+        <Input
+          label="Current City"
+          googleAutoComplete
+          placeholder={"Select current city"}
+          value={user.current_location?.description}
+          icon={renderInputIcon("location", IconTypeEnum.Ionicons, false)}
+          onGoogleAutoCompleteChange={(data) => {
+            updateUser({
+              ...user,
+              current_location: {
+                ...user.current_location,
+                place_id: data.place_id,
+                description: data.description,
+              },
+            });
+          }}
+        />
         <Gap level={1} />
         <Gap level={1} />
       </DiverDetailsFormContainer>

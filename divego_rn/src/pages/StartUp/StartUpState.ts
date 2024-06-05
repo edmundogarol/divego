@@ -10,7 +10,6 @@ import { StartUpScreensGroup } from "./StartUpInterfaces";
 export interface StartUpState {
   readonly active_index: number;
   readonly screens_group: StartUpScreensGroup;
-  readonly user: User;
   readonly agency: FreediveAgencyEnum | null;
   readonly certifications_list: Array<Array<string>> | null;
   readonly freediver: Freediver;
@@ -20,21 +19,6 @@ export const initialState: StartUpState = {
   active_index: 0,
   screens_group: StartUpScreensGroup.Freediver,
   agency: null,
-  user: {
-    id: undefined,
-    first_name: "",
-    last_name: "",
-    username: "",
-    email: "",
-    bio: "",
-    location: "",
-    birth_date: "",
-    logged_in: false,
-    is_staff: false,
-    verified: false,
-    active_role: null,
-    diver_type: null,
-  },
   freediver: {
     id: undefined,
     user: undefined,

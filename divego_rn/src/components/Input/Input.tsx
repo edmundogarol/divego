@@ -8,11 +8,13 @@ import {
   InputWrapper,
   Subtext,
 } from "./InputStyledComponents";
-import { TextInputProps } from "react-native";
-import { If } from "@components/If/If";
+import { ScrollView, TextInputProps } from "react-native";
+import { Else, If } from "@components/If/If";
 import { color } from "@styles/colors";
 import Icon from "@components/Icon/Icon";
 import { IconTypeEnum } from "@components/Icon/IconInterfaces";
+import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
+import environmentConfig from "@utils/environmentConfig";
 
 export interface InputWrapperProps extends TextInputProps {
   label?: string;
@@ -20,6 +22,11 @@ export interface InputWrapperProps extends TextInputProps {
   icon?: React.ReactElement;
   error?: string;
   subtext?: string;
+  googleAutoComplete?: boolean;
+  onGoogleAutoCompleteChange?: (
+    data: { description: string; place_id: string },
+    details: any,
+  ) => void;
 }
 
 const Input: React.FunctionComponent<InputWrapperProps> = ({
@@ -29,6 +36,8 @@ const Input: React.FunctionComponent<InputWrapperProps> = ({
   placeholder,
   error,
   subtext,
+  googleAutoComplete,
+  onGoogleAutoCompleteChange,
   ...props
 }) => {
   return (
@@ -38,17 +47,34 @@ const Input: React.FunctionComponent<InputWrapperProps> = ({
           {label}
         </Label>
       </If>
-      <InputContainer error={!!error}>
+      <InputContainer error={!!error} googleAutoComplete={googleAutoComplete}>
         <If condition={!!icon}>{icon}</If>
-        <InputStyled
-          {...props}
-          disabled={disabled}
-          placeholder={placeholder}
-          placeholderTextColor={
-            !!error ? color("SystemError2") : color("SystemLabel1")
-          }
-          editable={!disabled}
-        />
+        <If condition={googleAutoComplete}>
+          <ScrollView>
+            <GooglePlacesAutocomplete
+              placeholder="Search"
+              nearbyPlacesAPI="GooglePlacesSearch"
+              onFail={(error) => console.log(error)}
+              onTimeout={() => console.log("timeout")}
+              onPress={onGoogleAutoCompleteChange}
+              query={{
+                key: environmentConfig.GOOGLE_MAPS_API_KEY,
+                language: "en",
+              }}
+            />
+          </ScrollView>
+          <Else>
+            <InputStyled
+              {...props}
+              disabled={disabled}
+              placeholder={placeholder}
+              placeholderTextColor={
+                !!error ? color("SystemError2") : color("SystemLabel1")
+              }
+              editable={!disabled}
+            />
+          </Else>
+        </If>
       </InputContainer>
       <If condition={!!error}>
         <ErrorContainer>

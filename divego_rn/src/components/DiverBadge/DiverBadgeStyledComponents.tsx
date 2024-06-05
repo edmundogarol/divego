@@ -43,9 +43,11 @@ export const CertificationIconText = styled.Text`
   right: ${CONTAINER_MARGIN_SMALL}px;
 `;
 
-export const BadgeBackgroundIcon = styled(Icon)`
+export const BadgeBackgroundIcon = styled(Icon)<{
+  displacement?: { bottom: number; right: number };
+}>`
   position: absolute;
-  bottom: -60px;
-  right: -10px;
+  bottom: ${(props) => props.displacement?.bottom}px;
+  right: ${(props) => props.displacement?.right}px;
   z-index: -3;
 `;

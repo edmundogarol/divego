@@ -1,5 +1,7 @@
 import { CustomSvgIconName } from "@components/Icon/libraries/CustomSvgIcon";
 import { ColorKey } from "@styles/colors";
+import { Asset } from "react-native-image-picker";
+import { ICountry } from "react-native-international-phone-number";
 
 export interface CustomWindow extends Window {
   host: string;
@@ -31,14 +33,25 @@ export interface User {
   last_name: string;
   username: string;
   email: string;
+  phone?: string;
+  phoneCountry?: ICountry;
   bio?: string;
-  location?: string;
+  locations: Location[];
+  current_location_id?: string;
+  current_location?: Location;
   birth_date?: string;
   logged_in: boolean;
   is_staff: boolean;
   verified: boolean;
   active_role: RolesEnum | null;
   diver_type: DiverTypeEnum | null;
+  image?: Asset | string;
+}
+
+export interface Location {
+  id?: string;
+  place_id: string;
+  description: string;
 }
 
 export interface RoleDetails {

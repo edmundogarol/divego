@@ -21,7 +21,7 @@ export const ProfilePictureUploadButton = styled.Button``;
 export const ProfilePictureBadgeContainer = styled.View<{ scale?: number }>`
   position: absolute;
   z-index: 2;
-  transform: translate(100px, 70px) scale(${({ scale }) => scale || 1});
+  transform: translate(100px, 40px) scale(${({ scale }) => scale || 1});
 `;
 
 export const ProfilePictureUploaderRemoveContainer = styled.Pressable`
@@ -29,6 +29,6 @@ export const ProfilePictureUploaderRemoveContainer = styled.Pressable`
   background-color: ${color("SystemBlue4")};
   padding: ${CONTAINER_PADDING_SMALL}px;
   border-radius: 30px;
-  transform: translate(45px, -75px);
+  transform: translate(35px, -65px);
   z-index: 2;
 `;

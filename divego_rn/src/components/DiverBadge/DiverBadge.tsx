@@ -13,7 +13,7 @@ import {
   DiverIconContainer,
 } from "./DiverBadgeStyledComponents";
 import Icon from "@components/Icon/Icon";
-import { IconTypeEnum } from "@components/Icon/IconInterfaces";
+import { IconGlyph, IconTypeEnum } from "@components/Icon/IconInterfaces";
 import { If } from "@components/If/If";
 import { FREEDIVE_CERTIFICATIONS_SHORTENED } from "@utils/constants";
 
@@ -21,7 +21,7 @@ const DiverBadge: React.FunctionComponent<{
   agency: FreediveAgencyEnum | null;
   freediver: Freediver;
 }> = ({ agency, freediver }) => {
-  const getIconBackgroundColor = () => {
+  const getIconBackgroundColor = (): string => {
     switch (agency) {
       case FreediveAgencyEnum.Molchanovs:
         return color("MolchanovsBlue");
@@ -36,7 +36,7 @@ const DiverBadge: React.FunctionComponent<{
     }
   };
 
-  const getIconColor = () => {
+  const getIconColor = (): string => {
     switch (agency) {
       case FreediveAgencyEnum.Molchanovs:
       case FreediveAgencyEnum.Padi:
@@ -47,7 +47,7 @@ const DiverBadge: React.FunctionComponent<{
     }
   };
 
-  const getBackgroundIcon = () => {
+  const getBackgroundIcon = (): IconGlyph => {
     switch (freediver.freediver_type) {
       case FreediverTypeEnum.FUN_DIVER:
         return "CoralBadgeIcon";
@@ -60,7 +60,21 @@ const DiverBadge: React.FunctionComponent<{
     }
   };
 
-  const getAgencyText = () => {
+  const getBackgroundIconDisplacement = (): {
+    bottom: number;
+    right: number;
+  } => {
+    switch (freediver.freediver_type) {
+      case FreediverTypeEnum.SPEAR_FISHER:
+        return { bottom: -50, right: -10 };
+      case FreediverTypeEnum.FUN_DIVER:
+      case FreediverTypeEnum.LINE_DIVER:
+      default:
+        return { bottom: -60, right: -10 };
+    }
+  };
+
+  const getAgencyText = (): string => {
     switch (agency) {
       case FreediveAgencyEnum.Molchanovs:
         return "MOLCH";
@@ -77,7 +91,7 @@ const DiverBadge: React.FunctionComponent<{
     }
   };
 
-  const getAgencyFontSize = () => {
+  const getAgencyFontSize = (): number => {
     switch (agency) {
       case FreediveAgencyEnum.Molchanovs:
         return 50;
@@ -94,7 +108,7 @@ const DiverBadge: React.FunctionComponent<{
     }
   };
 
-  const getAgencyFontSpacing = () => {
+  const getAgencyFontSpacing = (): number => {
     switch (agency) {
       case FreediveAgencyEnum.Molchanovs:
         return -4;
@@ -116,6 +130,7 @@ const DiverBadge: React.FunctionComponent<{
             type={IconTypeEnum.CustomSvgIcon}
             size={180}
             color={color("SystemBlue4")}
+            displacement={getBackgroundIconDisplacement()}
           />
         </If>
         <Icon

@@ -18,12 +18,14 @@ export const InputWrapper = styled.View`
 
 export const InputContainer = styled.View<{
   error?: boolean;
+
+  googleAutoComplete?: boolean;
 }>`
   align-items: center;
-  height: ${INPUT_SIZE}px;
+  height: ${(props) => (props.googleAutoComplete ? "auto" : `${INPUT_SIZE}px`)};
   background-color: white;
   border-bottom-width: 0.5px;
-  border-color: #aaaaaa;
+  border-color: ${color("SystemBorder")};
   flex-direction: row;
   border-radius: ${CONTAINER_BORDER_RADIUS}px;
   margin-bottom: ${CONTAINER_MARGIN_DEFAULT}px;

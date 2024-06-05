@@ -93,7 +93,7 @@ export const FreediveScubaSwitchText = styled.Text`
   font-size: 12px;
 `;
 
-export const DiverDetailsFormContainer = styled.View`
+export const DiverDetailsFormContainer = styled.ScrollView`
   display: flex;
   flex-direction: column;
   width: 100%;
