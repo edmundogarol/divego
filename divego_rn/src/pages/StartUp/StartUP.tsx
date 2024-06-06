@@ -47,7 +47,11 @@ const StartUp: React.FunctionComponent = () => {
     ({ item }: { item: ScreenProps }) => {
       const Component = item.component;
       return (
-        <Component gotoNextPage={gotoNextPage} gotoPrevPage={gotoPrevPage} />
+        <Component
+          screenKey={item.key}
+          gotoNextPage={gotoNextPage}
+          gotoPrevPage={gotoPrevPage}
+        />
       );
     },
     [width, active_index],

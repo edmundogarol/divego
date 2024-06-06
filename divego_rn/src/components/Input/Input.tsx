@@ -52,7 +52,7 @@ const Input: React.FunctionComponent<InputWrapperProps> = ({
         <If condition={googleAutoComplete}>
           <ScrollView>
             <GooglePlacesAutocomplete
-              placeholder="Search"
+              placeholder={placeholder || "Search"}
               nearbyPlacesAPI="GooglePlacesSearch"
               onFail={(error) => console.log(error)}
               onTimeout={() => console.log("timeout")}

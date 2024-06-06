@@ -15,11 +15,12 @@ import { delay } from "@utils/utils";
 import useGetRoleButtons from "../hooks/useGetRoleButtons";
 import useCustomScreenOptions from "@navigation/hooks/useCustomScreenOptions";
 import useStartUpState from "../hooks/useStartUpState";
+import { ScreenRenderProps } from "../hooks/useRoleScreens";
 
-const StartUp0ChooseRole: React.FunctionComponent<{
-  gotoNextPage: () => void;
-  gotoPrevPage: () => void;
-}> = ({ gotoNextPage }) => {
+const StartUp0ChooseRole: React.FunctionComponent<ScreenRenderProps> = ({
+  screenKey,
+  gotoNextPage,
+}) => {
   const { active_index } = useStartUpState();
   const [isScuba, setIsScuba] = useState(false);
   const styles = globalStyles();
@@ -29,7 +30,7 @@ const StartUp0ChooseRole: React.FunctionComponent<{
   useCustomScreenOptions({
     title: "Choose Role",
     depList: [active_index],
-    loadCondition: active_index === 0,
+    loadCondition: active_index.toString() === screenKey,
   });
 
   const toggleSwitch = async () => {

@@ -9,11 +9,11 @@ import {
 } from "@pages/StartUp/StartUpStyledComponents";
 import { IconTypeEnum } from "@components/Icon/IconInterfaces";
 import Gap from "@components/Gap/Gap";
+import { ScreenRenderProps } from "@pages/StartUp/hooks/useRoleScreens";
 
-const StartUp1ScubaDiverDetails: React.FunctionComponent<{
-  gotoNextPage: () => void;
-  gotoPrevPage: () => void;
-}> = ({ gotoPrevPage }) => {
+const StartUp1ScubaDiverDetails: React.FunctionComponent<ScreenRenderProps> = ({
+  gotoPrevPage,
+}) => {
   const renderInputIcon = useRenderInputIcon();
 
   return (

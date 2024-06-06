@@ -1,9 +1,7 @@
-import { useState } from "react";
 import {
   ProfilePictureBadgeContainer,
   ProfilePictureImage,
   ProfilePictureUploadButton,
-  ProfilePictureUploadIconContainer,
   ProfilePictureUploaderContainer,
   ProfilePictureUploaderRemoveContainer,
 } from "@components/ProfilePicture/ProfilePictureStyledComponents";
@@ -20,10 +18,9 @@ import useLoginDispatch from "@pages/Login/hooks/useLoginDispatch";
 import useLoginState from "@pages/Login/hooks/useLoginState";
 
 const ProfilePictureUploader: React.FunctionComponent = () => {
-  const [photo, setPhoto] = useState<Asset | null>(null);
-  const { updateUser } = useLoginDispatch();
   const { user } = useLoginState();
   const { agency, freediver } = useStartUpState();
+  const { updateUser } = useLoginDispatch();
 
   const handleChoosePhoto = async () => {
     launchImageLibrary({ mediaType: "photo" }, (response) => {
@@ -35,7 +32,7 @@ const ProfilePictureUploader: React.FunctionComponent = () => {
 
   return (
     <ProfilePictureUploaderContainer>
-      <If condition={!!photo}>
+      <If condition={!!user.image}>
         <ProfilePictureUploaderRemoveContainer
           onPress={() => {
             Alert.alert(

@@ -5,43 +5,45 @@ import StartUp1ScubaDiverDetails from "../screens/Scuba/Diver/StartUp1ScubaDiver
 import StartUp0ChooseRole from "../screens/StartUp0ChooseRole";
 import useStartUpState from "./useStartUpState";
 import StartUp2ContactDetails from "../screens/Freediving/common/StartUp2ContactDetails";
+import StartUp3PreferredDiveLocations from "../screens/Freediving/common/StartUp3PreferredDiveLocations";
 
 export interface ScreenProps {
   key: string;
-  title: string;
-  component: React.FunctionComponent<{
-    gotoNextPage: () => void;
-    gotoPrevPage: () => void;
-  }>;
+  component: React.FunctionComponent<ScreenRenderProps>;
+}
+
+export interface ScreenRenderProps {
+  screenKey: string;
+  gotoNextPage: () => void;
+  gotoPrevPage: () => void;
 }
 
 const freediverScreens = [
   {
     key: "0",
-    title: "Choose Role",
     component: StartUp0ChooseRole,
   },
   {
     key: "1",
-    title: "Diver Details",
     component: StartUp1FreediverDetails,
   },
   {
     key: "2",
-    title: "Contact Details",
     component: StartUp2ContactDetails,
+  },
+  {
+    key: "3",
+    component: StartUp3PreferredDiveLocations,
   },
 ];
 
 const scubaDiverScreens = [
   {
     key: "0",
-    title: "Choose Role",
     component: StartUp0ChooseRole,
   },
   {
     key: "1",
-    title: "Scuba Diver Details",
     component: StartUp1ScubaDiverDetails,
   },
 ];
@@ -49,12 +51,10 @@ const scubaDiverScreens = [
 const freediveInstructorScreens = [
   {
     key: "0",
-    title: "Choose Role",
     component: StartUp0ChooseRole,
   },
   {
     key: "1",
-    title: "Freedive Instructor Details",
     component: StartUp1FreediveInstructorDetails,
   },
 ];

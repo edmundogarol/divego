@@ -12,27 +12,27 @@ import useLoginState from "@pages/Login/hooks/useLoginState";
 import useLoginDispatch from "@pages/Login/hooks/useLoginDispatch";
 import ProfilePictureUploader from "@components/ProfilePicture/ProfilePictureUploader";
 import InputInternationalPhone from "@components/Input/InputInternationalPhone";
+import { ScreenRenderProps } from "@pages/StartUp/hooks/useRoleScreens";
 
-const StartUp2ContactDetails: React.FunctionComponent<{
-  gotoNextPage: () => void;
-  gotoPrevPage: () => void;
-}> = ({ gotoPrevPage, gotoNextPage }) => {
+const StartUp2ContactDetails: React.FunctionComponent<ScreenRenderProps> = ({
+  screenKey,
+  gotoPrevPage,
+  gotoNextPage,
+}) => {
   const { user } = useLoginState();
   const { updateUser } = useLoginDispatch();
-  const { active_index, freediver } = useStartUpState();
+  const { active_index } = useStartUpState();
   const renderInputIcon = useRenderInputIcon();
 
   useCustomScreenOptions({
     title: "Contact Details",
-    backButtonOnPress: () => {
-      gotoPrevPage();
-    },
-    rightButtonOnPress: () => console.log({ user, freediver }),
+    backButtonOnPress: () => gotoPrevPage(),
+    rightButtonOnPress: () => gotoNextPage(),
     rightButtonDisabled:
       !user.current_location?.place_id || !user.first_name || !user.last_name,
     rightButtonText: "Next",
     depList: [active_index],
-    loadCondition: active_index === 2,
+    loadCondition: active_index.toString() === screenKey,
   });
 
   return (
@@ -66,7 +66,6 @@ const StartUp2ContactDetails: React.FunctionComponent<{
             });
           }}
         />
-        <Gap level={1} />
 
         <InputInternationalPhone
           label="Contact Number"
@@ -87,7 +86,6 @@ const StartUp2ContactDetails: React.FunctionComponent<{
           subtext="This will remain hidden until you choose to make it visible to new dive buddy connections"
         />
 
-        <Gap level={1} />
         <Input
           label="Current City"
           googleAutoComplete

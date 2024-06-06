@@ -22,11 +22,13 @@ import useCheckStartUpFreediverHasUnsaved from "@pages/StartUp/hooks/useCheckSta
 import useUnsavedChanges from "@utils/hooks/useUnsavedChanges";
 import useCustomScreenOptions from "@navigation/hooks/useCustomScreenOptions";
 import useStartUp1FreediverDetailsComplete from "@pages/StartUp/hooks/useStartUp1FreediverDetailsComplete";
+import { ScreenRenderProps } from "@pages/StartUp/hooks/useRoleScreens";
 
-const StartUp1FreediverDetails: React.FunctionComponent<{
-  gotoNextPage: () => void;
-  gotoPrevPage: () => void;
-}> = ({ gotoPrevPage, gotoNextPage }) => {
+const StartUp1FreediverDetails: React.FunctionComponent<ScreenRenderProps> = ({
+  screenKey,
+  gotoPrevPage,
+  gotoNextPage,
+}) => {
   const { active_index, freediver, agency } = useStartUpState();
   const { updateStartUpAgency, updateStartUpFreediver, resetStartUpFreediver } =
     useStartUpDispatch();
@@ -45,11 +47,13 @@ const StartUp1FreediverDetails: React.FunctionComponent<{
     gotoPrevPage,
   );
 
-  useGetFreedivingCertificationsListHandler(active_index.toString() === "1");
+  useGetFreedivingCertificationsListHandler(
+    active_index.toString() === screenKey,
+  );
   useCustomScreenOptions({
     title: "Freediver Details",
     backButtonOnPress: () => {
-      if (active_index === 1) {
+      if (active_index.toString() === screenKey) {
         unsavedChanges();
       } else {
         gotoPrevPage();
@@ -59,7 +63,7 @@ const StartUp1FreediverDetails: React.FunctionComponent<{
     rightButtonDisabled: !startUp1FreediverDetailsComplete(),
     rightButtonText: "Next",
     depList: [active_index],
-    loadCondition: active_index === 1,
+    loadCondition: active_index.toString() === screenKey,
   });
 
   return (
