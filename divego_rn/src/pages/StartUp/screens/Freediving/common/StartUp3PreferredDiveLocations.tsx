@@ -22,10 +22,13 @@ import Icon from "@components/Icon/Icon";
 import { color } from "@styles/colors";
 import { If } from "@components/If/If";
 import { useState } from "react";
+import useReactNavigation from "@navigation/hooks/useReactNavigation";
+import { PageEnum } from "@interfaces/NavigationTypes";
 
 const StartUp3PreferredDiveLocations: React.FunctionComponent<
   ScreenRenderProps
 > = ({ screenKey, gotoPrevPage, gotoNextPage }) => {
+  const navigation = useReactNavigation();
   const [searching, toggleSearching] = useState(false);
   const { user } = useLoginState();
   const { updateUser } = useLoginDispatch();
@@ -55,7 +58,10 @@ const StartUp3PreferredDiveLocations: React.FunctionComponent<
           />
         </If>
         <DiveSitesListContainer>
-          <AddDiveSiteContainer onPress={() => toggleSearching(!searching)}>
+          <AddDiveSiteContainer
+            onPress={() =>
+              navigation.navigate(PageEnum.FreediveDirectoryModal)
+            }>
             <Icon
               color={color("SystemWhite")}
               name={"map-plus"}
@@ -86,7 +92,7 @@ const StartUp3PreferredDiveLocations: React.FunctionComponent<
                   size={40}
                 />
                 <PaidDiveSiteTitle numberOfLines={2}>
-                  {"Purchase To Add More"}
+                  {"Buy To Add More"}
                 </PaidDiveSiteTitle>
               </PaidDiveSiteContainer>
             );

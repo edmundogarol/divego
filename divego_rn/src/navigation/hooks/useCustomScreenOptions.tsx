@@ -12,7 +12,7 @@ interface CustomScreenOptionProps {
   rightButtonOnPress?: () => void;
   rightButtonText?: string;
   rightButtonDisabled?: boolean;
-  depList: any[];
+  depList?: any[];
   loadCondition?: boolean;
 }
 
@@ -23,7 +23,7 @@ const useCustomScreenOptions = ({
   rightButtonOnPress,
   rightButtonDisabled,
   rightButtonText,
-  depList,
+  depList = [],
   loadCondition = true,
 }: CustomScreenOptionProps): void => {
   const navigation = useReactNavigation();
@@ -60,7 +60,7 @@ const useCustomScreenOptions = ({
         ),
       });
     }
-  }, [depList]);
+  }, [...depList]);
 };
 
 export default useCustomScreenOptions;
