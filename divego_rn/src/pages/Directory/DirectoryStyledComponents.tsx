@@ -1,16 +1,24 @@
 import Icon from "@components/Icon/Icon";
 import { color } from "@styles/colors";
 import {
+  CONTAINER_MARGIN_DEFAULT,
+  CONTAINER_MARGIN_LARGE,
   CONTAINER_MARGIN_SMALL,
   CONTAINER_PADDING_DEFAULT,
+  CONTAINER_PADDING_LARGE,
   CONTAINER_PADDING_SMALL,
 } from "@styles/constants";
 import { debugBorder } from "@utils/utils";
 import styled from "styled-components/native";
 
-export const DirectoryItemContainer = styled.View`
+export const DirectoryContainer = styled.View`
+  padding: ${CONTAINER_PADDING_LARGE}px;
+`;
+
+export const DirectoryItemContainer = styled.Pressable`
   height: 100px;
-  margin: ${CONTAINER_MARGIN_SMALL}px;
+  margin-top: ${CONTAINER_MARGIN_SMALL}px;
+  margin-bottom: ${CONTAINER_MARGIN_SMALL}px;
   overflow: hidden;
   border-radius: 10px;
   border-color: ${color("SystemBlue3")};
@@ -26,7 +34,7 @@ export const DirectoryItemHeader = styled.View`
   flex-direction: row;
   color: black;
   height: 40px;
-  background-color: #658eb5b1;
+  background-color: #42709bb0;
   align-items: center;
   padding-left: ${CONTAINER_PADDING_DEFAULT}px;
 `;
@@ -46,4 +54,10 @@ export const DirectoryAmenitiesContainer = styled.View`
 
 export const DirectoryAmenitiesIconContainer = styled(Icon)`
   margin-right: ${CONTAINER_PADDING_SMALL}px;
+`;
+
+export const CurrentLocationContainer = styled.View`
+  display: flex;
+  align-items: center;
+  margin-right: ${CONTAINER_MARGIN_LARGE}px;
 `;

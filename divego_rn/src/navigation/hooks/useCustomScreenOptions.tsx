@@ -2,24 +2,28 @@ import React, { useEffect } from "react";
 import { useCommonHeaderOptions } from "@navigation/hooks/useCommonHeaderOptions";
 import useReactNavigation from "@navigation/hooks/useReactNavigation";
 import BackButton from "@navigation/components/BackButton";
-import { If } from "@components/If/If";
+import { Else, If } from "@components/If/If";
 import { Text } from "react-native";
 
 interface CustomScreenOptionProps {
   title: string | JSX.Element;
   backButtonOnPress?: () => void;
   backButtonDisabled?: boolean;
+  backButton?: JSX.Element;
   rightButtonOnPress?: () => void;
   rightButtonText?: string;
   rightButtonDisabled?: boolean;
+  rightButton?: JSX.Element;
   depList?: any[];
   loadCondition?: boolean;
 }
 
 const useCustomScreenOptions = ({
   title,
+  backButton,
   backButtonOnPress,
   backButtonDisabled,
+  rightButton,
   rightButtonOnPress,
   rightButtonDisabled,
   rightButtonText,
@@ -41,21 +45,35 @@ const useCustomScreenOptions = ({
           </Text>
         ),
         headerLeft: (): React.ReactElement => (
-          <If condition={!!backButtonOnPress}>
-            <BackButton
-              disabled={backButtonDisabled}
-              onPress={() => (backButtonOnPress ? backButtonOnPress() : null)}
-            />
+          <If condition={!!backButton}>
+            {backButton || <></>}
+            <Else>
+              <If condition={!!backButtonOnPress}>
+                <BackButton
+                  disabled={backButtonDisabled}
+                  onPress={() =>
+                    backButtonOnPress ? backButtonOnPress() : null
+                  }
+                />
+              </If>
+            </Else>
           </If>
         ),
         headerRight: (): React.ReactElement => (
-          <If condition={!!rightButtonOnPress}>
-            <BackButton
-              forward
-              disabled={rightButtonDisabled}
-              text={rightButtonText}
-              onPress={() => (rightButtonOnPress ? rightButtonOnPress() : null)}
-            />
+          <If condition={!!rightButton}>
+            {rightButton || <></>}
+            <Else>
+              <If condition={!!rightButtonOnPress}>
+                <BackButton
+                  forward
+                  disabled={rightButtonDisabled}
+                  text={rightButtonText}
+                  onPress={() =>
+                    rightButtonOnPress ? rightButtonOnPress() : null
+                  }
+                />
+              </If>
+            </Else>
           </If>
         ),
       });

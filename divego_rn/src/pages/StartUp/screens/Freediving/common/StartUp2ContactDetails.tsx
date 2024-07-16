@@ -13,6 +13,8 @@ import useLoginDispatch from "@pages/Login/hooks/useLoginDispatch";
 import ProfilePictureUploader from "@components/ProfilePicture/ProfilePictureUploader";
 import InputInternationalPhone from "@components/Input/InputInternationalPhone";
 import { ScreenRenderProps } from "@pages/StartUp/hooks/useRoleScreens";
+import { isNotEmptyString } from "@utils/utils";
+import { initialState } from "@pages/Login/LoginState";
 
 const StartUp2ContactDetails: React.FunctionComponent<ScreenRenderProps> = ({
   screenKey,
@@ -31,7 +33,7 @@ const StartUp2ContactDetails: React.FunctionComponent<ScreenRenderProps> = ({
     rightButtonDisabled:
       !user.current_location?.place_id || !user.first_name || !user.last_name,
     rightButtonText: "Next",
-    depList: [active_index],
+    depList: [active_index, user],
     loadCondition: active_index.toString() === screenKey,
   });
 
@@ -99,9 +101,32 @@ const StartUp2ContactDetails: React.FunctionComponent<ScreenRenderProps> = ({
                 ...user.current_location,
                 place_id: data.place_id,
                 description: data.description,
+                main: data.structured_formatting.main_text,
               },
             });
           }}
+          updateCallback={(text) => {
+            if (
+              !!user.current_location &&
+              text !== user.current_location?.description
+            ) {
+              if (!isNotEmptyString(text)) {
+                updateUser({
+                  ...user,
+                  current_location: initialState.user.current_location,
+                });
+              } else {
+                updateUser({
+                  ...user,
+                  current_location: {
+                    ...user.current_location,
+                    description: text,
+                  },
+                });
+              }
+            }
+          }}
+          subtext="We will use this to show you nearby, recommended dive sites."
         />
         <Gap level={1} />
         <Gap level={1} />

@@ -15,7 +15,7 @@ const useStartUp1FreediverDetailsComplete = (): (() => boolean) => {
         agency === FreediveAgencyEnum.NonCertified ||
         agency === FreediveAgencyEnum.Other)
     );
-  }, [startUpFreediver]);
+  }, [startUpFreediver, agency]);
 };
 
 export default useStartUp1FreediverDetailsComplete;

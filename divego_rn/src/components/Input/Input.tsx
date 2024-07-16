@@ -24,9 +24,14 @@ export interface InputWrapperProps extends TextInputProps {
   subtext?: string;
   googleAutoComplete?: boolean;
   onGoogleAutoCompleteChange?: (
-    data: { description: string; place_id: string },
+    data: {
+      description: string;
+      place_id: string;
+      structured_formatting: { main_text: string };
+    },
     details: any,
   ) => void;
+  updateCallback?: (text: string) => void;
 }
 
 const Input: React.FunctionComponent<InputWrapperProps> = ({
@@ -38,6 +43,7 @@ const Input: React.FunctionComponent<InputWrapperProps> = ({
   subtext,
   googleAutoComplete,
   onGoogleAutoCompleteChange,
+  updateCallback,
   ...props
 }) => {
   return (
@@ -52,7 +58,7 @@ const Input: React.FunctionComponent<InputWrapperProps> = ({
         <If condition={googleAutoComplete}>
           <ScrollView>
             <GooglePlacesAutocomplete
-              placeholder={placeholder || "Search"}
+              placeholder={!!placeholder ? placeholder : "Search"}
               nearbyPlacesAPI="GooglePlacesSearch"
               onFail={(error) => console.log(error)}
               onTimeout={() => console.log("timeout")}
@@ -60,6 +66,16 @@ const Input: React.FunctionComponent<InputWrapperProps> = ({
               query={{
                 key: environmentConfig.GOOGLE_MAPS_API_KEY,
                 language: "en",
+              }}
+              ref={(ref) => {
+                if (!!props.value) {
+                  ref?.setAddressText(props.value);
+                }
+              }}
+              textInputProps={{
+                onChangeText: (text) => {
+                  if (updateCallback) updateCallback(text);
+                },
               }}
             />
           </ScrollView>

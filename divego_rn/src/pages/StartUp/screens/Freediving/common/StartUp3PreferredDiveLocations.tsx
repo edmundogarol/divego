@@ -39,8 +39,7 @@ const StartUp3PreferredDiveLocations: React.FunctionComponent<
     title: <Text numberOfLines={2}>{"Preferred Dive Locations"}</Text>,
     backButtonOnPress: () => gotoPrevPage(),
     rightButtonOnPress: () => console.log({ user, freediver }),
-    rightButtonDisabled:
-      !user.current_location?.place_id || !user.first_name || !user.last_name,
+    rightButtonDisabled: user.locations.length < 1,
     rightButtonText: "Next",
     depList: [active_index],
     loadCondition: active_index.toString() === screenKey,
@@ -82,7 +81,7 @@ const StartUp3PreferredDiveLocations: React.FunctionComponent<
               </EmptyDiveSiteContainer>
             );
           })}
-          {[4, 5].map((idx) => {
+          {/* {[4, 5].map((idx) => {
             return (
               <PaidDiveSiteContainer key={idx}>
                 <Icon
@@ -96,7 +95,7 @@ const StartUp3PreferredDiveLocations: React.FunctionComponent<
                 </PaidDiveSiteTitle>
               </PaidDiveSiteContainer>
             );
-          })}
+          })} */}
         </DiveSitesListContainer>
         <Gap level={1} />
         <Gap level={1} />

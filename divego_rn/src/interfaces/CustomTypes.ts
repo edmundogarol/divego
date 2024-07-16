@@ -50,8 +50,9 @@ export interface User {
 
 export interface Location {
   id?: string;
-  place_id: string;
-  description: string;
+  place_id?: string;
+  description?: string;
+  main?: string;
 }
 
 export interface RoleDetails {

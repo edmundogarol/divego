@@ -1,0 +1,59 @@
+import { IconTypeEnum } from "@components/Icon/IconInterfaces";
+import { color } from "@styles/colors";
+import { DirectoryAmenitiesIconContainer } from "../DirectoryStyledComponents";
+
+const useRenderAmenityIcons = () => {
+  return (item: { amenities: string[] }) =>
+    !!item &&
+    item.amenities?.map((amenity: string, idx: number) => {
+      switch (amenity) {
+        case "toilet":
+          return (
+            <DirectoryAmenitiesIconContainer
+              key={idx}
+              color={color("SystemWhite")}
+              name="toilet"
+              type={IconTypeEnum.MaterialCommunityIcons}
+            />
+          );
+        case "showers":
+          return (
+            <DirectoryAmenitiesIconContainer
+              key={idx}
+              color={color("SystemWhite")}
+              name="shower"
+              type={IconTypeEnum.FontAwesome}
+            />
+          );
+        case "food":
+          return (
+            <DirectoryAmenitiesIconContainer
+              key={idx}
+              color={color("SystemWhite")}
+              name="food"
+              type={IconTypeEnum.MaterialCommunityIcons}
+            />
+          );
+        case "gym":
+          return (
+            <DirectoryAmenitiesIconContainer
+              key={idx}
+              color={color("SystemWhite")}
+              name="barbell"
+              type={IconTypeEnum.Ionicons}
+            />
+          );
+        default:
+          return (
+            <DirectoryAmenitiesIconContainer
+              key={idx}
+              color={color("SystemWhite")}
+              name="question"
+              type={IconTypeEnum.FontAwesome5}
+            />
+          );
+      }
+    });
+};
+
+export default useRenderAmenityIcons;

@@ -62,7 +62,7 @@ const StartUp1FreediverDetails: React.FunctionComponent<ScreenRenderProps> = ({
     rightButtonOnPress: () => gotoNextPage(),
     rightButtonDisabled: !startUp1FreediverDetailsComplete(),
     rightButtonText: "Next",
-    depList: [active_index],
+    depList: [active_index, agency, freediver],
     loadCondition: active_index.toString() === screenKey,
   });
 
