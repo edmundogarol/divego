@@ -56,8 +56,9 @@ export const DirectoryAmenitiesIconContainer = styled(Icon)`
   margin-right: ${CONTAINER_PADDING_SMALL}px;
 `;
 
-export const CurrentLocationContainer = styled.View`
+export const CurrentLocationButtonContainer = styled.Pressable`
   display: flex;
   align-items: center;
+  margin-top: ${CONTAINER_MARGIN_LARGE}px;
   margin-right: ${CONTAINER_MARGIN_LARGE}px;
 `;

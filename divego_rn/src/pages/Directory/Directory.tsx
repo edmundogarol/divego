@@ -1,4 +1,4 @@
-import { Text, View } from "react-native";
+import { Text } from "react-native";
 import { FlatList, ScrollView } from "react-native-gesture-handler";
 import useReactNavigation from "@navigation/hooks/useReactNavigation";
 import useCustomScreenOptions from "@navigation/hooks/useCustomScreenOptions";
@@ -8,8 +8,8 @@ import useRenderInputIcon from "@components/Input/hooks/useRenderInputIcon";
 import { IconTypeEnum } from "@components/Icon/IconInterfaces";
 import useRenderDirectoryItem from "./hooks/useRenderDirectoryItem";
 import mockDirectoryItems from "./mocks/mockDirectoryItems";
-import CurrentLocation from "./CurrentLocation";
 import { DirectoryContainer } from "./DirectoryStyledComponents";
+import CurrentLocationButton from "./CurrentLocationButton";
 
 const Directory: React.FunctionComponent = () => {
   const navigation = useReactNavigation();
@@ -19,7 +19,7 @@ const Directory: React.FunctionComponent = () => {
   useCustomScreenOptions({
     title: <Text>{"Dive Directory"}</Text>,
     backButtonOnPress: () => navigation.goBack(),
-    rightButton: <CurrentLocation />,
+    rightButton: <CurrentLocationButton />,
   });
 
   return (

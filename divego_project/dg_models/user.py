@@ -158,8 +158,11 @@ class User(AbstractBaseUser, PermissionsMixin):
     
 class Location(models.Model):
     user = models.ManyToManyField(User, blank=True)
+    main = models.TextField(max_length=70, blank=False, null=True)
     description = models.TextField(max_length=70, blank=False)
     place_id = models.TextField(max_length=70, blank=False)
+    lng = models.DecimalField(max_digits=9, decimal_places=7, blank=False, null=True)
+    lat = models.DecimalField(max_digits=9, decimal_places=7, blank=False, null=True)
 
 class ResetPasswordSession(models.Model):
     user = models.ForeignKey(User, on_delete=models.PROTECT, blank=False, null=True)

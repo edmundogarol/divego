@@ -53,6 +53,12 @@ export interface Location {
   place_id?: string;
   description?: string;
   main?: string;
+  coordinates?: {
+    lng: number;
+    lat: number;
+    latitudeDelta: number;
+    longitudeDelta: number;
+  };
 }
 
 export interface RoleDetails {

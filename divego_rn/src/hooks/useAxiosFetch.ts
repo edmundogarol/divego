@@ -23,6 +23,8 @@ const useAxiosFetch = <T>(
     accept?: string;
     params?: { [key: string]: any };
   },
+  useUrl?: string,
+  skip?: boolean,
 ): AxiosFetchWrapperResponse<T> => {
   const [data, setData] = useState<T | undefined>(undefined);
   const [loading, setLoading] = useState(false);
@@ -34,9 +36,14 @@ const useAxiosFetch = <T>(
     let fetchError;
 
     setLoading(true);
+    if (skip) {
+      setLoading(false);
+      return { data: fetchData, error: fetchError };
+    }
+
     try {
       const response = await axios({
-        url: baseUrl(url),
+        url: useUrl ? useUrl : baseUrl(url),
         headers: {
           Accept: APPLICATION_JSON,
         },
@@ -75,7 +82,7 @@ const useAxiosFetch = <T>(
     }
 
     return { data: fetchData, error: fetchError };
-  }, [url, params, data, error, loading]);
+  }, [url, params, data, error, loading, skip]);
 
   return {
     fetch,

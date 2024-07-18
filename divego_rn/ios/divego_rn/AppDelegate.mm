@@ -1,11 +1,14 @@
 #import "AppDelegate.h"
 #import <React/RCTLinkingManager.h>
 #import <React/RCTBundleURLProvider.h>
+#import <GoogleMaps/GoogleMaps.h>
 
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+  [GMSServices provideAPIKey:@"AIzaSyDpZIivM0JbYH9hwYWxyPrNMipGaqc5HZk"];
+  
   self.moduleName = @"divego_rn";
   // You can add your custom initial props in the dictionary below.
   // They will be passed down to the ViewController used by React Native.

@@ -15,6 +15,7 @@ import InputInternationalPhone from "@components/Input/InputInternationalPhone";
 import { ScreenRenderProps } from "@pages/StartUp/hooks/useRoleScreens";
 import { isNotEmptyString } from "@utils/utils";
 import { initialState } from "@pages/Login/LoginState";
+import useCurrentLocationPlaceDetailsHandler from "@pages/Directory/hooks/useCurrentLocationPlaceDetailsHandler";
 
 const StartUp2ContactDetails: React.FunctionComponent<ScreenRenderProps> = ({
   screenKey,
@@ -26,6 +27,7 @@ const StartUp2ContactDetails: React.FunctionComponent<ScreenRenderProps> = ({
   const { active_index } = useStartUpState();
   const renderInputIcon = useRenderInputIcon();
 
+  useCurrentLocationPlaceDetailsHandler();
   useCustomScreenOptions({
     title: "Contact Details",
     backButtonOnPress: () => gotoPrevPage(),
@@ -102,6 +104,7 @@ const StartUp2ContactDetails: React.FunctionComponent<ScreenRenderProps> = ({
                 place_id: data.place_id,
                 description: data.description,
                 main: data.structured_formatting.main_text,
+                coordinates: initialState.user.current_location?.coordinates,
               },
             });
           }}

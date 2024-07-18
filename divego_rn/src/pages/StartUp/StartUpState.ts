@@ -18,13 +18,13 @@ export interface StartUpState {
 export const initialState: StartUpState = {
   active_index: 0,
   screens_group: StartUpScreensGroup.Freediver,
-  agency: null,
+  agency: FreediveAgencyEnum.NonCertified,
   freediver: {
     id: undefined,
     user: undefined,
     location: undefined,
     preferred_dive_locations: [],
-    freediver_type: null,
+    freediver_type: FreediverTypeEnum.FUN_DIVER,
     certification: null,
     certification_verified: false,
     image: undefined,
