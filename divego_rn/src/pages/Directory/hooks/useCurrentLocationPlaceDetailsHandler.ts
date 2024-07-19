@@ -14,7 +14,6 @@ const useCurrentLocationPlaceDetailsHandler = (): void => {
     if (!user.current_location?.coordinates?.lat) {
       fetch().then(({ data: placeDetails, error }) => {
         if (placeDetails && placeDetails.status !== "INVALID_REQUEST") {
-          console.log({ placeDetails });
           updateUser({
             ...user,
             current_location: {

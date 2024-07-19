@@ -6,7 +6,6 @@ export const useRenderMapView = () => {
   const { user } = useLoginState();
 
   return useCallback(() => {
-    console.log({ currentLocation: user.current_location });
     return (
       <MapView
         style={{ height: 300, width: 300 }}
@@ -24,5 +23,5 @@ export const useRenderMapView = () => {
         }
       />
     );
-  }, [user.current_location?.coordinates]);
+  }, [user.current_location, user.current_location?.coordinates?.lat]);
 };

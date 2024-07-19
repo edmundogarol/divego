@@ -7,17 +7,21 @@ import useRenderInputIcon from "@components/Input/hooks/useRenderInputIcon";
 import { IconTypeEnum } from "@components/Icon/IconInterfaces";
 import { DirectoryContainer } from "./DirectoryStyledComponents";
 import CurrentLocationButton from "./CurrentLocationButton";
-import MapView, { Region } from "react-native-maps";
 import { useEffect } from "react";
 import useLoginState from "@pages/Login/hooks/useLoginState";
-import useCurrentLocationPlaceDetailsHandler from "./hooks/useCurrentLocationPlaceDetailsHandler";
 import { useRenderMapView } from "./hooks/useRenderMapView";
+import useLoginDispatch from "@pages/Login/hooks/useLoginDispatch";
+import { initialState } from "@pages/Login/LoginState";
+import { useHandleUserCurrentLocationUpdateCallback } from "@hooks/location/useHandleUserCurrentLocationUpdateCallback";
 
 const ChangeCurrentLocation: React.FunctionComponent = () => {
   const navigation = useReactNavigation();
   const renderInputIcon = useRenderInputIcon();
   const { user } = useLoginState();
+  const { updateUser } = useLoginDispatch();
   const renderMapView = useRenderMapView();
+  const handleUserCurrentLocationUpdateCallback =
+    useHandleUserCurrentLocationUpdateCallback();
 
   useEffect(() => {
     LogBox.ignoreLogs(["VirtualizedLists should never be nested"]);
@@ -40,14 +44,26 @@ const ChangeCurrentLocation: React.FunctionComponent = () => {
         }}
         keyboardShouldPersistTaps={"handled"}>
         <Input
+          googleAutoComplete
           style={{ zIndex: 2 }}
           placeholder="Enter Dive Site Location"
           icon={renderInputIcon("search", IconTypeEnum.FontAwesome, false)}
-          googleAutoComplete
           subtext={
             "Setting current location will suggest dive sites within a 10km radius"
           }
-          onGoogleAutoCompleteChange={(data) => {}}
+          onGoogleAutoCompleteChange={(data) => {
+            updateUser({
+              ...user,
+              current_location: {
+                ...user.current_location,
+                place_id: data.place_id,
+                description: data.description,
+                main: data.structured_formatting.main_text,
+                coordinates: initialState.user.current_location?.coordinates,
+              },
+            });
+          }}
+          updateCallback={handleUserCurrentLocationUpdateCallback}
         />
         <Gap level={1} />
         {renderMapView()}

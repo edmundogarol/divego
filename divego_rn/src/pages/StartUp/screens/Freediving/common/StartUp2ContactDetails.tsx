@@ -13,9 +13,9 @@ import useLoginDispatch from "@pages/Login/hooks/useLoginDispatch";
 import ProfilePictureUploader from "@components/ProfilePicture/ProfilePictureUploader";
 import InputInternationalPhone from "@components/Input/InputInternationalPhone";
 import { ScreenRenderProps } from "@pages/StartUp/hooks/useRoleScreens";
-import { isNotEmptyString } from "@utils/utils";
 import { initialState } from "@pages/Login/LoginState";
 import useCurrentLocationPlaceDetailsHandler from "@pages/Directory/hooks/useCurrentLocationPlaceDetailsHandler";
+import { useHandleUserCurrentLocationUpdateCallback } from "@hooks/location/useHandleUserCurrentLocationUpdateCallback";
 
 const StartUp2ContactDetails: React.FunctionComponent<ScreenRenderProps> = ({
   screenKey,
@@ -26,6 +26,8 @@ const StartUp2ContactDetails: React.FunctionComponent<ScreenRenderProps> = ({
   const { updateUser } = useLoginDispatch();
   const { active_index } = useStartUpState();
   const renderInputIcon = useRenderInputIcon();
+  const handleUserCurrentLocationUpdateCallback =
+    useHandleUserCurrentLocationUpdateCallback();
 
   useCurrentLocationPlaceDetailsHandler();
   useCustomScreenOptions({
@@ -94,7 +96,6 @@ const StartUp2ContactDetails: React.FunctionComponent<ScreenRenderProps> = ({
           label="Current City"
           googleAutoComplete
           placeholder={"Select current city"}
-          value={user.current_location?.description}
           icon={renderInputIcon("location", IconTypeEnum.Ionicons, false)}
           onGoogleAutoCompleteChange={(data) => {
             updateUser({
@@ -108,30 +109,7 @@ const StartUp2ContactDetails: React.FunctionComponent<ScreenRenderProps> = ({
               },
             });
           }}
-          updateCallback={(text) => {
-            if (
-              !!user.current_location &&
-              text !== user.current_location?.description
-            ) {
-              if (
-                !isNotEmptyString(text) ||
-                text !== user.current_location.description
-              ) {
-                updateUser({
-                  ...user,
-                  current_location: initialState.user.current_location,
-                });
-              } else {
-                updateUser({
-                  ...user,
-                  current_location: {
-                    ...user.current_location,
-                    description: text,
-                  },
-                });
-              }
-            }
-          }}
+          updateCallback={handleUserCurrentLocationUpdateCallback}
           subtext="We will use this to show you nearby, recommended dive sites."
         />
         <Gap level={1} />
