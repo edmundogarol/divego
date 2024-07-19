@@ -11,11 +11,13 @@ import MapView, { Region } from "react-native-maps";
 import { useEffect } from "react";
 import useLoginState from "@pages/Login/hooks/useLoginState";
 import useCurrentLocationPlaceDetailsHandler from "./hooks/useCurrentLocationPlaceDetailsHandler";
+import { useRenderMapView } from "./hooks/useRenderMapView";
 
 const ChangeCurrentLocation: React.FunctionComponent = () => {
   const navigation = useReactNavigation();
   const renderInputIcon = useRenderInputIcon();
   const { user } = useLoginState();
+  const renderMapView = useRenderMapView();
 
   useEffect(() => {
     LogBox.ignoreLogs(["VirtualizedLists should never be nested"]);
@@ -26,8 +28,6 @@ const ChangeCurrentLocation: React.FunctionComponent = () => {
     backButtonOnPress: () => navigation.goBack(),
     rightButton: <CurrentLocationButton noClick />,
   });
-
-  console.log({ user_coordinates: user.current_location?.coordinates });
 
   return (
     <DirectoryContainer>
@@ -50,21 +50,7 @@ const ChangeCurrentLocation: React.FunctionComponent = () => {
           onGoogleAutoCompleteChange={(data) => {}}
         />
         <Gap level={1} />
-        <MapView
-          style={{ height: 300, width: 300 }}
-          initialRegion={
-            user.current_location
-              ? ({
-                  latitude: user.current_location?.coordinates?.lat,
-                  longitude: user.current_location?.coordinates?.lng,
-                  latitudeDelta:
-                    user.current_location?.coordinates?.latitudeDelta,
-                  longitudeDelta:
-                    user.current_location?.coordinates?.longitudeDelta,
-                } as Region)
-              : undefined
-          }
-        />
+        {renderMapView()}
       </ScrollView>
     </DirectoryContainer>
   );

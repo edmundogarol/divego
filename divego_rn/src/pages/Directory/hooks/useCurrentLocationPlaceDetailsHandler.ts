@@ -11,13 +11,10 @@ const useCurrentLocationPlaceDetailsHandler = (): void => {
   const { fetch } = usePlaceDetailsApiCall();
 
   useEffect(() => {
-    console.log({
-      "user.current_location?.coordinates": user.current_location,
-    });
     if (!user.current_location?.coordinates?.lat) {
-      console.log("FETCHING!");
       fetch().then(({ data: placeDetails, error }) => {
         if (placeDetails && placeDetails.status !== "INVALID_REQUEST") {
+          console.log({ placeDetails });
           updateUser({
             ...user,
             current_location: {

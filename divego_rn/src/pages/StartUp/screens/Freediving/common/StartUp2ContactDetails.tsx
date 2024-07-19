@@ -113,7 +113,10 @@ const StartUp2ContactDetails: React.FunctionComponent<ScreenRenderProps> = ({
               !!user.current_location &&
               text !== user.current_location?.description
             ) {
-              if (!isNotEmptyString(text)) {
+              if (
+                !isNotEmptyString(text) ||
+                text !== user.current_location.description
+              ) {
                 updateUser({
                   ...user,
                   current_location: initialState.user.current_location,
