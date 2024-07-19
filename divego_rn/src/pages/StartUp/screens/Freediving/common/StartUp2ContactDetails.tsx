@@ -95,6 +95,7 @@ const StartUp2ContactDetails: React.FunctionComponent<ScreenRenderProps> = ({
         <Input
           label="Current City"
           googleAutoComplete
+          value={user.current_location?.description}
           placeholder={"Select current city"}
           icon={renderInputIcon("location", IconTypeEnum.Ionicons, false)}
           onGoogleAutoCompleteChange={(data) => {

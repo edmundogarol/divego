@@ -59,6 +59,6 @@ export const DirectoryAmenitiesIconContainer = styled(Icon)`
 export const CurrentLocationButtonContainer = styled.Pressable`
   display: flex;
   align-items: center;
-  margin-top: ${CONTAINER_MARGIN_LARGE}px;
+
   margin-right: ${CONTAINER_MARGIN_LARGE}px;
 `;

@@ -20,8 +20,6 @@ const ChangeCurrentLocation: React.FunctionComponent = () => {
   const { user } = useLoginState();
   const { updateUser } = useLoginDispatch();
   const renderMapView = useRenderMapView();
-  const handleUserCurrentLocationUpdateCallback =
-    useHandleUserCurrentLocationUpdateCallback();
 
   useEffect(() => {
     LogBox.ignoreLogs(["VirtualizedLists should never be nested"]);
@@ -63,7 +61,6 @@ const ChangeCurrentLocation: React.FunctionComponent = () => {
               },
             });
           }}
-          updateCallback={handleUserCurrentLocationUpdateCallback}
         />
         <Gap level={1} />
         {renderMapView()}

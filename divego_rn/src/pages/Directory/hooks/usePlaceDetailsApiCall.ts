@@ -33,7 +33,8 @@ const usePlaceDetailsApiCall =
       "",
       undefined,
       `https://maps.googleapis.com/maps/api/place/details/json?fields=geometry&place_id=${user.current_location?.place_id}&key=${environmentConfig.GOOGLE_MAPS_API_KEY}`,
-      user.current_location?.place_id === undefined,
+      user.current_location?.place_id === undefined ||
+        !!user.current_location.coordinates,
     );
 
     return config;

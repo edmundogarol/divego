@@ -31,11 +31,7 @@ const useCurrentLocationPlaceDetailsHandler = (): void => {
         }
       });
     }
-  }, [
-    user,
-    user.current_location?.place_id,
-    user.current_location?.coordinates?.lat,
-  ]);
+  }, [user.current_location?.place_id]);
 };
 
 export default useCurrentLocationPlaceDetailsHandler;

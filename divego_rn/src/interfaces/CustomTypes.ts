@@ -37,7 +37,6 @@ export interface User {
   phoneCountry?: ICountry;
   bio?: string;
   locations: Location[];
-  current_location_id?: string;
   current_location?: Location;
   birth_date?: string;
   logged_in: boolean;

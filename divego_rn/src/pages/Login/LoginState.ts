@@ -29,7 +29,9 @@ export const initialState: LoginState = {
     bio: "",
     phone: "",
     phoneCountry: undefined,
-    current_location_id: undefined,
+    current_location: {
+      description: "",
+    },
     locations: [],
     birth_date: "",
     logged_in: false,

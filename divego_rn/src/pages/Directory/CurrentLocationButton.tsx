@@ -15,7 +15,7 @@ const CurrentLocationButton: React.FunctionComponent<{
     <CurrentLocationButtonContainer
       onPress={noClick ? null : handleChangeLocationButtonClick}>
       <Icon name="location-outline" type={IconTypeEnum.Ionicons} />
-      <Text>{user.current_location?.main}</Text>
+      <Text numberOfLines={1}>{user.current_location?.main}</Text>
     </CurrentLocationButtonContainer>
   );
 };

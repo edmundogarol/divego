@@ -9,7 +9,7 @@ export const useRenderMapView = () => {
     return (
       <MapView
         style={{ height: 300, width: 300 }}
-        initialRegion={
+        region={
           user.current_location
             ? ({
                 latitude: user.current_location?.coordinates?.lat,
@@ -23,5 +23,9 @@ export const useRenderMapView = () => {
         }
       />
     );
-  }, [user.current_location, user.current_location?.coordinates?.lat]);
+  }, [
+    user.current_location?.main,
+    user.current_location?.place_id,
+    user.current_location?.coordinates?.lat,
+  ]);
 };
