@@ -14,7 +14,7 @@ export const debugBorder = (color: string) => {
 export const debugStylesBorder = (color: string) => {
   return {
     borderColor: color,
-    borderWidth: 5,
+    borderWidth: 1,
   };
 };
 

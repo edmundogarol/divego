@@ -1,20 +1,28 @@
-import { LogBox, ScrollView, Text } from "react-native";
+import { Dimensions, LogBox, ScrollView, Text } from "react-native";
 import useReactNavigation from "@navigation/hooks/useReactNavigation";
 import useCustomScreenOptions from "@navigation/hooks/useCustomScreenOptions";
 import Gap from "@components/Gap/Gap";
 import Input from "@components/Input/Input";
 import useRenderInputIcon from "@components/Input/hooks/useRenderInputIcon";
 import { IconTypeEnum } from "@components/Icon/IconInterfaces";
-import { DirectoryContainer } from "./DirectoryStyledComponents";
+import {
+  CurrentLocationMapContainer,
+  DirectoryContainer,
+} from "./DirectoryStyledComponents";
 import CurrentLocationButton from "./CurrentLocationButton";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import useLoginState from "@pages/Login/hooks/useLoginState";
 import { useRenderMapView } from "./hooks/useRenderMapView";
 import useLoginDispatch from "@pages/Login/hooks/useLoginDispatch";
 import { initialState } from "@pages/Login/LoginState";
 import { useHandleUserCurrentLocationUpdateCallback } from "@hooks/location/useHandleUserCurrentLocationUpdateCallback";
+import { View } from "react-native-reanimated/lib/typescript/Animated";
 
 const ChangeCurrentLocation: React.FunctionComponent = () => {
+  const [mapDims, setMapDims] = useState({
+    width: 0,
+    height: 0,
+  });
   const navigation = useReactNavigation();
   const renderInputIcon = useRenderInputIcon();
   const { user } = useLoginState();
@@ -43,7 +51,7 @@ const ChangeCurrentLocation: React.FunctionComponent = () => {
         keyboardShouldPersistTaps={"handled"}>
         <Input
           googleAutoComplete
-          style={{ zIndex: 2 }}
+          style={{ zIndex: 2, flex: 1 }}
           placeholder="Enter Dive Site Location"
           icon={renderInputIcon("search", IconTypeEnum.FontAwesome, false)}
           subtext={
@@ -63,7 +71,13 @@ const ChangeCurrentLocation: React.FunctionComponent = () => {
           }}
         />
         <Gap level={1} />
-        {renderMapView()}
+        <CurrentLocationMapContainer
+          onLayout={(event) => {
+            const { width, height } = event.nativeEvent.layout;
+            setMapDims({ width, height });
+          }}>
+          {renderMapView(mapDims)}
+        </CurrentLocationMapContainer>
       </ScrollView>
     </DirectoryContainer>
   );
