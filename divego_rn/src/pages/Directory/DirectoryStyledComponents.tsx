@@ -59,12 +59,11 @@ export const DirectoryAmenitiesIconContainer = styled(Icon)`
 export const CurrentLocationButtonContainer = styled.Pressable`
   display: flex;
   align-items: center;
-
   margin-right: ${CONTAINER_MARGIN_LARGE}px;
 `;
 
 export const CurrentLocationMapContainer = styled.View`
-  height: 500px;
+  height: 60%;
   border-width: 1px;
   border-color: ${color("SystemLabel1")};
 `;
