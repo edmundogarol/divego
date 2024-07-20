@@ -2,6 +2,7 @@ import useLoginState from "@pages/Login/hooks/useLoginState";
 import { CONTAINER_MARGIN_SMALL } from "@styles/constants";
 import { useCallback } from "react";
 import MapView, { Region, Marker } from "react-native-maps";
+import DiverMarkerImage from "@assets/images/diver_marker.png";
 
 export const useRenderMapView = () => {
   const { user } = useLoginState();
@@ -24,7 +25,11 @@ export const useRenderMapView = () => {
             width: width - CONTAINER_MARGIN_SMALL,
           }}
           region={currentLocation}>
-          <Marker coordinate={currentLocation as Region} />
+          <Marker
+            coordinate={currentLocation as Region}
+            image={DiverMarkerImage}
+            style={{ transform: "scale(0.4)" }}
+          />
         </MapView>
       );
     },

@@ -67,3 +67,9 @@ export const CurrentLocationMapContainer = styled.View`
   border-width: 1px;
   border-color: ${color("SystemLabel1")};
 `;
+
+export const CurrentLocationText = styled.Text`
+  text-align: center;
+  text-transform: uppercase;
+  color: ${color("SystemLabel2")};
+`;

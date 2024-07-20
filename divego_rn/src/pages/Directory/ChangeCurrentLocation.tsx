@@ -7,6 +7,7 @@ import useRenderInputIcon from "@components/Input/hooks/useRenderInputIcon";
 import { IconTypeEnum } from "@components/Icon/IconInterfaces";
 import {
   CurrentLocationMapContainer,
+  CurrentLocationText,
   DirectoryContainer,
 } from "./DirectoryStyledComponents";
 import CurrentLocationButton from "./CurrentLocationButton";
@@ -17,6 +18,8 @@ import useLoginDispatch from "@pages/Login/hooks/useLoginDispatch";
 import { initialState } from "@pages/Login/LoginState";
 import { useHandleUserCurrentLocationUpdateCallback } from "@hooks/location/useHandleUserCurrentLocationUpdateCallback";
 import { View } from "react-native-reanimated/lib/typescript/Animated";
+import Button from "@components/Button/Button";
+import { G } from "react-native-svg";
 
 const ChangeCurrentLocation: React.FunctionComponent = () => {
   const [mapDims, setMapDims] = useState({
@@ -79,6 +82,16 @@ const ChangeCurrentLocation: React.FunctionComponent = () => {
           }}>
           {renderMapView(mapDims)}
         </CurrentLocationMapContainer>
+        <Gap level={2} />
+        <CurrentLocationText>
+          {user.current_location?.description}
+        </CurrentLocationText>
+        <Gap level={2} />
+        <Button
+          disabled={!user.current_location}
+          text={"Set Current Location"}
+          onPress={() => navigation.goBack()}
+        />
       </ScrollView>
     </DirectoryContainer>
   );
