@@ -5,13 +5,17 @@ import styled from "styled-components/native";
 export const PressableWrapper = styled.Pressable<{
   loading?: boolean;
   transparent?: boolean;
+  disabledBlock?: boolean;
 }>`
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  background-color: ${({ loading, transparent }) => {
+  background-color: ${({ loading, transparent, disabledBlock }) => {
     if (loading) {
       return "#c1d5e7";
+    }
+    if (disabledBlock) {
+      return color("SystemLabel1");
     }
     if (transparent) {
       return "transparent";

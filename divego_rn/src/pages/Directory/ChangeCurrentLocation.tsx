@@ -1,4 +1,4 @@
-import { Dimensions, LogBox, ScrollView, Text } from "react-native";
+import { LogBox, ScrollView, Text } from "react-native";
 import useReactNavigation from "@navigation/hooks/useReactNavigation";
 import useCustomScreenOptions from "@navigation/hooks/useCustomScreenOptions";
 import Gap from "@components/Gap/Gap";
@@ -16,10 +16,7 @@ import useLoginState from "@pages/Login/hooks/useLoginState";
 import { useRenderMapView } from "./hooks/useRenderMapView";
 import useLoginDispatch from "@pages/Login/hooks/useLoginDispatch";
 import { initialState } from "@pages/Login/LoginState";
-import { useHandleUserCurrentLocationUpdateCallback } from "@hooks/location/useHandleUserCurrentLocationUpdateCallback";
-import { View } from "react-native-reanimated/lib/typescript/Animated";
 import Button from "@components/Button/Button";
-import { G } from "react-native-svg";
 
 const ChangeCurrentLocation: React.FunctionComponent = () => {
   const [mapDims, setMapDims] = useState({
@@ -88,7 +85,7 @@ const ChangeCurrentLocation: React.FunctionComponent = () => {
         </CurrentLocationText>
         <Gap level={2} />
         <Button
-          disabled={!user.current_location}
+          disabled={!user.current_location?.description}
           text={"Set Current Location"}
           onPress={() => navigation.goBack()}
         />

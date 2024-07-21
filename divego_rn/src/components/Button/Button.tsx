@@ -9,6 +9,7 @@ export interface ButtonWrapperProps extends PressableProps {
   label?: string;
   loading?: boolean;
   disabled?: boolean;
+  disabledBlock?: boolean;
   textStyle?: TextStyle;
   iconStyle?: TextStyle;
   iconType?: IconTypeEnum;
@@ -25,6 +26,7 @@ const Button: React.FunctionComponent<ButtonWrapperProps> = ({
   iconStyle,
   style,
   disabled,
+  disabledBlock,
   transparent,
   onPress,
   loading,
@@ -38,7 +40,7 @@ const Button: React.FunctionComponent<ButtonWrapperProps> = ({
       onPress={(e): void => {
         if (onPress) onPress(e);
       }}
-      disabled={disabled}
+      disabledBlock={disabledBlock}
       transparent={transparent}
       style={style}>
       {iconLeft ? (

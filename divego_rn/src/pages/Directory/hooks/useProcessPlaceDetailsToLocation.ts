@@ -11,8 +11,8 @@ export const useProcessPlaceDetailsToCoordinates = () => {
     const southwestLat = data?.geometry?.viewport.southwest.lat;
     // const latDelta = northeastLat - southwestLat;
     // const lngDelta = latDelta * ASPECT_RATIO;
-    const latDelta = 0.01;
-    const lngDelta = 0.01;
+    const latDelta = 0.009;
+    const lngDelta = 0.009;
 
     return {
       lng: data?.geometry?.location.lng,
