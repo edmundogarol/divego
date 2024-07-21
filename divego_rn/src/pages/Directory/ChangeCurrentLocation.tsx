@@ -38,7 +38,6 @@ const ChangeCurrentLocation: React.FunctionComponent = () => {
     LogBox.ignoreLogs(["VirtualizedLists should never be nested"]);
   }, []);
 
-  console.log({ mapCurrentLocation });
   useCurrentLocationPlaceDetailsHandlerView();
   useCustomScreenOptions({
     title: <Text>{"Current Location"}</Text>,

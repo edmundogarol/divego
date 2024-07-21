@@ -11,7 +11,6 @@ const CurrentLocationButton: React.FunctionComponent<{
 }> = ({ noClick, location }) => {
   const handleChangeLocationButtonClick = useHandleChangeLocationButtonClick();
 
-  console.log(location?.main);
   return (
     <CurrentLocationButtonContainer
       onPress={noClick ? null : handleChangeLocationButtonClick}>
