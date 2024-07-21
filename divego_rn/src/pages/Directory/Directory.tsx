@@ -11,12 +11,15 @@ import mockDirectoryItems from "./mocks/mockDirectoryItems";
 import { DirectoryContainer } from "./DirectoryStyledComponents";
 import CurrentLocationButton from "./CurrentLocationButton";
 import useLoginState from "@pages/Login/hooks/useLoginState";
+import Button from "@components/Button/Button";
+import { useHandleChangeLocationButtonClick } from "./hooks/useHandleChangeLocationButtonClick";
+import { Subtext } from "@components/Input/InputStyledComponents";
 
 const Directory: React.FunctionComponent = () => {
   const { user } = useLoginState();
   const navigation = useReactNavigation();
-  const renderInputIcon = useRenderInputIcon();
   const renderDirectoryItem = useRenderDirectoryItem();
+  const handleChangeLocationButtonClick = useHandleChangeLocationButtonClick();
 
   useCustomScreenOptions({
     title: <Text>{"Dive Directory"}</Text>,
@@ -27,14 +30,14 @@ const Directory: React.FunctionComponent = () => {
 
   return (
     <DirectoryContainer>
-      <Input
-        placeholder="Enter Dive Site Location"
-        icon={renderInputIcon("search", IconTypeEnum.FontAwesome, false)}
-        googleAutoComplete
-        subtext={
-          "Showing suggestions within a 10km radius from current location"
-        }
+      <Button
+        text={"Change Current Location"}
+        onPress={() => handleChangeLocationButtonClick()}
       />
+      <Gap level={1} />
+      <Subtext>
+        {"Showing suggestions within a 10km radius from current location"}
+      </Subtext>
       <ScrollView scrollEnabled={true}>
         <Gap level={1} />
         <FlatList
