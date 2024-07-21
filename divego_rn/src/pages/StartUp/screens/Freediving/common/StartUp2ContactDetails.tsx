@@ -14,7 +14,7 @@ import ProfilePictureUploader from "@components/ProfilePicture/ProfilePictureUpl
 import InputInternationalPhone from "@components/Input/InputInternationalPhone";
 import { ScreenRenderProps } from "@pages/StartUp/hooks/useRoleScreens";
 import { initialState } from "@pages/Login/LoginState";
-import useCurrentLocationPlaceDetailsHandler from "@pages/Directory/hooks/useCurrentLocationPlaceDetailsHandler";
+import useCurrentLocationPlaceDetailsHandlerUser from "@pages/Directory/hooks/useCurrentLocationPlaceDetailsHandlerUser";
 import { useHandleUserCurrentLocationUpdateCallback } from "@hooks/location/useHandleUserCurrentLocationUpdateCallback";
 
 const StartUp2ContactDetails: React.FunctionComponent<ScreenRenderProps> = ({
@@ -29,7 +29,7 @@ const StartUp2ContactDetails: React.FunctionComponent<ScreenRenderProps> = ({
   const handleUserCurrentLocationUpdateCallback =
     useHandleUserCurrentLocationUpdateCallback();
 
-  useCurrentLocationPlaceDetailsHandler();
+  useCurrentLocationPlaceDetailsHandlerUser();
   useCustomScreenOptions({
     title: "Contact Details",
     backButtonOnPress: () => gotoPrevPage(),

@@ -10,8 +10,10 @@ import useRenderDirectoryItem from "./hooks/useRenderDirectoryItem";
 import mockDirectoryItems from "./mocks/mockDirectoryItems";
 import { DirectoryContainer } from "./DirectoryStyledComponents";
 import CurrentLocationButton from "./CurrentLocationButton";
+import useLoginState from "@pages/Login/hooks/useLoginState";
 
 const Directory: React.FunctionComponent = () => {
+  const { user } = useLoginState();
   const navigation = useReactNavigation();
   const renderInputIcon = useRenderInputIcon();
   const renderDirectoryItem = useRenderDirectoryItem();
@@ -19,7 +21,8 @@ const Directory: React.FunctionComponent = () => {
   useCustomScreenOptions({
     title: <Text>{"Dive Directory"}</Text>,
     backButtonOnPress: () => navigation.goBack(),
-    rightButton: <CurrentLocationButton />,
+    rightButton: <CurrentLocationButton location={user.current_location} />,
+    depList: [user.current_location],
   });
 
   return (

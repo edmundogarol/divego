@@ -1,21 +1,22 @@
 import { Text } from "react-native";
 import Icon from "@components/Icon/Icon";
 import { IconTypeEnum } from "@components/Icon/IconInterfaces";
-import useLoginState from "@pages/Login/hooks/useLoginState";
 import { CurrentLocationButtonContainer } from "./DirectoryStyledComponents";
 import { useHandleChangeLocationButtonClick } from "./hooks/useHandleChangeLocationButtonClick";
+import { Location } from "@interfaces/CustomTypes";
 
 const CurrentLocationButton: React.FunctionComponent<{
+  location?: Location;
   noClick?: boolean;
-}> = ({ noClick }) => {
-  const { user } = useLoginState();
+}> = ({ noClick, location }) => {
   const handleChangeLocationButtonClick = useHandleChangeLocationButtonClick();
 
+  console.log(location?.main);
   return (
     <CurrentLocationButtonContainer
       onPress={noClick ? null : handleChangeLocationButtonClick}>
       <Icon name="location-outline" type={IconTypeEnum.Ionicons} />
-      <Text numberOfLines={1}>{user.current_location?.main}</Text>
+      <Text numberOfLines={1}>{location?.main}</Text>
     </CurrentLocationButtonContainer>
   );
 };

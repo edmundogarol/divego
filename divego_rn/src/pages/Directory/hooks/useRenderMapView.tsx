@@ -3,18 +3,21 @@ import { CONTAINER_MARGIN_SMALL } from "@styles/constants";
 import { useCallback } from "react";
 import MapView, { Region, Marker } from "react-native-maps";
 import DiverMarkerImage from "@assets/images/diver_marker.png";
+import useDirectoryState from "./useDirectoryState";
 
 export const useRenderMapView = () => {
   const { user } = useLoginState();
+  const { mapCurrentLocation } = useDirectoryState();
+  const locationToUse = mapCurrentLocation || user.current_location;
 
   return useCallback(
     ({ width, height }: { width: number; height: number }) => {
-      const currentLocation = user.current_location
+      const currentLocation = locationToUse
         ? ({
-            latitude: user.current_location?.coordinates?.lat,
-            longitude: user.current_location?.coordinates?.lng,
-            latitudeDelta: user.current_location?.coordinates?.latitudeDelta,
-            longitudeDelta: user.current_location?.coordinates?.longitudeDelta,
+            latitude: locationToUse?.coordinates?.lat,
+            longitude: locationToUse?.coordinates?.lng,
+            latitudeDelta: locationToUse?.coordinates?.latitudeDelta,
+            longitudeDelta: locationToUse?.coordinates?.longitudeDelta,
           } as Region)
         : undefined;
 
@@ -37,6 +40,9 @@ export const useRenderMapView = () => {
       user.current_location?.main,
       user.current_location?.place_id,
       user.current_location?.coordinates?.lat,
+      mapCurrentLocation?.main,
+      mapCurrentLocation?.place_id,
+      mapCurrentLocation?.coordinates?.lat,
     ],
   );
 };

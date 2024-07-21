@@ -4,11 +4,12 @@ import useLoginState from "@pages/Login/hooks/useLoginState";
 import useLoginDispatch from "@pages/Login/hooks/useLoginDispatch";
 import useProcessPlaceDetailsToLocation from "./useProcessPlaceDetailsToLocation";
 
-const useCurrentLocationPlaceDetailsHandler = (): void => {
+const useCurrentLocationPlaceDetailsHandlerUser = (): void => {
   const { user } = useLoginState();
   const { updateUser } = useLoginDispatch();
   const processPlaceDetailsToLocation = useProcessPlaceDetailsToLocation();
-  const { fetch } = usePlaceDetailsApiCall();
+  const placeDetailsApiCall = usePlaceDetailsApiCall();
+  const { fetch } = placeDetailsApiCall(user.current_location);
 
   useEffect(() => {
     if (!user.current_location?.coordinates?.lat) {
@@ -34,4 +35,4 @@ const useCurrentLocationPlaceDetailsHandler = (): void => {
   }, [user.current_location?.place_id]);
 };
 
-export default useCurrentLocationPlaceDetailsHandler;
+export default useCurrentLocationPlaceDetailsHandlerUser;

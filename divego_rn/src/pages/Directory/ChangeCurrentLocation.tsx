@@ -17,26 +17,42 @@ import { useRenderMapView } from "./hooks/useRenderMapView";
 import useLoginDispatch from "@pages/Login/hooks/useLoginDispatch";
 import { initialState } from "@pages/Login/LoginState";
 import Button from "@components/Button/Button";
+import useDirectoryState from "./hooks/useDirectoryState";
+import useDirectoryDispatch from "./hooks/useDirectoryDispatch";
+import useCurrentLocationPlaceDetailsHandlerView from "./hooks/useCurrentLocationPlaceDetailsHandlerView";
 
 const ChangeCurrentLocation: React.FunctionComponent = () => {
+  const { user } = useLoginState();
+  const { updateUser } = useLoginDispatch();
+  const { mapCurrentLocation } = useDirectoryState();
+  const { updateMapCurrentLocation } = useDirectoryDispatch();
   const [mapDims, setMapDims] = useState({
     width: 0,
     height: 0,
   });
   const navigation = useReactNavigation();
   const renderInputIcon = useRenderInputIcon();
-  const { user } = useLoginState();
-  const { updateUser } = useLoginDispatch();
   const renderMapView = useRenderMapView();
 
   useEffect(() => {
     LogBox.ignoreLogs(["VirtualizedLists should never be nested"]);
   }, []);
 
+  console.log({ mapCurrentLocation });
+  useCurrentLocationPlaceDetailsHandlerView();
   useCustomScreenOptions({
     title: <Text>{"Current Location"}</Text>,
-    backButtonOnPress: () => navigation.goBack(),
-    rightButton: <CurrentLocationButton noClick />,
+    backButtonOnPress: () => {
+      updateMapCurrentLocation(undefined);
+      navigation.goBack();
+    },
+    rightButton: (
+      <CurrentLocationButton
+        noClick
+        location={mapCurrentLocation || user.current_location}
+      />
+    ),
+    depList: [user.current_location, mapCurrentLocation],
   });
 
   return (
@@ -59,15 +75,11 @@ const ChangeCurrentLocation: React.FunctionComponent = () => {
             "Setting current location will suggest dive sites within a 10km radius"
           }
           onGoogleAutoCompleteChange={(data) => {
-            updateUser({
-              ...user,
-              current_location: {
-                ...user.current_location,
-                place_id: data.place_id,
-                description: data.description,
-                main: data.structured_formatting.main_text,
-                coordinates: initialState.user.current_location?.coordinates,
-              },
+            updateMapCurrentLocation({
+              place_id: data.place_id,
+              description: data.description,
+              main: data.structured_formatting.main_text,
+              coordinates: initialState.user.current_location?.coordinates,
             });
           }}
         />
@@ -81,13 +93,20 @@ const ChangeCurrentLocation: React.FunctionComponent = () => {
         </CurrentLocationMapContainer>
         <Gap level={2} />
         <CurrentLocationText>
-          {user.current_location?.description}
+          {mapCurrentLocation?.description ||
+            user.current_location?.description}
         </CurrentLocationText>
         <Gap level={2} />
         <Button
-          disabled={!user.current_location?.description}
+          disabledBlock={!mapCurrentLocation?.description}
           text={"Set Current Location"}
-          onPress={() => navigation.goBack()}
+          onPress={() => {
+            navigation.goBack();
+            updateUser({
+              ...user,
+              current_location: mapCurrentLocation,
+            });
+          }}
         />
       </ScrollView>
     </DirectoryContainer>
