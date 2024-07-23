@@ -4,6 +4,7 @@ import useReactNavigation from "@navigation/hooks/useReactNavigation";
 import BackButton from "@navigation/components/BackButton";
 import { Else, If } from "@components/If/If";
 import { Text } from "react-native";
+import { PageEnum } from "@interfaces/NavigationTypes";
 
 interface CustomScreenOptionProps {
   title: string | JSX.Element;
@@ -16,6 +17,7 @@ interface CustomScreenOptionProps {
   rightButton?: JSX.Element;
   depList?: any[];
   loadCondition?: boolean;
+  onClose?: () => void;
 }
 
 const useCustomScreenOptions = ({
@@ -29,9 +31,23 @@ const useCustomScreenOptions = ({
   rightButtonText,
   depList = [],
   loadCondition = true,
+  onClose,
 }: CustomScreenOptionProps): void => {
   const navigation = useReactNavigation();
   const headerOptions = useCommonHeaderOptions();
+
+  useEffect(() => {
+    if (onClose) {
+      navigation.self().addListener("beforeRemove", (e) => {
+        if (
+          e.target &&
+          e?.target.includes(navigation.getCurrentPageName() as PageEnum)
+        ) {
+          onClose();
+        }
+      });
+    }
+  }, [navigation]);
 
   useEffect(() => {
     if (loadCondition) {

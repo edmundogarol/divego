@@ -20,6 +20,8 @@ import Button from "@components/Button/Button";
 import useDirectoryState from "./hooks/useDirectoryState";
 import useDirectoryDispatch from "./hooks/useDirectoryDispatch";
 import useCurrentLocationPlaceDetailsHandlerView from "./hooks/useCurrentLocationPlaceDetailsHandlerView";
+import { useNavigation } from "@react-navigation/native";
+import React from "react";
 
 const ChangeCurrentLocation: React.FunctionComponent = () => {
   const { user } = useLoginState();
@@ -51,6 +53,7 @@ const ChangeCurrentLocation: React.FunctionComponent = () => {
         location={mapCurrentLocation || user.current_location}
       />
     ),
+    onClose: () => updateMapCurrentLocation(undefined),
     depList: [user.current_location, mapCurrentLocation],
   });
 
@@ -100,11 +103,15 @@ const ChangeCurrentLocation: React.FunctionComponent = () => {
           disabledBlock={!mapCurrentLocation?.description}
           text={"Set Current Location"}
           onPress={() => {
-            navigation.goBack();
-            updateUser({
-              ...user,
-              current_location: mapCurrentLocation,
-            });
+            console.log({ mapCurrentLocation });
+            if (mapCurrentLocation?.description) {
+              updateUser({
+                ...user,
+                current_location: mapCurrentLocation,
+              });
+              updateMapCurrentLocation(undefined);
+              navigation.goBack();
+            }
           }}
         />
       </ScrollView>

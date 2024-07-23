@@ -41,6 +41,7 @@ export const useReactNavigation = (): NativeNavigation => {
     goBack: (): void => navigation.goBack(),
     backToFirstScreen: (): void => navigation.popToTop(),
     setOptions: (options: any): void => navigation.setOptions(options),
+    self: () => navigation,
   }).current;
 };
 

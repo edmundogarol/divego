@@ -4,6 +4,7 @@ import {
   NavigationState,
   ParamListBase,
 } from "@react-navigation/native";
+import { StackNavigationProp } from "@react-navigation/stack";
 
 export enum PageEnum {
   RootNavigator = "RootNavigator",
@@ -49,4 +50,5 @@ export interface NativeNavigation extends Navigation {
   isFocused?: () => boolean;
   setOptions: (options: any) => void;
   canGoBack: () => boolean;
+  self: () => StackNavigationProp<ParamListBase>;
 }
