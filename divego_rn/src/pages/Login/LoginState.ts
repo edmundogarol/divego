@@ -33,6 +33,7 @@ export const initialState: LoginState = {
       description: "",
     },
     locations: [],
+    privileges: [],
     birth_date: "",
     logged_in: false,
     is_staff: false,

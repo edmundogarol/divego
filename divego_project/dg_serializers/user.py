@@ -19,6 +19,7 @@ class UserSerializer(serializers.ModelSerializer):
             "privileges",
             "verified",
             "locations",
+            "privileges",
             "current_location",
             "birth_date",
             "active_role",

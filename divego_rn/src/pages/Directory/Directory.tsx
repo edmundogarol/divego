@@ -14,6 +14,8 @@ import useLoginState from "@pages/Login/hooks/useLoginState";
 import Button from "@components/Button/Button";
 import { useHandleChangeLocationButtonClick } from "./hooks/useHandleChangeLocationButtonClick";
 import { Subtext } from "@components/Input/InputStyledComponents";
+import { If } from "@components/If/If";
+import { Privileges } from "@interfaces/CustomTypes";
 
 const Directory: React.FunctionComponent = () => {
   const { user } = useLoginState();
@@ -28,24 +30,37 @@ const Directory: React.FunctionComponent = () => {
     depList: [user.current_location],
   });
 
+  console.log({ currentLocation: user.current_location, user });
   return (
     <DirectoryContainer>
-      <Button
-        text={"Change Current Location"}
-        onPress={() => handleChangeLocationButtonClick()}
-      />
-      <Gap level={1} />
-      <Subtext>
-        {"Showing suggestions within a 10km radius from current location"}
-      </Subtext>
       <ScrollView scrollEnabled={true}>
+        <Button
+          text={"Change Current Location"}
+          onPress={() => handleChangeLocationButtonClick()}
+        />
         <Gap level={1} />
+        <Subtext>
+          {"Showing suggestions within a 10km radius from current location"}
+        </Subtext>
         <FlatList
           data={mockDirectoryItems}
           scrollEnabled={false}
           renderItem={renderDirectoryItem}
           contentContainerStyle={{}}
         />
+        <Gap level={1} />
+        <If condition={user.privileges.includes(Privileges.SCOUT)}>
+          <Button
+            text={"Nominate Dive Site"}
+            onPress={() => alert("Nominate Dive Site")}
+          />
+          <Gap level={1} />
+          <Subtext>
+            {
+              "It seems like you are one of our special 'Scout' divers. You can nominate new dive sites! Your nominations of potential dive sites can get listed on our directory pending verifications."
+            }
+          </Subtext>
+        </If>
       </ScrollView>
     </DirectoryContainer>
   );

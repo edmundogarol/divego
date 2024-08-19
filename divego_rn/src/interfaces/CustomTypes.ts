@@ -27,6 +27,12 @@ export enum FreediverTypeEnum {
   SPEAR_FISHER = "spear_fisher",
 }
 
+export enum Privileges {
+  SUPER = "super",
+  ADMIN = "admin",
+  SCOUT = "scout",
+}
+
 export interface User {
   id?: number;
   first_name: string;
@@ -37,6 +43,7 @@ export interface User {
   phoneCountry?: ICountry;
   bio?: string;
   locations: Location[];
+  privileges: Privileges[];
   current_location?: Location;
   birth_date?: string;
   logged_in: boolean;

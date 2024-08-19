@@ -4,8 +4,10 @@ BY_LAST_LOGIN = "by_last_login"
 
 SUPER = "super"
 ADMIN = "admin"
+SCOUT = "scout"
 
 PRIVILEGES = (
     (SUPER, "Super"),
     (ADMIN, "Admin"),
+    (SCOUT, "Scout"),
 )

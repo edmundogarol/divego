@@ -20,7 +20,6 @@ import Button from "@components/Button/Button";
 import useDirectoryState from "./hooks/useDirectoryState";
 import useDirectoryDispatch from "./hooks/useDirectoryDispatch";
 import useCurrentLocationPlaceDetailsHandlerView from "./hooks/useCurrentLocationPlaceDetailsHandlerView";
-import { useNavigation } from "@react-navigation/native";
 import React from "react";
 
 const ChangeCurrentLocation: React.FunctionComponent = () => {
