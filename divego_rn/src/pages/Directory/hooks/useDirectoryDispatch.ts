@@ -1,10 +1,15 @@
 import { Dispatch } from "react";
 import { useDispatch } from "react-redux";
 import { Location } from "@interfaces/CustomTypes";
-import { DirectoryAction, updateMapCurrentLocation } from "../DirectoryState";
+import {
+  DirectoryAction,
+  updateMapCurrentLocation,
+  updateMapNominateLocation,
+} from "../DirectoryState";
 
 interface DirectoryDispatch {
   updateMapCurrentLocation(mapCurrentLocation: Location | undefined): void;
+  updateMapNominateLocation(mapNominateLocation: Location | undefined): void;
 }
 
 export const useDirectoryDispatch = (): DirectoryDispatch => {
@@ -12,6 +17,9 @@ export const useDirectoryDispatch = (): DirectoryDispatch => {
   return {
     updateMapCurrentLocation(mapCurrentLocation: Location | undefined): void {
       dispatch(updateMapCurrentLocation(mapCurrentLocation));
+    },
+    updateMapNominateLocation(mapNominateLocation: Location | undefined): void {
+      dispatch(updateMapNominateLocation(mapNominateLocation));
     },
   };
 };

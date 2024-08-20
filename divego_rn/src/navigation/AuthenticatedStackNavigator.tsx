@@ -9,6 +9,7 @@ import useStartUpState from "@pages/StartUp/hooks/useStartUpState";
 import { useCommonHeaderOptions } from "./hooks/useCommonHeaderOptions";
 import FreediveDirectoryModal from "@pages/Directory/FreediveDirectoryModal/FreediveDirectoryModal";
 import ChangeCurrentLocation from "@pages/Directory/ChangeCurrentLocation";
+import NominateDiveSite from "@pages/Directory/NominateDiveSite";
 
 export const Stack = createStackNavigator<AuthenticatedStackNavigatorParams>();
 
@@ -46,6 +47,13 @@ const AuthenticatedStackNavigator: React.FunctionComponent =
             }}
             name={PageEnum.ChangeCurrentLocation}
             component={ChangeCurrentLocation}
+          />
+          <Stack.Screen
+            options={{
+              ...headerOptions,
+            }}
+            name={PageEnum.NominateDiveSite}
+            component={NominateDiveSite}
           />
         </Stack.Group>
       </Stack.Navigator>

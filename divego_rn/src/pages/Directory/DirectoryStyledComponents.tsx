@@ -73,3 +73,14 @@ export const CurrentLocationText = styled.Text`
   text-transform: uppercase;
   color: ${color("SystemLabel2")};
 `;
+
+export const SetPinMarker = styled.ImageBackground`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 50px;
+  height: 70px;
+  flex: 1;
+  z-index: 2;
+  transform: translate(-29px, -39.8px);
+`;

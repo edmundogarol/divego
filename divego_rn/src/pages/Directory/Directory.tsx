@@ -16,6 +16,7 @@ import { useHandleChangeLocationButtonClick } from "./hooks/useHandleChangeLocat
 import { Subtext } from "@components/Input/InputStyledComponents";
 import { If } from "@components/If/If";
 import { Privileges } from "@interfaces/CustomTypes";
+import { PageEnum } from "@interfaces/NavigationTypes";
 
 const Directory: React.FunctionComponent = () => {
   const { user } = useLoginState();
@@ -52,7 +53,7 @@ const Directory: React.FunctionComponent = () => {
         <If condition={user.privileges.includes(Privileges.SCOUT)}>
           <Button
             text={"Nominate Dive Site"}
-            onPress={() => alert("Nominate Dive Site")}
+            onPress={() => navigation.navigate(PageEnum.NominateDiveSite)}
           />
           <Gap level={1} />
           <Subtext>
