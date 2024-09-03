@@ -4,19 +4,23 @@ import { Location } from "@interfaces/CustomTypes";
 export interface DirectoryState {
   readonly mapCurrentLocation: Location | undefined;
   readonly mapNominateLocation: Location | undefined;
+  readonly suggestedNearbyLocation: Location | undefined;
 }
 
 export const initialState: DirectoryState = {
   mapCurrentLocation: undefined,
   mapNominateLocation: undefined,
+  suggestedNearbyLocation: undefined,
 };
 
 type UpdateMapCurrentLocation = PayloadAction<Location | undefined>;
 type UpdateMapNominateLocation = PayloadAction<Location | undefined>;
+type UpdateSuggestedNearbyLocation = PayloadAction<Location | undefined>;
 
 export type DirectoryAction =
   | UpdateMapCurrentLocation
-  | UpdateMapNominateLocation;
+  | UpdateMapNominateLocation
+  | UpdateSuggestedNearbyLocation;
 
 export const directorySlice = createSlice({
   name: "directory",
@@ -28,11 +32,20 @@ export const directorySlice = createSlice({
     updateMapNominateLocation: (state, action: UpdateMapNominateLocation) => {
       state.mapNominateLocation = action.payload;
     },
+    updateSuggestedNearbyLocation: (
+      state,
+      action: UpdateMapNominateLocation,
+    ) => {
+      state.suggestedNearbyLocation = action.payload;
+    },
   },
 });
 
-export const { updateMapCurrentLocation, updateMapNominateLocation } =
-  directorySlice.actions;
+export const {
+  updateMapCurrentLocation,
+  updateMapNominateLocation,
+  updateSuggestedNearbyLocation,
+} = directorySlice.actions;
 export const directoryReducer = directorySlice.reducer;
 
 export default directorySlice.reducer;

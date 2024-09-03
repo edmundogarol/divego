@@ -31,7 +31,6 @@ const Directory: React.FunctionComponent = () => {
     depList: [user.current_location],
   });
 
-  console.log({ currentLocation: user.current_location, user });
   return (
     <DirectoryContainer>
       <ScrollView scrollEnabled={true}>

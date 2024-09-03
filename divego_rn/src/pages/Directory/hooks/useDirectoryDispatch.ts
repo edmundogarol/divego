@@ -5,11 +5,15 @@ import {
   DirectoryAction,
   updateMapCurrentLocation,
   updateMapNominateLocation,
+  updateSuggestedNearbyLocation,
 } from "../DirectoryState";
 
 interface DirectoryDispatch {
   updateMapCurrentLocation(mapCurrentLocation: Location | undefined): void;
   updateMapNominateLocation(mapNominateLocation: Location | undefined): void;
+  updateSuggestedNearbyLocation(
+    suggestedNearbyLocation: Location | undefined,
+  ): void;
 }
 
 export const useDirectoryDispatch = (): DirectoryDispatch => {
@@ -20,6 +24,11 @@ export const useDirectoryDispatch = (): DirectoryDispatch => {
     },
     updateMapNominateLocation(mapNominateLocation: Location | undefined): void {
       dispatch(updateMapNominateLocation(mapNominateLocation));
+    },
+    updateSuggestedNearbyLocation(
+      suggestedNearbyLocation: Location | undefined,
+    ): void {
+      dispatch(updateSuggestedNearbyLocation(suggestedNearbyLocation));
     },
   };
 };

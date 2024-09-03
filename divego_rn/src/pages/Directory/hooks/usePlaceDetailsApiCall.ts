@@ -1,8 +1,6 @@
 import useAxiosFetch, { AxiosFetchWrapperResponse } from "@hooks/useAxiosFetch";
 import { Location } from "@interfaces/CustomTypes";
-import useLoginState from "@pages/Login/hooks/useLoginState";
 import environmentConfig from "@utils/environmentConfig";
-import { useCallback } from "react";
 
 export interface PlaceDetailsApiCallData {
   result: {

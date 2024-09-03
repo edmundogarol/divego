@@ -12,17 +12,22 @@ export const useRenderMapNominationView = () => {
   const locationToUse = mapNominateLocation || user.current_location;
 
   const onRegionChange = (region: Region) => {
-    updateMapNominateLocation({
-      coordinates: {
-        lng: region.longitude,
-        lat: region.latitude,
-        longitudeDelta: region.longitudeDelta,
-        latitudeDelta: region.latitudeDelta,
-      },
+    console.log({
+      useRenderMapNominationViewonRegionChange: region,
+      mapNominateLocation,
     });
+    if (!!mapNominateLocation?.coordinates || !mapNominateLocation) {
+      updateMapNominateLocation({
+        coordinates: {
+          lng: region.longitude,
+          lat: region.latitude,
+          longitudeDelta: 0.0019,
+          latitudeDelta: 0.0019,
+        },
+      });
+    }
   };
 
-  console.log({ mapNominateLocation });
   return useCallback(
     ({ width, height }: { width: number; height: number }) => {
       const currentLocation = {

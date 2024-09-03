@@ -1,5 +1,5 @@
 import React from "react";
-import { Image, LogBox, ScrollView, Text, View } from "react-native";
+import { LogBox, ScrollView, Text } from "react-native";
 import useReactNavigation from "@navigation/hooks/useReactNavigation";
 import useCustomScreenOptions from "@navigation/hooks/useCustomScreenOptions";
 import Gap from "@components/Gap/Gap";
@@ -12,28 +12,29 @@ import {
   DirectoryContainer,
   SetPinMarker,
 } from "./DirectoryStyledComponents";
-import CurrentLocationButton from "./CurrentLocationButton";
 import { useEffect, useState } from "react";
 import useLoginState from "@pages/Login/hooks/useLoginState";
-import { useRenderMapView } from "./hooks/useRenderMapView";
 import useLoginDispatch from "@pages/Login/hooks/useLoginDispatch";
-import { initialState } from "@pages/Login/LoginState";
 import Button from "@components/Button/Button";
 import useDirectoryState from "./hooks/useDirectoryState";
 import useDirectoryDispatch from "./hooks/useDirectoryDispatch";
-import useCurrentLocationPlaceDetailsHandlerView from "./hooks/useCurrentLocationPlaceDetailsHandlerView";
 import DiverMarkerImage from "@assets/images/diver_marker.png";
 import { useRenderMapNominationView } from "./hooks/useRenderMapNominationView";
+import useNominateDiveSiteHandler from "./hooks/useNominateDiveSiteHandler";
+import useProcessPlaceDetailsToCoordinates from "./hooks/useProcessPlaceDetailsToLocation";
+import useNominatedLocationPlaceDetailsHandlerView from "./hooks/useNominatedLocationPlaceDetailsHandlerView";
 
 const NominateDiveSite: React.FunctionComponent = () => {
   const { user } = useLoginState();
   const { updateUser } = useLoginDispatch();
-  const { mapCurrentLocation } = useDirectoryState();
-  const { updateMapCurrentLocation } = useDirectoryDispatch();
+  const { mapNominateLocation, suggestedNearbyLocation } = useDirectoryState();
+  const { updateMapNominateLocation, updateSuggestedNearbyLocation } =
+    useDirectoryDispatch();
   const [mapDims, setMapDims] = useState({
     width: 0,
     height: 0,
   });
+  const [search, toggleSearch] = useState(false);
   const navigation = useReactNavigation();
   const renderInputIcon = useRenderInputIcon();
   const renderMapView = useRenderMapNominationView();
@@ -42,11 +43,13 @@ const NominateDiveSite: React.FunctionComponent = () => {
     LogBox.ignoreLogs(["VirtualizedLists should never be nested"]);
   }, []);
 
-  useCurrentLocationPlaceDetailsHandlerView();
+  useNominateDiveSiteHandler();
+  useNominatedLocationPlaceDetailsHandlerView();
   useCustomScreenOptions({
     title: <Text>{"Nominate Dive Site"}</Text>,
     backButtonOnPress: () => {
-      // updateMapCurrentLocation(undefined);
+      updateMapNominateLocation(undefined);
+      updateSuggestedNearbyLocation(undefined);
       navigation.goBack();
     },
     // rightButton: (
@@ -71,20 +74,30 @@ const NominateDiveSite: React.FunctionComponent = () => {
         }}
         keyboardShouldPersistTaps={"handled"}>
         <Input
-          googleAutoComplete
+          onFocus={() => toggleSearch(!search)}
+          googleAutoComplete={search}
           style={{ zIndex: 3, flex: 1 }}
           placeholder="Enter Dive Site Location"
-          icon={renderInputIcon("search", IconTypeEnum.FontAwesome, false)}
+          icon={renderInputIcon(
+            "search",
+            IconTypeEnum.FontAwesome,
+            false,
+            () => {
+              console.log("pressing");
+              toggleSearch(!search);
+            },
+          )}
           subtext={
             "Nominating a dive site will first go through verification before listing in the Dive Directory"
           }
           onGoogleAutoCompleteChange={(data) => {
-            // updateMapCurrentLocation({
-            //   place_id: data.place_id,
-            //   description: data.description,
-            //   main: data.structured_formatting.main_text,
-            //   coordinates: initialState.user.current_location?.coordinates,
-            // });
+            updateMapNominateLocation({
+              place_id: data.place_id,
+              description: data.description,
+              main: data.structured_formatting.main_text,
+              coordinates: undefined,
+            });
+            toggleSearch(!search);
           }}
         />
         <Gap level={1} />
@@ -99,23 +112,14 @@ const NominateDiveSite: React.FunctionComponent = () => {
         </CurrentLocationMapContainer>
         <Gap level={2} />
         <CurrentLocationText>
-          {mapCurrentLocation?.description ||
-            user.current_location?.description}
+          {suggestedNearbyLocation?.description || "Unknown Location"}
         </CurrentLocationText>
         <Gap level={2} />
         <Button
-          disabledBlock={!mapCurrentLocation?.description}
-          text={"Place Site Pin"}
+          disabledBlock={!suggestedNearbyLocation?.description}
+          text={"Nominate New Dive Site"}
           onPress={() => {
-            console.log({ mapCurrentLocation });
-            if (mapCurrentLocation?.description) {
-              updateUser({
-                ...user,
-                current_location: mapCurrentLocation,
-              });
-              updateMapCurrentLocation(undefined);
-              navigation.goBack();
-            }
+            alert("NOMINATE!");
           }}
         />
       </ScrollView>
