@@ -4,6 +4,7 @@ import MapView, { Region } from "react-native-maps";
 import useDirectoryState from "./useDirectoryState";
 import useLoginState from "@pages/Login/hooks/useLoginState";
 import useDirectoryDispatch from "./useDirectoryDispatch";
+import { mapZoom } from "@utils/utils";
 
 export const useRenderMapNominationView = () => {
   const { user } = useLoginState();
@@ -12,17 +13,13 @@ export const useRenderMapNominationView = () => {
   const locationToUse = mapNominateLocation || user.current_location;
 
   const onRegionChange = (region: Region) => {
-    console.log({
-      useRenderMapNominationViewonRegionChange: region,
-      mapNominateLocation,
-    });
     if (!!mapNominateLocation?.coordinates || !mapNominateLocation) {
       updateMapNominateLocation({
         coordinates: {
           lng: region.longitude,
           lat: region.latitude,
-          longitudeDelta: 0.0019,
-          latitudeDelta: 0.0019,
+          longitudeDelta: mapZoom(2),
+          latitudeDelta: mapZoom(2),
         },
       });
     }

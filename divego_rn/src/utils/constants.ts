@@ -39,3 +39,5 @@ export const FREEDIVE_CERTIFICATIONS_SHORTENED = {
   padi_master_freediver_instructor: "MI",
   padi_freediver_instructor_trainer: "IT",
 };
+
+export const LONG_LAT_DELTA = 0.0019;

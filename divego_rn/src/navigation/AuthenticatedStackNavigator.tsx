@@ -9,7 +9,7 @@ import useStartUpState from "@pages/StartUp/hooks/useStartUpState";
 import { useCommonHeaderOptions } from "./hooks/useCommonHeaderOptions";
 import FreediveDirectoryModal from "@pages/Directory/FreediveDirectoryModal/FreediveDirectoryModal";
 import ChangeCurrentLocation from "@pages/Directory/ChangeCurrentLocation";
-import NominateDiveSite from "@pages/Directory/NominateDiveSite";
+import NominateDiveSite from "@pages/Directory/NominateDiveSite/NominateDiveSite";
 
 export const Stack = createStackNavigator<AuthenticatedStackNavigatorParams>();
 

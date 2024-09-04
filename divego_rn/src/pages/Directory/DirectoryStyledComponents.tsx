@@ -1,7 +1,6 @@
 import Icon from "@components/Icon/Icon";
 import { color } from "@styles/colors";
 import {
-  CONTAINER_MARGIN_DEFAULT,
   CONTAINER_MARGIN_LARGE,
   CONTAINER_MARGIN_SMALL,
   CONTAINER_PADDING_DEFAULT,
@@ -9,10 +8,13 @@ import {
   CONTAINER_PADDING_SMALL,
 } from "@styles/constants";
 import { debugBorder } from "@utils/utils";
+import { Dimensions } from "react-native";
 import styled from "styled-components/native";
+const { width } = Dimensions.get("screen");
 
 export const DirectoryContainer = styled.View`
   padding: ${CONTAINER_PADDING_LARGE}px;
+  width: ${width}px;
 `;
 
 export const DirectoryItemContainer = styled.Pressable`

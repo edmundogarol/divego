@@ -1,4 +1,5 @@
 import { css } from "styled-components";
+import { LONG_LAT_DELTA } from "./constants";
 
 export const isNotEmptyString = (value: string): boolean => {
   return typeof value === "string" && !!value && value !== "";
@@ -30,3 +31,7 @@ export const isJson = (item: any) => {
 };
 
 export const delay = (ms: number) => new Promise((res) => setTimeout(res, ms));
+
+export const mapZoom = (zoomLevel: number) => {
+  return LONG_LAT_DELTA * zoomLevel;
+};

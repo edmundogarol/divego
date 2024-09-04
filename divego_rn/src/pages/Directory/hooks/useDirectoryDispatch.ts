@@ -5,6 +5,7 @@ import {
   DirectoryAction,
   updateMapCurrentLocation,
   updateMapNominateLocation,
+  updateNominateDiveSiteActiveIndex,
   updateSuggestedNearbyLocation,
 } from "../DirectoryState";
 
@@ -14,6 +15,7 @@ interface DirectoryDispatch {
   updateSuggestedNearbyLocation(
     suggestedNearbyLocation: Location | undefined,
   ): void;
+  updateNominateDiveSiteActiveIndex(activeIndex: number): void;
 }
 
 export const useDirectoryDispatch = (): DirectoryDispatch => {
@@ -29,6 +31,9 @@ export const useDirectoryDispatch = (): DirectoryDispatch => {
       suggestedNearbyLocation: Location | undefined,
     ): void {
       dispatch(updateSuggestedNearbyLocation(suggestedNearbyLocation));
+    },
+    updateNominateDiveSiteActiveIndex(activeIndex: number): void {
+      dispatch(updateNominateDiveSiteActiveIndex(activeIndex));
     },
   };
 };

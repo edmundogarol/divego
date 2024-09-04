@@ -32,6 +32,10 @@ env: build
 gui:
 	cd frontend && rm -rf node_modules && yarn && yarn start
 
+lint:
+	cd divego_rn && yarn lint
+
+
 # prodgui:
 # 	cd frontend && yarn && yarn start
 

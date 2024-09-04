@@ -3,12 +3,14 @@ import { Location } from "@interfaces/CustomTypes";
 
 export interface DirectoryState {
   readonly mapCurrentLocation: Location | undefined;
+  readonly nominateDiveSiteActiveIndex: number;
   readonly mapNominateLocation: Location | undefined;
   readonly suggestedNearbyLocation: Location | undefined;
 }
 
 export const initialState: DirectoryState = {
   mapCurrentLocation: undefined,
+  nominateDiveSiteActiveIndex: 0,
   mapNominateLocation: undefined,
   suggestedNearbyLocation: undefined,
 };
@@ -16,11 +18,13 @@ export const initialState: DirectoryState = {
 type UpdateMapCurrentLocation = PayloadAction<Location | undefined>;
 type UpdateMapNominateLocation = PayloadAction<Location | undefined>;
 type UpdateSuggestedNearbyLocation = PayloadAction<Location | undefined>;
+type UpdateNominateDiveSiteActiveIndex = PayloadAction<number>;
 
 export type DirectoryAction =
   | UpdateMapCurrentLocation
   | UpdateMapNominateLocation
-  | UpdateSuggestedNearbyLocation;
+  | UpdateSuggestedNearbyLocation
+  | UpdateNominateDiveSiteActiveIndex;
 
 export const directorySlice = createSlice({
   name: "directory",
@@ -38,6 +42,12 @@ export const directorySlice = createSlice({
     ) => {
       state.suggestedNearbyLocation = action.payload;
     },
+    updateNominateDiveSiteActiveIndex: (
+      state,
+      action: UpdateNominateDiveSiteActiveIndex,
+    ) => {
+      state.nominateDiveSiteActiveIndex = action.payload;
+    },
   },
 });
 
@@ -45,6 +55,7 @@ export const {
   updateMapCurrentLocation,
   updateMapNominateLocation,
   updateSuggestedNearbyLocation,
+  updateNominateDiveSiteActiveIndex,
 } = directorySlice.actions;
 export const directoryReducer = directorySlice.reducer;
 

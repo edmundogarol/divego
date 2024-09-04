@@ -11,23 +11,18 @@ import {
   CurrentLocationText,
   DirectoryContainer,
   SetPinMarker,
-} from "./DirectoryStyledComponents";
+} from "../../DirectoryStyledComponents";
 import { useEffect, useState } from "react";
-import useLoginState from "@pages/Login/hooks/useLoginState";
-import useLoginDispatch from "@pages/Login/hooks/useLoginDispatch";
 import Button from "@components/Button/Button";
-import useDirectoryState from "./hooks/useDirectoryState";
-import useDirectoryDispatch from "./hooks/useDirectoryDispatch";
+import useDirectoryState from "../../hooks/useDirectoryState";
+import useDirectoryDispatch from "../../hooks/useDirectoryDispatch";
 import DiverMarkerImage from "@assets/images/diver_marker.png";
-import { useRenderMapNominationView } from "./hooks/useRenderMapNominationView";
-import useNominateDiveSiteHandler from "./hooks/useNominateDiveSiteHandler";
-import useProcessPlaceDetailsToCoordinates from "./hooks/useProcessPlaceDetailsToLocation";
-import useNominatedLocationPlaceDetailsHandlerView from "./hooks/useNominatedLocationPlaceDetailsHandlerView";
+import { useRenderMapNominationView } from "../../hooks/useRenderMapNominationView";
+import useNominateDiveSiteHandler from "../../hooks/useNominateDiveSiteHandler";
+import useNominatedLocationPlaceDetailsHandlerView from "../../hooks/useNominatedLocationPlaceDetailsHandlerView";
 
-const NominateDiveSite: React.FunctionComponent = () => {
-  const { user } = useLoginState();
-  const { updateUser } = useLoginDispatch();
-  const { mapNominateLocation, suggestedNearbyLocation } = useDirectoryState();
+const NominateDiveSiteMap: React.FunctionComponent = () => {
+  const { suggestedNearbyLocation } = useDirectoryState();
   const { updateMapNominateLocation, updateSuggestedNearbyLocation } =
     useDirectoryDispatch();
   const [mapDims, setMapDims] = useState({
@@ -52,14 +47,11 @@ const NominateDiveSite: React.FunctionComponent = () => {
       updateSuggestedNearbyLocation(undefined);
       navigation.goBack();
     },
-    // rightButton: (
-    //   <CurrentLocationButton
-    //     noClick
-    //     location={mapCurrentLocation || user.current_location}
-    //   />
-    // ),
-    // onClose: () => updateMapCurrentLocation(undefined),
-    // depList: [user.current_location, mapCurrentLocation],
+    onClose: () => {
+      updateMapNominateLocation(undefined);
+      updateSuggestedNearbyLocation(undefined);
+    },
+    depList: [suggestedNearbyLocation],
   });
 
   return (
@@ -127,4 +119,4 @@ const NominateDiveSite: React.FunctionComponent = () => {
   );
 };
 
-export default NominateDiveSite;
+export default NominateDiveSiteMap;

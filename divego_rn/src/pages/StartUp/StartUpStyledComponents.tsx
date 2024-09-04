@@ -10,12 +10,6 @@ import { Dimensions } from "react-native";
 import styled from "styled-components/native";
 const { width } = Dimensions.get("screen");
 
-export const StartUpContainer = styled.View`
-  align-items: center;
-  justify-content: start;
-  height: 100%;
-`;
-
 export const ScreenContentsContainer = styled.View`
   align-items: center;
   justify-content: start;
