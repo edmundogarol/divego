@@ -16,6 +16,7 @@ const useNominateDiveSiteHandler = (): void => {
   useEffect(() => {
     fetch()
       .then(({ data: nearbyPlaces, error }) => {
+        console.log({ nearbyPlaces });
         if (nearbyPlaces && nearbyPlaces.status === "ZERO_RESULTS") {
           updateSuggestedNearbyLocation({
             description: "Unknown Location",
