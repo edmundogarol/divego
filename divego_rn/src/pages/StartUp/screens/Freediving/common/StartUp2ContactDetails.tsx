@@ -16,6 +16,7 @@ import { ScreenRenderProps } from "@pages/StartUp/hooks/useRoleScreens";
 import { initialState } from "@pages/Login/LoginState";
 import useCurrentLocationPlaceDetailsHandlerUser from "@pages/Directory/hooks/useCurrentLocationPlaceDetailsHandlerUser";
 import { useHandleUserCurrentLocationUpdateCallback } from "@hooks/location/useHandleUserCurrentLocationUpdateCallback";
+import { useState } from "react";
 
 const StartUp2ContactDetails: React.FunctionComponent<ScreenRenderProps> = ({
   screenKey,
@@ -28,6 +29,7 @@ const StartUp2ContactDetails: React.FunctionComponent<ScreenRenderProps> = ({
   const renderInputIcon = useRenderInputIcon();
   const handleUserCurrentLocationUpdateCallback =
     useHandleUserCurrentLocationUpdateCallback();
+  const [googleAutoComplete, setGoogleAutoComplete] = useState(true);
 
   useCurrentLocationPlaceDetailsHandlerUser();
   useCustomScreenOptions({
@@ -94,9 +96,13 @@ const StartUp2ContactDetails: React.FunctionComponent<ScreenRenderProps> = ({
 
         <Input
           label="Current City"
-          googleAutoComplete
+          googleAutoComplete={googleAutoComplete}
+          debounce={1000}
+          onFocus={() => setGoogleAutoComplete(true)}
           value={user.current_location?.description}
-          placeholder={"Select current city"}
+          placeholder={
+            user.current_location?.description || "Select current city"
+          }
           icon={renderInputIcon("location", IconTypeEnum.Ionicons, false)}
           onGoogleAutoCompleteChange={(data) => {
             updateUser({
@@ -109,6 +115,7 @@ const StartUp2ContactDetails: React.FunctionComponent<ScreenRenderProps> = ({
                 coordinates: initialState.user.current_location?.coordinates,
               },
             });
+            setGoogleAutoComplete(false);
           }}
           updateCallback={handleUserCurrentLocationUpdateCallback}
           subtext="We will use this to show you nearby, recommended dive sites."

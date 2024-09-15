@@ -31,6 +31,7 @@ export interface InputWrapperProps extends TextInputProps {
     },
     details: any,
   ) => void;
+  debounce?: number;
   updateCallback?: (text: string) => void;
 }
 
@@ -44,6 +45,7 @@ const Input: React.FunctionComponent<InputWrapperProps> = ({
   googleAutoComplete,
   onGoogleAutoCompleteChange,
   updateCallback,
+  debounce,
   ...props
 }) => {
   return (
@@ -58,6 +60,7 @@ const Input: React.FunctionComponent<InputWrapperProps> = ({
         <If condition={googleAutoComplete}>
           <ScrollView>
             <GooglePlacesAutocomplete
+              debounce={debounce}
               placeholder={!!placeholder ? placeholder : "Search"}
               nearbyPlacesAPI="GooglePlacesSearch"
               onFail={(error) => console.log(error)}
