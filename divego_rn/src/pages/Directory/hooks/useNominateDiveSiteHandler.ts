@@ -16,7 +16,6 @@ const useNominateDiveSiteHandler = (): void => {
   useEffect(() => {
     fetch()
       .then(({ data: nearbyPlaces, error }) => {
-        console.log({ nearbyPlaces });
         if (nearbyPlaces && nearbyPlaces.status === "ZERO_RESULTS") {
           updateSuggestedNearbyLocation({
             description: "Unknown Location",
@@ -29,6 +28,7 @@ const useNominateDiveSiteHandler = (): void => {
             coordinates: processPlaceDetailsToCoordinates({
               result: nearbyPlaces.results[0],
             } as unknown as PlaceDetailsApiCallData),
+            photos: nearbyPlaces.results[0].photos,
           });
         } else if (error) {
           console.error("Location details fetch error", error);

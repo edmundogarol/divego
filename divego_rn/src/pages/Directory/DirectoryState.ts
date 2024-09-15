@@ -3,14 +3,14 @@ import { Location } from "@interfaces/CustomTypes";
 
 export interface DirectoryState {
   readonly mapCurrentLocation: Location | undefined;
-  readonly nominateDiveSiteActiveIndex: number;
+  readonly active_index: number;
   readonly mapNominateLocation: Location | undefined;
   readonly suggestedNearbyLocation: Location | undefined;
 }
 
 export const initialState: DirectoryState = {
   mapCurrentLocation: undefined,
-  nominateDiveSiteActiveIndex: 0,
+  active_index: 0,
   mapNominateLocation: undefined,
   suggestedNearbyLocation: undefined,
 };
@@ -46,7 +46,7 @@ export const directorySlice = createSlice({
       state,
       action: UpdateNominateDiveSiteActiveIndex,
     ) => {
-      state.nominateDiveSiteActiveIndex = action.payload;
+      state.active_index = action.payload;
     },
   },
 });

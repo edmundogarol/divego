@@ -20,9 +20,12 @@ import DiverMarkerImage from "@assets/images/diver_marker.png";
 import { useRenderMapNominationView } from "../../hooks/useRenderMapNominationView";
 import useNominateDiveSiteHandler from "../../hooks/useNominateDiveSiteHandler";
 import useNominatedLocationPlaceDetailsHandlerView from "../../hooks/useNominatedLocationPlaceDetailsHandlerView";
+import { ScreenRenderProps } from "@pages/StartUp/hooks/useRoleScreens";
 
-const NominateDiveSiteMap: React.FunctionComponent = () => {
-  const { suggestedNearbyLocation } = useDirectoryState();
+const NominateDiveSiteMap: React.FunctionComponent<ScreenRenderProps> = ({
+  gotoNextPage,
+}) => {
+  const { active_index, suggestedNearbyLocation } = useDirectoryState();
   const { updateMapNominateLocation, updateSuggestedNearbyLocation } =
     useDirectoryDispatch();
   const [mapDims, setMapDims] = useState({
@@ -51,7 +54,10 @@ const NominateDiveSiteMap: React.FunctionComponent = () => {
       updateMapNominateLocation(undefined);
       updateSuggestedNearbyLocation(undefined);
     },
-    depList: [suggestedNearbyLocation],
+    rightButtonOnPress: () => gotoNextPage(),
+    rightButtonText: "Next",
+    rightButtonDisabled: !suggestedNearbyLocation,
+    depList: [suggestedNearbyLocation, active_index],
   });
 
   return (
@@ -66,6 +72,7 @@ const NominateDiveSiteMap: React.FunctionComponent = () => {
         }}
         keyboardShouldPersistTaps={"handled"}>
         <Input
+          debounce={1000}
           onFocus={() => toggleSearch(!search)}
           googleAutoComplete={search}
           style={{ zIndex: 3, flex: 1 }}
@@ -75,7 +82,6 @@ const NominateDiveSiteMap: React.FunctionComponent = () => {
             IconTypeEnum.FontAwesome,
             false,
             () => {
-              console.log("pressing");
               toggleSearch(!search);
             },
           )}
@@ -111,7 +117,7 @@ const NominateDiveSiteMap: React.FunctionComponent = () => {
           disabledBlock={!suggestedNearbyLocation?.description}
           text={"Nominate New Dive Site"}
           onPress={() => {
-            alert("NOMINATE!");
+            gotoNextPage();
           }}
         />
       </ScrollView>

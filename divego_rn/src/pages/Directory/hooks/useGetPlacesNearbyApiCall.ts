@@ -1,5 +1,5 @@
 import useAxiosFetch, { AxiosFetchWrapperResponse } from "@hooks/useAxiosFetch";
-import { Location } from "@interfaces/CustomTypes";
+import { Location, LocationPhoto } from "@interfaces/CustomTypes";
 import environmentConfig from "@utils/environmentConfig";
 
 export interface NearbyPlacesDetailsApiCallData {
@@ -24,6 +24,7 @@ export interface NearbyPlacesDetailsApiCallData {
           };
         };
       };
+      photos: LocationPhoto[];
     },
   ];
   status: string;

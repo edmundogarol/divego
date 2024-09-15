@@ -65,6 +65,23 @@ export interface Location {
     latitudeDelta: number;
     longitudeDelta: number;
   };
+  photos?: LocationPhoto[];
+}
+
+export interface LocationNominee extends Location {
+  amenities: LocationAmenities[];
+}
+
+export interface LocationPhoto {
+  photo_reference: string;
+}
+
+export enum LocationAmenities {
+  Shower = "shower",
+  Toilet = "toilet",
+  Food = "food",
+  Gym = "gym",
+  RestArea = "rest_area",
 }
 
 export interface RoleDetails {

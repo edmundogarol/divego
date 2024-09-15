@@ -5,13 +5,13 @@ import useDirectoryDispatch from "../hooks/useDirectoryDispatch";
 import Carousel from "@components/Carousel/Carousel";
 
 const NominateDiveSite: React.FunctionComponent = () => {
-  const { nominateDiveSiteActiveIndex } = useDirectoryState();
+  const { active_index } = useDirectoryState();
   const { updateNominateDiveSiteActiveIndex } = useDirectoryDispatch();
   const nominateDiveSiteScreens = useNominateDiveSiteScreens();
 
   return (
     <Carousel
-      activeIndex={nominateDiveSiteActiveIndex}
+      activeIndex={active_index}
       updateIndex={updateNominateDiveSiteActiveIndex}
       screens={nominateDiveSiteScreens}
     />
