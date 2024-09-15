@@ -116,6 +116,7 @@ prepare_ios() {
   yarn cache clean
   
   # Prepare
+  yarn prep
   yarn pods
   watchman watch-del '/Users/YungYung/Code/divego/divego_rn' ; watchman watch-project '/Users/YungYung/Code/divego/divego_rn'  
   yarn start

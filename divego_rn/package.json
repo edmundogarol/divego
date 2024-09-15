@@ -8,7 +8,7 @@
     "ios": "ENVFILE=.env.dev react-native run-ios --simulator=\"iPhone 15\"",
     "pods": "cd ios && bundle exec pod install --repo-update && cd ..",
     "clean-android": "yarn cache clean && cd android && ./gradlew clean && cd ..",
-    "clean-ios": "yarn cache clean && xattr -w com.apple.xcode.CreatedByBuildSystem true /Users/YungYung/Code/divego/divego_rn/ios/build && cd ios && xcodebuild clean && cd ..",
+    "clean-ios": "yarn cache clean && cd ios && xcodebuild clean && cd ..",
     "lint": "eslint .",
     "start": "react-native start --resetCache",
     "test": "jest"
@@ -26,7 +26,7 @@
     "axios": "^1.6.8",
     "lodash": "^4.17.21",
     "react": "18.2.0",
-    "react-native": "0.74.3",
+    "react-native": "0.73.6",
     "react-native-animated-pagination-dots": "^0.1.73",
     "react-native-config": "^1.5.3",
     "react-native-gesture-handler": "^2.16.1",
