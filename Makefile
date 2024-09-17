@@ -25,7 +25,7 @@ native:
 	cd divego_rn && yarn start
 	
 ios:
-	cd divego_rn && yarn ios
+	cd divego_rn && cat .env.dev &&  yarn ios
 
 env: build
 

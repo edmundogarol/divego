@@ -1,5 +1,4 @@
 # Resolve react_native_pods.rb with node to allow for hoisting
-pod 'react-native-config', :path => '../node_modules/react-native-config'
 
 require Pod::Executable.execute_command('node', ['-p',
   'require.resolve(
@@ -30,9 +29,7 @@ end
 
 target 'divego_rn' do
   # React Native Maps dependencies
-  rn_maps_path = '../node_modules/react-native-maps'
-  pod 'react-native-google-maps', :path => rn_maps_path
-
+  pod 'react-native-google-maps', :path => '../node_modules/react-native-maps'
   config = use_native_modules!
 
   use_react_native!(

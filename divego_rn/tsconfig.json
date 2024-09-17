@@ -28,7 +28,8 @@
           "vendorPrefix": "error",
         }
       }
-    ]
+    ],
+    "typeRoots": ["./types"],
   },
   "include": [
     "**/*.ts",

@@ -1,18 +1,13 @@
 #!/bin/bash
 
-# ENV_FILE="./docker/compose/.env"
+ENV_FILE="./divego_rn/.env.dev"
 
-# if [ -f "$ENV_FILE" ]; then
-#   source "$ENV_FILE"
-# else
-#   echo "The .env file was not found at $ENV_FILE."
-#   exit 1
-# fi
-
-# if [ -z "$NODE_VERSION" ]; then
-#   echo "NODE_VERSION is not set in the .env file."
-#   exit 1
-# fi
+if [ -f "$ENV_FILE" ]; then
+  source "$ENV_FILE"
+else
+  echo "The .env file was not found at $ENV_FILE."
+  exit 1
+fi
 
 # readonly REQUIRED_NODE_VERSION="$NODE_VERSION"
 # readonly REQUIRED_POD_VERSION="1.15"
@@ -113,12 +108,8 @@ prepare_ios() {
   rm -rf ios/Pods ios/Podfile.lock ios/build
   rm -rf ~/Library/Developer/Xcode/DerivedData/
   yarn clean-ios
-  yarn cache clean
   
-  # Prepare
-  yarn prep
   yarn pods
-  watchman watch-del '/Users/YungYung/Code/divego/divego_rn' ; watchman watch-project '/Users/YungYung/Code/divego/divego_rn'  
   yarn start
 }
 
@@ -146,6 +137,14 @@ prepare_ios() {
 #   echo 'Preparing Web Environment...'
 # }
 
+install_npm_packages() {
+  echo 'Installing yarn packages...'
+  cd divego_rn
+  yarn cache clean
+  yarn prep
+  cd ..
+}
+
 prepare_target_environment() {
   case $TYPE in
     web)
@@ -172,7 +171,7 @@ prepare_target_environment() {
 
 # install_brew_and_watchman
 # install_nodejs
-
+install_npm_packages
 prepare_target_environment
 
 echo 'Done!'

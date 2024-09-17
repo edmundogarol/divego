@@ -7,3 +7,8 @@ declare module "*.svg" {
 
 declare module "*.jpg";
 declare module "*.png";
+
+declare module "react-native-dotenv" {
+  export const HOST: string;
+  export const GOOGLE_MAPS_API_KEY: string;
+}

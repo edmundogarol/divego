@@ -1,12 +1,12 @@
-import Config from "react-native-config";
+//@ts-ignore
+import { HOST, GOOGLE_MAPS_API_KEY } from "@env";
 
 export interface EnvironmentConfig {
   HOST?: string;
   GOOGLE_MAPS_API_KEY?: string;
 }
 
-const { HOST, GOOGLE_MAPS_API_KEY } = Config;
-
+console.log({ HOST, GOOGLE_MAPS_API_KEY });
 const environmentConfig: EnvironmentConfig = {
   HOST,
   GOOGLE_MAPS_API_KEY,
