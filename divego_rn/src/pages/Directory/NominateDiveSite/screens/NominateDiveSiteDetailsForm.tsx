@@ -20,7 +20,7 @@ const NominateDiveSiteDetailsForm: React.FunctionComponent<
   ScreenRenderProps
 > = ({ screenKey, gotoPrevPage, gotoNextPage }) => {
   const { user } = useLoginState();
-  const { updateMapNominateLocation } = useDirectoryDispatch();
+  const { updateSuggestedNearbyLocation } = useDirectoryDispatch();
   const { active_index, mapNominateLocation, suggestedNearbyLocation } =
     useDirectoryState();
   const renderInputIcon = useRenderInputIcon();
@@ -33,10 +33,13 @@ const NominateDiveSiteDetailsForm: React.FunctionComponent<
       !user.current_location?.place_id || !user.first_name || !user.last_name,
     rightButtonText: "Submit",
     loadCondition: active_index.toString() === screenKey,
-    depList: [active_index, user],
+    depList: [active_index, user, suggestedNearbyLocation],
   });
 
-  console.log({ mapNominateLocation, suggestedNearbyLocation });
+  console.log({
+    mapNominateLocation: mapNominateLocation?.description,
+    suggestedNearbyLocation: suggestedNearbyLocation?.description,
+  });
   return (
     <ScreenContentsContainer>
       <NominateDiveSiteDetailsFormContainer>
@@ -68,8 +71,8 @@ const NominateDiveSiteDetailsForm: React.FunctionComponent<
             false,
           )}
           onChange={(e) => {
-            updateMapNominateLocation({
-              ...mapNominateLocation,
+            updateSuggestedNearbyLocation({
+              ...suggestedNearbyLocation,
               description: e.nativeEvent.text,
             });
           }}
