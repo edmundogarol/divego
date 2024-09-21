@@ -66,6 +66,7 @@ export interface Location {
     longitudeDelta: number;
   };
   photos?: LocationPhoto[];
+  uploadedPhoto?: Asset;
 }
 
 export interface LocationNominee extends Location {

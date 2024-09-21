@@ -1,6 +1,11 @@
 import { color } from "@styles/colors";
-import { BUTTON_SIZE, CONTAINER_PADDING_DEFAULT } from "@styles/constants";
+import {
+  BUTTON_SIZE,
+  CONTAINER_PADDING_DEFAULT,
+  CONTAINER_PADDING_SMALL,
+} from "@styles/constants";
 import styled from "styled-components/native";
+import { ButtonType } from "./ButtonInterfaces";
 
 export const PressableWrapper = styled.Pressable<{
   loading?: boolean;
@@ -29,7 +34,67 @@ export const PressableWrapper = styled.Pressable<{
   align-items: center;
 `;
 
-export const ButtonText = styled.Text`
+export const ButtonText = styled.Text<{ buttonType?: ButtonType }>`
   font-size: 17px;
-  color: white;
+  color: ${({ buttonType }) => {
+    switch (buttonType) {
+      case ButtonType.Block:
+        return "white";
+      case ButtonType.Outline:
+      case ButtonType.HuggingOutline:
+        return color("SystemBlue3");
+    }
+  }};
+`;
+
+export const OutlinedPressableWrapper = styled.Pressable<{
+  loading?: boolean;
+  transparent?: boolean;
+  disabledBlock?: boolean;
+}>`
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  background-color: ${({ loading, transparent, disabledBlock }) => {
+    if (loading) {
+      return "#c1d5e7";
+    }
+    if (disabledBlock) {
+      return color("SystemLabel1");
+    }
+    return "transparent";
+  }};
+  padding: ${CONTAINER_PADDING_DEFAULT}px;
+  width: 100%;
+  height: ${BUTTON_SIZE}px;
+  border-radius: 5px;
+  align-items: center;
+  border-width: 1px;
+  border-color: ${color("SystemBlue3")};
+`;
+
+export const HuggingOutlinedPressableWrapper = styled.Pressable<{
+  loading?: boolean;
+  transparent?: boolean;
+  disabledBlock?: boolean;
+}>`
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  background-color: ${({ loading, transparent, disabledBlock }) => {
+    if (loading) {
+      return "#c1d5e7";
+    }
+    if (disabledBlock) {
+      return color("SystemLabel1");
+    }
+    return "transparent";
+  }};
+  padding: ${CONTAINER_PADDING_SMALL}px;
+  padding-left: ${CONTAINER_PADDING_DEFAULT}px;
+  padding-right: ${CONTAINER_PADDING_DEFAULT}px;
+  border-radius: 10px;
+  align-items: center;
+  border-width: 1px;
+  border-color: ${color("SystemBlue3")};
 `;

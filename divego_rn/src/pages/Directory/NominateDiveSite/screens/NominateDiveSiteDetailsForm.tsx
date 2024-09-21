@@ -7,6 +7,8 @@ import useCustomScreenOptions from "@navigation/hooks/useCustomScreenOptions";
 import useLoginState from "@pages/Login/hooks/useLoginState";
 import { ScreenRenderProps } from "@pages/StartUp/hooks/useRoleScreens";
 import {
+  ChangeDiveSiteImageButton,
+  DiveSiteImageButtonsContainer,
   NominateDiveSiteDetailsFormContainer,
   NominateDiveSitePhoto,
   NominateDiveSitePhotoContainer,
@@ -15,6 +17,10 @@ import useDirectoryState from "@pages/Directory/hooks/useDirectoryState";
 import useDirectoryDispatch from "@pages/Directory/hooks/useDirectoryDispatch";
 import environmentConfig from "@utils/environmentConfig";
 import { If } from "@components/If/If";
+import Button from "@components/Button/Button";
+import { color } from "@styles/colors";
+import { ButtonType } from "@components/Button/ButtonInterfaces";
+import { launchImageLibrary } from "react-native-image-picker";
 
 const NominateDiveSiteDetailsForm: React.FunctionComponent<
   ScreenRenderProps
@@ -24,6 +30,23 @@ const NominateDiveSiteDetailsForm: React.FunctionComponent<
   const { active_index, mapNominateLocation, suggestedNearbyLocation } =
     useDirectoryState();
   const renderInputIcon = useRenderInputIcon();
+  const diveSiteImage =
+    suggestedNearbyLocation?.uploadedPhoto?.uri ||
+    `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=${
+      suggestedNearbyLocation?.photos &&
+      suggestedNearbyLocation.photos[0].photo_reference
+    }&key=${environmentConfig.GOOGLE_MAPS_API_KEY}`;
+
+  const handleChoosePhoto = async () => {
+    launchImageLibrary({ mediaType: "photo" }, (response) => {
+      if (response && response.assets) {
+        updateSuggestedNearbyLocation({
+          ...suggestedNearbyLocation,
+          uploadedPhoto: response.assets[0],
+        });
+      }
+    });
+  };
 
   useCustomScreenOptions({
     title: "Dive Site Details",
@@ -51,12 +74,28 @@ const NominateDiveSiteDetailsForm: React.FunctionComponent<
           <NominateDiveSitePhotoContainer>
             <NominateDiveSitePhoto
               source={{
-                uri: `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=${
-                  suggestedNearbyLocation?.photos &&
-                  suggestedNearbyLocation.photos[0].photo_reference
-                }&key=${environmentConfig.GOOGLE_MAPS_API_KEY}`,
+                uri: diveSiteImage,
               }}
             />
+            <DiveSiteImageButtonsContainer>
+              <ChangeDiveSiteImageButton
+                type={ButtonType.HuggingOutline}
+                text={"Change Dive Site Image"}
+                onPress={() => handleChoosePhoto()}
+                textStyle={{ fontSize: 14 }}
+              />
+              <ChangeDiveSiteImageButton
+                type={ButtonType.HuggingOutline}
+                text={"Reset Image"}
+                onPress={() =>
+                  updateSuggestedNearbyLocation({
+                    ...suggestedNearbyLocation,
+                    uploadedPhoto: undefined,
+                  })
+                }
+                textStyle={{ fontSize: 14 }}
+              />
+            </DiveSiteImageButtonsContainer>
           </NominateDiveSitePhotoContainer>
         </If>
         <Gap level={1} />
