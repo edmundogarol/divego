@@ -43,6 +43,15 @@ const useRenderAmenityIconsList = () => {
               type={IconTypeEnum.Ionicons}
             />
           );
+        case "fee":
+          return (
+            <DirectoryAmenitiesIconContainer
+              key={idx}
+              color={color("SystemWhite")}
+              name="dollar"
+              type={IconTypeEnum.FontAwesome}
+            />
+          );
         default:
           return (
             <DirectoryAmenitiesIconContainer

@@ -10,7 +10,7 @@ const mockDirectoryItems = [
     place_id: "1231231",
     description: "Club Kontiki",
     img: clubkontiki,
-    amenities: ["showers", "toilet", "food"],
+    amenities: ["showers", "toilet", "food", "fee"],
   },
   {
     id: 2,

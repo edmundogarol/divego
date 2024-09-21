@@ -36,6 +36,14 @@ const useRenderAmenityIcon = () => {
             type={IconTypeEnum.Ionicons}
           />
         );
+      case "fee":
+        return (
+          <NominateAmenitiesButtonIcon
+            active={active}
+            name="dollar"
+            type={IconTypeEnum.FontAwesome}
+          />
+        );
       default:
         return (
           <NominateAmenitiesButtonIcon

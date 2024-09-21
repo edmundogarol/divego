@@ -19,6 +19,7 @@ export const initialState: DirectoryState = {
     showers: false,
     food: false,
     gym: false,
+    fee: false,
   },
 };
 
