@@ -4,7 +4,6 @@ import useReactNavigation from "@navigation/hooks/useReactNavigation";
 import useCustomScreenOptions from "@navigation/hooks/useCustomScreenOptions";
 import Gap from "@components/Gap/Gap";
 import useRenderDirectoryItem from "./hooks/useRenderDirectoryItem";
-import mockDirectoryItems from "./mocks/mockDirectoryItems";
 import { DirectoryContainer } from "./DirectoryStyledComponents";
 import CurrentLocationButton from "./CurrentLocationButton";
 import useLoginState from "@pages/Login/hooks/useLoginState";
@@ -14,10 +13,12 @@ import { Subtext } from "@components/Input/InputStyledComponents";
 import { If } from "@components/If/If";
 import { Privileges } from "@interfaces/CustomTypes";
 import { PageEnum } from "@interfaces/NavigationTypes";
+import useDirectoryState from "./hooks/useDirectoryState";
 
 const Directory: React.FunctionComponent = () => {
   const { user } = useLoginState();
   const navigation = useReactNavigation();
+  const { nearbyLocations } = useDirectoryState();
   const renderDirectoryItem = useRenderDirectoryItem();
   const handleChangeLocationButtonClick = useHandleChangeLocationButtonClick();
 
@@ -40,7 +41,7 @@ const Directory: React.FunctionComponent = () => {
           {"Showing suggestions within a 10km radius from current location"}
         </Subtext>
         <FlatList
-          data={mockDirectoryItems}
+          data={Object.values(nearbyLocations)}
           scrollEnabled={false}
           renderItem={renderDirectoryItem}
           contentContainerStyle={{}}

@@ -55,7 +55,7 @@ export interface User {
 }
 
 export interface Location {
-  id?: string;
+  id: number;
   place_id?: string;
   description?: string;
   main?: string;
@@ -67,11 +67,15 @@ export interface Location {
   };
   photos?: LocationPhoto[];
   uploadedPhoto?: Asset;
-}
-
-export interface LocationNominee extends Location {
+  mapPhoto?: ImageData | Asset;
   amenities: LocationAmenities[];
 }
+
+export interface LocationsNearby extends Location {
+  active: boolean;
+}
+
+export type LocationsNearbyMapped = { [key: number]: LocationsNearby };
 
 export interface LocationPhoto {
   photo_reference: string;
@@ -82,6 +86,7 @@ export enum LocationAmenities {
   Toilet = "toilet",
   Food = "food",
   Gym = "gym",
+  Fee = "fee",
   RestArea = "rest_area",
 }
 

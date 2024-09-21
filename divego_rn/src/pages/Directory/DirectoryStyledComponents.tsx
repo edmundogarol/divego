@@ -17,8 +17,8 @@ export const DirectoryContainer = styled.View`
   width: ${width}px;
 `;
 
-export const DirectoryItemContainer = styled.Pressable`
-  height: 100px;
+export const DirectoryItemContainer = styled.Pressable<{ active?: boolean }>`
+  height: ${(props) => (props.active ? 200 : 100)}px;
   margin-top: ${CONTAINER_MARGIN_SMALL}px;
   margin-bottom: ${CONTAINER_MARGIN_SMALL}px;
   overflow: hidden;
@@ -27,8 +27,8 @@ export const DirectoryItemContainer = styled.Pressable`
   border-width: 1px;
 `;
 
-export const DirectoryItemImage = styled.ImageBackground`
-  height: 100px;
+export const DirectoryItemImage = styled.ImageBackground<{ active?: boolean }>`
+  height: ${(props) => (props.active ? 200 : 100)}px;
 `;
 
 export const DirectoryItemHeader = styled.View`

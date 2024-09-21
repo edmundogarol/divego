@@ -1,10 +1,16 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { Location } from "@interfaces/CustomTypes";
+import {
+  Location,
+  LocationsNearby,
+  LocationsNearbyMapped,
+} from "@interfaces/CustomTypes";
+import mockDirectoryItems from "./mocks/mockDirectoryItems";
 
 export interface DirectoryState {
   readonly mapCurrentLocation: Location | undefined;
   readonly active_index: number;
   readonly mapNominateLocation: Location | undefined;
+  readonly nearbyLocations: LocationsNearbyMapped;
   readonly suggestedNearbyLocation: Location | undefined;
   readonly diveSiteAmenityChoices: { [key: string]: boolean };
 }
@@ -14,6 +20,7 @@ export const initialState: DirectoryState = {
   active_index: 0,
   mapNominateLocation: undefined,
   suggestedNearbyLocation: undefined,
+  nearbyLocations: mockDirectoryItems,
   diveSiteAmenityChoices: {
     toilet: false,
     showers: false,
@@ -28,13 +35,15 @@ type UpdateMapNominateLocation = PayloadAction<Location | undefined>;
 type UpdateSuggestedNearbyLocation = PayloadAction<Location | undefined>;
 type UpdateNominateDiveSiteActiveIndex = PayloadAction<number>;
 type UpdateDiveSiteActiveAmenities = PayloadAction<string>;
+type UpdateNearbyLocations = PayloadAction<LocationsNearbyMapped>;
 
 export type DirectoryAction =
   | UpdateMapCurrentLocation
   | UpdateMapNominateLocation
   | UpdateSuggestedNearbyLocation
   | UpdateNominateDiveSiteActiveIndex
-  | UpdateDiveSiteActiveAmenities;
+  | UpdateDiveSiteActiveAmenities
+  | UpdateNearbyLocations;
 
 export const directorySlice = createSlice({
   name: "directory",
@@ -67,6 +76,9 @@ export const directorySlice = createSlice({
         [action.payload]: !state.diveSiteAmenityChoices[action.payload],
       };
     },
+    updateNearbyLocations: (state, action) => {
+      state.nearbyLocations = action.payload;
+    },
   },
 });
 
@@ -76,6 +88,7 @@ export const {
   updateSuggestedNearbyLocation,
   updateNominateDiveSiteActiveIndex,
   updateDiveSiteActiveAmenities,
+  updateNearbyLocations,
 } = directorySlice.actions;
 export const directoryReducer = directorySlice.reducer;
 

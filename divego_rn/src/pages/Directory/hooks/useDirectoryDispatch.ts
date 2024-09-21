@@ -1,11 +1,12 @@
 import { Dispatch } from "react";
 import { useDispatch } from "react-redux";
-import { Location } from "@interfaces/CustomTypes";
+import { Location, LocationsNearbyMapped } from "@interfaces/CustomTypes";
 import {
   DirectoryAction,
   updateDiveSiteActiveAmenities,
   updateMapCurrentLocation,
   updateMapNominateLocation,
+  updateNearbyLocations,
   updateNominateDiveSiteActiveIndex,
   updateSuggestedNearbyLocation,
 } from "../DirectoryState";
@@ -18,6 +19,7 @@ interface DirectoryDispatch {
   ): void;
   updateNominateDiveSiteActiveIndex(activeIndex: number): void;
   updateDiveSiteActiveAmenities(amenity: string): void;
+  updateNearbyLocations(nearbyLocations: LocationsNearbyMapped): void;
 }
 
 export const useDirectoryDispatch = (): DirectoryDispatch => {
@@ -39,6 +41,9 @@ export const useDirectoryDispatch = (): DirectoryDispatch => {
     },
     updateDiveSiteActiveAmenities(amenity: string): void {
       dispatch(updateDiveSiteActiveAmenities(amenity));
+    },
+    updateNearbyLocations(nearbyLocations: LocationsNearbyMapped): void {
+      dispatch(updateNearbyLocations(nearbyLocations));
     },
   };
 };

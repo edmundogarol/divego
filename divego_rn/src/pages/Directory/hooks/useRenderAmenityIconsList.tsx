@@ -1,9 +1,10 @@
 import { IconTypeEnum } from "@components/Icon/IconInterfaces";
 import { color } from "@styles/colors";
 import { DirectoryAmenitiesIconContainer } from "../DirectoryStyledComponents";
+import { LocationsNearby } from "@interfaces/CustomTypes";
 
 const useRenderAmenityIconsList = () => {
-  return (item: { amenities: string[] }) =>
+  return (item: LocationsNearby) =>
     !!item &&
     item.amenities?.map((amenity: string, idx: number) => {
       switch (amenity) {
