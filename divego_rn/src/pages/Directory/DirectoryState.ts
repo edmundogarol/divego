@@ -6,6 +6,7 @@ export interface DirectoryState {
   readonly active_index: number;
   readonly mapNominateLocation: Location | undefined;
   readonly suggestedNearbyLocation: Location | undefined;
+  readonly diveSiteAmenityChoices: { [key: string]: boolean };
 }
 
 export const initialState: DirectoryState = {
@@ -13,18 +14,26 @@ export const initialState: DirectoryState = {
   active_index: 0,
   mapNominateLocation: undefined,
   suggestedNearbyLocation: undefined,
+  diveSiteAmenityChoices: {
+    toilet: false,
+    showers: false,
+    food: false,
+    gym: false,
+  },
 };
 
 type UpdateMapCurrentLocation = PayloadAction<Location | undefined>;
 type UpdateMapNominateLocation = PayloadAction<Location | undefined>;
 type UpdateSuggestedNearbyLocation = PayloadAction<Location | undefined>;
 type UpdateNominateDiveSiteActiveIndex = PayloadAction<number>;
+type UpdateDiveSiteActiveAmenities = PayloadAction<string>;
 
 export type DirectoryAction =
   | UpdateMapCurrentLocation
   | UpdateMapNominateLocation
   | UpdateSuggestedNearbyLocation
-  | UpdateNominateDiveSiteActiveIndex;
+  | UpdateNominateDiveSiteActiveIndex
+  | UpdateDiveSiteActiveAmenities;
 
 export const directorySlice = createSlice({
   name: "directory",
@@ -48,6 +57,15 @@ export const directorySlice = createSlice({
     ) => {
       state.active_index = action.payload;
     },
+    updateDiveSiteActiveAmenities: (
+      state,
+      action: UpdateDiveSiteActiveAmenities,
+    ) => {
+      state.diveSiteAmenityChoices = {
+        ...state.diveSiteAmenityChoices,
+        [action.payload]: !state.diveSiteAmenityChoices[action.payload],
+      };
+    },
   },
 });
 
@@ -56,6 +74,7 @@ export const {
   updateMapNominateLocation,
   updateSuggestedNearbyLocation,
   updateNominateDiveSiteActiveIndex,
+  updateDiveSiteActiveAmenities,
 } = directorySlice.actions;
 export const directoryReducer = directorySlice.reducer;
 

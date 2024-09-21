@@ -6,11 +6,11 @@ import {
   DirectoryItemImage,
   DirectoryItemText,
 } from "../DirectoryStyledComponents";
-import useRenderAmenityIcons from "./useRenderAmenityIcons";
+import useRenderAmenityIconsList from "./useRenderAmenityIconsList";
 
 const useRenderDirectoryItem = () =>
   useCallback(({ item }: any) => {
-    const renderAmenityIcons = useRenderAmenityIcons();
+    const renderAmenityIconsList = useRenderAmenityIconsList();
 
     return (
       <DirectoryItemContainer>
@@ -18,7 +18,7 @@ const useRenderDirectoryItem = () =>
           <DirectoryItemHeader>
             <DirectoryItemText>{item.description}</DirectoryItemText>
             <DirectoryAmenitiesContainer>
-              {renderAmenityIcons(item)}
+              {renderAmenityIconsList(item)}
             </DirectoryAmenitiesContainer>
           </DirectoryItemHeader>
         </DirectoryItemImage>

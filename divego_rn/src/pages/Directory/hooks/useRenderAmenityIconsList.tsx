@@ -2,7 +2,7 @@ import { IconTypeEnum } from "@components/Icon/IconInterfaces";
 import { color } from "@styles/colors";
 import { DirectoryAmenitiesIconContainer } from "../DirectoryStyledComponents";
 
-const useRenderAmenityIcons = () => {
+const useRenderAmenityIconsList = () => {
   return (item: { amenities: string[] }) =>
     !!item &&
     item.amenities?.map((amenity: string, idx: number) => {
@@ -56,4 +56,4 @@ const useRenderAmenityIcons = () => {
     });
 };
 
-export default useRenderAmenityIcons;
+export default useRenderAmenityIconsList;

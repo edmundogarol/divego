@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import { Location } from "@interfaces/CustomTypes";
 import {
   DirectoryAction,
+  updateDiveSiteActiveAmenities,
   updateMapCurrentLocation,
   updateMapNominateLocation,
   updateNominateDiveSiteActiveIndex,
@@ -16,6 +17,7 @@ interface DirectoryDispatch {
     suggestedNearbyLocation: Location | undefined,
   ): void;
   updateNominateDiveSiteActiveIndex(activeIndex: number): void;
+  updateDiveSiteActiveAmenities(amenity: string): void;
 }
 
 export const useDirectoryDispatch = (): DirectoryDispatch => {
@@ -34,6 +36,9 @@ export const useDirectoryDispatch = (): DirectoryDispatch => {
     },
     updateNominateDiveSiteActiveIndex(activeIndex: number): void {
       dispatch(updateNominateDiveSiteActiveIndex(activeIndex));
+    },
+    updateDiveSiteActiveAmenities(amenity: string): void {
+      dispatch(updateDiveSiteActiveAmenities(amenity));
     },
   };
 };

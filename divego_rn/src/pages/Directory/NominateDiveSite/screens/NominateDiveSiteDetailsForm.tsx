@@ -7,6 +7,8 @@ import useCustomScreenOptions from "@navigation/hooks/useCustomScreenOptions";
 import useLoginState from "@pages/Login/hooks/useLoginState";
 import { ScreenRenderProps } from "@pages/StartUp/hooks/useRoleScreens";
 import {
+  AmenitiesContainer,
+  AmenityButton,
   ChangeDiveSiteImageButton,
   DiveSiteImageButtonsContainer,
   NominateDiveSiteDetailsFormContainer,
@@ -16,20 +18,28 @@ import {
 import useDirectoryState from "@pages/Directory/hooks/useDirectoryState";
 import useDirectoryDispatch from "@pages/Directory/hooks/useDirectoryDispatch";
 import environmentConfig from "@utils/environmentConfig";
-import { If } from "@components/If/If";
-import Button from "@components/Button/Button";
-import { color } from "@styles/colors";
+import { Else, If } from "@components/If/If";
 import { ButtonType } from "@components/Button/ButtonInterfaces";
 import { launchImageLibrary } from "react-native-image-picker";
+import { Label, Subtext } from "@components/Input/InputStyledComponents";
+import useRenderAmenityIcon from "@pages/Directory/hooks/useRenderAmenityIcon";
+import Icon from "@components/Icon/Icon";
+import { color } from "@styles/colors";
 
 const NominateDiveSiteDetailsForm: React.FunctionComponent<
   ScreenRenderProps
 > = ({ screenKey, gotoPrevPage, gotoNextPage }) => {
   const { user } = useLoginState();
-  const { updateSuggestedNearbyLocation } = useDirectoryDispatch();
-  const { active_index, mapNominateLocation, suggestedNearbyLocation } =
-    useDirectoryState();
+  const { updateSuggestedNearbyLocation, updateDiveSiteActiveAmenities } =
+    useDirectoryDispatch();
+  const {
+    active_index,
+    mapNominateLocation,
+    suggestedNearbyLocation,
+    diveSiteAmenityChoices,
+  } = useDirectoryState();
   const renderInputIcon = useRenderInputIcon();
+  const renderAmenityIcon = useRenderAmenityIcon();
   const diveSiteImage =
     suggestedNearbyLocation?.uploadedPhoto?.uri ||
     `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=${
@@ -66,38 +76,48 @@ const NominateDiveSiteDetailsForm: React.FunctionComponent<
   return (
     <ScreenContentsContainer>
       <NominateDiveSiteDetailsFormContainer>
-        <If
-          condition={
-            suggestedNearbyLocation?.photos &&
-            !!suggestedNearbyLocation?.photos[0]
-          }>
-          <NominateDiveSitePhotoContainer>
+        <NominateDiveSitePhotoContainer>
+          <If
+            condition={
+              (suggestedNearbyLocation?.uploadedPhoto &&
+                !!suggestedNearbyLocation?.uploadedPhoto.uri) ||
+              (suggestedNearbyLocation?.photos &&
+                !!suggestedNearbyLocation?.photos[0])
+            }>
             <NominateDiveSitePhoto
               source={{
                 uri: diveSiteImage,
               }}
             />
-            <DiveSiteImageButtonsContainer>
-              <ChangeDiveSiteImageButton
-                type={ButtonType.HuggingOutline}
-                text={"Change Dive Site Image"}
-                onPress={() => handleChoosePhoto()}
-                textStyle={{ fontSize: 14 }}
+            <Else>
+              <Icon
+                name="location-outline"
+                type={IconTypeEnum.Ionicons}
+                size={100}
+                color={color("SystemBlue3")}
               />
-              <ChangeDiveSiteImageButton
-                type={ButtonType.HuggingOutline}
-                text={"Reset Image"}
-                onPress={() =>
-                  updateSuggestedNearbyLocation({
-                    ...suggestedNearbyLocation,
-                    uploadedPhoto: undefined,
-                  })
-                }
-                textStyle={{ fontSize: 14 }}
-              />
-            </DiveSiteImageButtonsContainer>
-          </NominateDiveSitePhotoContainer>
-        </If>
+            </Else>
+          </If>
+          <DiveSiteImageButtonsContainer>
+            <ChangeDiveSiteImageButton
+              type={ButtonType.HuggingOutline}
+              text={"Change Dive Site Image"}
+              onPress={() => handleChoosePhoto()}
+              textStyle={{ fontSize: 14 }}
+            />
+            <ChangeDiveSiteImageButton
+              type={ButtonType.HuggingOutline}
+              text={"Reset Image"}
+              onPress={() =>
+                updateSuggestedNearbyLocation({
+                  ...suggestedNearbyLocation,
+                  uploadedPhoto: undefined,
+                })
+              }
+              textStyle={{ fontSize: 14 }}
+            />
+          </DiveSiteImageButtonsContainer>
+        </NominateDiveSitePhotoContainer>
         <Gap level={1} />
         <Gap level={1} />
         <Input
@@ -118,6 +138,20 @@ const NominateDiveSiteDetailsForm: React.FunctionComponent<
         />
         <Gap level={1} />
         <Gap level={1} />
+        <Label>{"Amenities"}</Label>
+        <Subtext>{"Choose the facilities available in this dive site"}</Subtext>
+        <AmenitiesContainer>
+          {Object.keys(diveSiteAmenityChoices).map((amenity) => (
+            <AmenityButton
+              active={diveSiteAmenityChoices[amenity]}
+              onPress={() => updateDiveSiteActiveAmenities(amenity)}>
+              {renderAmenityIcon({
+                type: amenity,
+                active: diveSiteAmenityChoices[amenity],
+              })}
+            </AmenityButton>
+          ))}
+        </AmenitiesContainer>
       </NominateDiveSiteDetailsFormContainer>
     </ScreenContentsContainer>
   );
