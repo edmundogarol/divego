@@ -55,7 +55,7 @@ export interface User {
 }
 
 export interface Location {
-  id: number;
+  id: number | undefined;
   place_id?: string;
   description?: string;
   main?: string;

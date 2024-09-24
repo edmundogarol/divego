@@ -15,6 +15,7 @@ import {
   updateStartUpDetails,
   updateStartUpScreensGroup,
   resetStartUpFreediver,
+  updatePreferredDiveSites,
 } from "../StartUpState";
 import { StartUpScreensGroup } from "../StartUpInterfaces";
 
@@ -31,6 +32,7 @@ interface StartUpDispatch {
     freediver_type: FreediverTypeEnum;
   }): void;
   updateCertificationsList(certifications_list: Array<Array<string>>): void;
+  updatePreferredDiveSites(diveSites: Array<number>): void;
   resetStartUpFreediver(): void;
 }
 
@@ -65,6 +67,9 @@ export const useStartUpDispatch = (): StartUpDispatch => {
     },
     updateCertificationsList(certifications_list: Array<Array<string>>): void {
       dispatch(updateCertificationsList(certifications_list));
+    },
+    updatePreferredDiveSites(diveSites: Array<number>): void {
+      dispatch(updatePreferredDiveSites(diveSites));
     },
     resetStartUpFreediver(): void {
       dispatch(resetStartUpFreediver());

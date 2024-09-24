@@ -13,6 +13,7 @@ export interface StartUpState {
   readonly agency: FreediveAgencyEnum | null;
   readonly certifications_list: Array<Array<string>> | null;
   readonly freediver: Freediver;
+  readonly preferredDiveSites: number[];
 }
 
 export const initialState: StartUpState = {
@@ -31,6 +32,7 @@ export const initialState: StartUpState = {
     image_public: undefined,
   },
   certifications_list: null,
+  preferredDiveSites: [],
 };
 
 type UpdateStartUpActiveIndex = PayloadAction<number>;
@@ -48,6 +50,8 @@ type UpdateStartUpDetails = PayloadAction<{
 
 type UpdateCertificationsList = PayloadAction<Array<Array<string>>>;
 
+type UpdatePreferredDiveSites = PayloadAction<Array<number>>;
+
 type ResetStartUpFreediver = PayloadAction;
 
 export type StartUpAction =
@@ -57,7 +61,8 @@ export type StartUpAction =
   | UpdateStartUpScreensGroup
   | UpdateStartUpDetails
   | UpdateCertificationsList
-  | ResetStartUpFreediver;
+  | ResetStartUpFreediver
+  | UpdatePreferredDiveSites;
 
 export const startUpSlice = createSlice({
   name: "startUp",
@@ -81,6 +86,9 @@ export const startUpSlice = createSlice({
     updateCertificationsList: (state, action: UpdateCertificationsList) => {
       state.certifications_list = action.payload;
     },
+    updatePreferredDiveSites: (state, action: UpdatePreferredDiveSites) => {
+      state.preferredDiveSites = action.payload;
+    },
     resetStartUpFreediver: (state) => {
       state.freediver = initialState.freediver;
       state.agency = initialState.agency;
@@ -96,6 +104,7 @@ export const {
   updateStartUpDetails,
   updateCertificationsList,
   resetStartUpFreediver,
+  updatePreferredDiveSites,
 } = startUpSlice.actions;
 
 export const startUpReducer = startUpSlice.reducer;

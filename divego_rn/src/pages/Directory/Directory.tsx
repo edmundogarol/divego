@@ -1,35 +1,36 @@
-import { Text } from "react-native";
 import { FlatList, ScrollView } from "react-native-gesture-handler";
 import useReactNavigation from "@navigation/hooks/useReactNavigation";
-import useCustomScreenOptions from "@navigation/hooks/useCustomScreenOptions";
 import Gap from "@components/Gap/Gap";
 import useRenderDirectoryItem from "./hooks/useRenderDirectoryItem";
 import { DirectoryContainer } from "./DirectoryStyledComponents";
-import CurrentLocationButton from "./CurrentLocationButton";
 import useLoginState from "@pages/Login/hooks/useLoginState";
 import Button from "@components/Button/Button";
 import { useHandleChangeLocationButtonClick } from "./hooks/useHandleChangeLocationButtonClick";
 import { Subtext } from "@components/Input/InputStyledComponents";
 import { If } from "@components/If/If";
-import { Privileges } from "@interfaces/CustomTypes";
+import { LocationsNearbyMapped, Privileges } from "@interfaces/CustomTypes";
 import { PageEnum } from "@interfaces/NavigationTypes";
-import useDirectoryState from "./hooks/useDirectoryState";
-import useStartUpState from "@pages/StartUp/hooks/useStartUpState";
 
-const Directory: React.FunctionComponent = () => {
+interface DirectoryProps {
+  showNominateButton?: boolean;
+  nearbyLocations: LocationsNearbyMapped;
+  preferredDiveSites: number[];
+  updatePreferredDiveSites: (diveSites: number[]) => void;
+}
+
+const Directory: React.FunctionComponent<DirectoryProps> = ({
+  showNominateButton,
+  nearbyLocations,
+  preferredDiveSites,
+  updatePreferredDiveSites,
+}) => {
   const { user } = useLoginState();
   const navigation = useReactNavigation();
-  const { nearbyLocations } = useDirectoryState();
-  const renderDirectoryItem = useRenderDirectoryItem();
-  const { active_index } = useStartUpState();
+  const renderDirectoryItem = useRenderDirectoryItem(
+    preferredDiveSites,
+    updatePreferredDiveSites,
+  );
   const handleChangeLocationButtonClick = useHandleChangeLocationButtonClick();
-
-  useCustomScreenOptions({
-    title: <Text>{"Dive Directory"}</Text>,
-    backButtonOnPress: () => navigation.goBack(),
-    rightButton: <CurrentLocationButton location={user.current_location} />,
-    depList: [user.current_location],
-  });
 
   return (
     <DirectoryContainer>
@@ -43,7 +44,10 @@ const Directory: React.FunctionComponent = () => {
           {"Showing suggestions within a 10km radius from current location"}
         </Subtext>
         <FlatList
-          data={Object.values(nearbyLocations)}
+          data={Object.values(nearbyLocations).filter(
+            (location) =>
+              location.id && !preferredDiveSites.includes(location.id),
+          )}
           scrollEnabled={false}
           renderItem={renderDirectoryItem}
           contentContainerStyle={{}}
@@ -51,7 +55,7 @@ const Directory: React.FunctionComponent = () => {
         <Gap level={1} />
         <If
           condition={
-            user.privileges.includes(Privileges.SCOUT) && active_index === 0
+            user.privileges.includes(Privileges.SCOUT) && showNominateButton
           }>
           <Button
             text={"Nominate Dive Site"}

@@ -15,7 +15,7 @@ export enum PageEnum {
   ResetPassword = "ResetPassword",
   Dashboard = "Dashboard",
   StartUp = "Start Up",
-  FreediveDirectoryModal = "FreediveDirectory",
+  StartUpDirectory = "StartUpDirectory",
   ChangeCurrentLocation = "ChangeCurrentLocation",
   NominateDiveSite = "NominateDiveSite",
 }
@@ -25,7 +25,7 @@ export type AuthenticatedStackNavigatorParams = {
   [PageEnum.DrawerNavigator]: undefined;
   [PageEnum.Dashboard]: undefined;
   [PageEnum.StartUp]: undefined;
-  [PageEnum.FreediveDirectoryModal]: undefined;
+  [PageEnum.StartUpDirectory]: undefined;
   [PageEnum.ChangeCurrentLocation]: undefined;
   [PageEnum.NominateDiveSite]: undefined;
 };

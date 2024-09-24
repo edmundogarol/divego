@@ -7,9 +7,9 @@ import DrawerNavigator from "./DrawerNavigator/DrawerNavigator";
 import StartUp from "@pages/StartUp/StartUp";
 import useStartUpState from "@pages/StartUp/hooks/useStartUpState";
 import { useCommonHeaderOptions } from "./hooks/useCommonHeaderOptions";
-import FreediveDirectoryModal from "@pages/Directory/FreediveDirectoryModal/FreediveDirectoryModal";
 import ChangeCurrentLocation from "@pages/Directory/ChangeCurrentLocation";
 import NominateDiveSite from "@pages/Directory/NominateDiveSite/NominateDiveSite";
+import StartUpDirectory from "@pages/StartUp/screens/common/StartUpDirectory";
 
 export const Stack = createStackNavigator<AuthenticatedStackNavigatorParams>();
 
@@ -38,8 +38,8 @@ const AuthenticatedStackNavigator: React.FunctionComponent =
             options={{
               ...headerOptions,
             }}
-            name={PageEnum.FreediveDirectoryModal}
-            component={FreediveDirectoryModal}
+            name={PageEnum.StartUpDirectory}
+            component={StartUpDirectory}
           />
           <Stack.Screen
             options={{

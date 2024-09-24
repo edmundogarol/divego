@@ -11,12 +11,12 @@ import {
 import useRenderAmenityIconsList from "./useRenderAmenityIconsList";
 import useDirectoryState from "./useDirectoryState";
 import useDirectoryDispatch from "./useDirectoryDispatch";
-import { Pressable } from "react-native";
-import useRenderInputIcon from "@components/Input/hooks/useRenderInputIcon";
-import Icon from "@components/Icon/Icon";
 import { IconTypeEnum } from "@components/Icon/IconInterfaces";
 
-const useRenderDirectoryItem = () => {
+const useRenderDirectoryItem = (
+  preferredDiveSites: number[],
+  updatePreferredDiveSites: (diveSites: number[]) => void,
+) => {
   const { nearbyLocations } = useDirectoryState();
   const { updateNearbyLocations } = useDirectoryDispatch();
 
@@ -40,7 +40,14 @@ const useRenderDirectoryItem = () => {
                 {renderAmenityIconsList(item)}
               </DirectoryAmenitiesContainer>
             </DirectoryItemHeader>
-            <DirectoryItemAddButton>
+            <DirectoryItemAddButton
+              onPress={() => {
+                updatePreferredDiveSites([...preferredDiveSites, item.id]);
+                updateNearbyLocations({
+                  ...nearbyLocations,
+                  [item.id]: { ...item, active: !item.active },
+                });
+              }}>
               <DirectoryItemAddIcon
                 type={IconTypeEnum.FontAwesome}
                 name="plus"
@@ -50,7 +57,7 @@ const useRenderDirectoryItem = () => {
         </DirectoryItemContainer>
       );
     },
-    [nearbyLocations],
+    [nearbyLocations, preferredDiveSites, updatePreferredDiveSites],
   );
 };
 
