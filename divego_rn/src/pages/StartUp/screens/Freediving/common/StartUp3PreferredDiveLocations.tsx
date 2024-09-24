@@ -39,8 +39,7 @@ const StartUp3PreferredDiveLocations: React.FunctionComponent<
     title: <Text numberOfLines={2}>{"Preferred Dive Locations"}</Text>,
     backButtonOnPress: () => gotoPrevPage(),
     rightButtonOnPress: () => console.log({ user, freediver }),
-    rightButtonDisabled: user.locations.length < 1,
-    rightButtonText: "Next",
+    rightButtonText: user.locations.length < 1 ? "Skip" : "Next",
     depList: [active_index],
     loadCondition: active_index.toString() === screenKey,
   });

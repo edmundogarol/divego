@@ -41,6 +41,22 @@ export const DirectoryItemHeader = styled.View`
   padding-left: ${CONTAINER_PADDING_DEFAULT}px;
 `;
 
+export const DirectoryItemAddButton = styled.Pressable`
+  display: flex;
+  position: absolute;
+  right: 0;
+  top: 50%;
+  padding: ${CONTAINER_PADDING_DEFAULT}px;
+  margin-right: ${CONTAINER_MARGIN_SMALL}px;
+  background-color: ${color("SystemSuccess1")};
+  border-color: white;
+  border-width: 1px;
+`;
+
+export const DirectoryItemAddIcon = styled(Icon)`
+  color: ${color("SystemWhite")};
+`;
+
 export const DirectoryItemText = styled.Text`
   color: ${color("SystemWhite")};
   font-weight: 800;

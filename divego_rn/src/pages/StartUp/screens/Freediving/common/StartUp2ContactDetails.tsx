@@ -36,8 +36,8 @@ const StartUp2ContactDetails: React.FunctionComponent<ScreenRenderProps> = ({
     title: "Contact Details",
     backButtonOnPress: () => gotoPrevPage(),
     rightButtonOnPress: () => gotoNextPage(),
-    rightButtonDisabled:
-      !user.current_location?.place_id || !user.first_name || !user.last_name,
+    // rightButtonDisabled:
+    //   !user.current_location?.place_id || !user.first_name || !user.last_name,
     rightButtonText: "Next",
     depList: [active_index, user],
     loadCondition: active_index.toString() === screenKey,

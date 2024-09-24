@@ -1,15 +1,20 @@
 import { useCallback } from "react";
 import {
   DirectoryAmenitiesContainer,
+  DirectoryItemAddButton,
+  DirectoryItemAddIcon,
   DirectoryItemContainer,
   DirectoryItemHeader,
   DirectoryItemImage,
   DirectoryItemText,
 } from "../DirectoryStyledComponents";
 import useRenderAmenityIconsList from "./useRenderAmenityIconsList";
-import { LocationsNearby } from "@interfaces/CustomTypes";
 import useDirectoryState from "./useDirectoryState";
 import useDirectoryDispatch from "./useDirectoryDispatch";
+import { Pressable } from "react-native";
+import useRenderInputIcon from "@components/Input/hooks/useRenderInputIcon";
+import Icon from "@components/Icon/Icon";
+import { IconTypeEnum } from "@components/Icon/IconInterfaces";
 
 const useRenderDirectoryItem = () => {
   const { nearbyLocations } = useDirectoryState();
@@ -35,6 +40,12 @@ const useRenderDirectoryItem = () => {
                 {renderAmenityIconsList(item)}
               </DirectoryAmenitiesContainer>
             </DirectoryItemHeader>
+            <DirectoryItemAddButton>
+              <DirectoryItemAddIcon
+                type={IconTypeEnum.FontAwesome}
+                name="plus"
+              />
+            </DirectoryItemAddButton>
           </DirectoryItemImage>
         </DirectoryItemContainer>
       );

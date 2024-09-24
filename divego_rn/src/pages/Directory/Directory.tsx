@@ -14,12 +14,14 @@ import { If } from "@components/If/If";
 import { Privileges } from "@interfaces/CustomTypes";
 import { PageEnum } from "@interfaces/NavigationTypes";
 import useDirectoryState from "./hooks/useDirectoryState";
+import useStartUpState from "@pages/StartUp/hooks/useStartUpState";
 
 const Directory: React.FunctionComponent = () => {
   const { user } = useLoginState();
   const navigation = useReactNavigation();
   const { nearbyLocations } = useDirectoryState();
   const renderDirectoryItem = useRenderDirectoryItem();
+  const { active_index } = useStartUpState();
   const handleChangeLocationButtonClick = useHandleChangeLocationButtonClick();
 
   useCustomScreenOptions({
@@ -47,7 +49,10 @@ const Directory: React.FunctionComponent = () => {
           contentContainerStyle={{}}
         />
         <Gap level={1} />
-        <If condition={user.privileges.includes(Privileges.SCOUT)}>
+        <If
+          condition={
+            user.privileges.includes(Privileges.SCOUT) && active_index === 0
+          }>
           <Button
             text={"Nominate Dive Site"}
             onPress={() => navigation.navigate(PageEnum.NominateDiveSite)}
