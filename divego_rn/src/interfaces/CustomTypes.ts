@@ -1,5 +1,6 @@
 import { CustomSvgIconName } from "@components/Icon/libraries/CustomSvgIcon";
 import { ColorKey } from "@styles/colors";
+import { Animated } from "react-native";
 import { Asset } from "react-native-image-picker";
 import { ICountry } from "react-native-international-phone-number";
 
@@ -73,6 +74,8 @@ export interface Location {
 
 export interface LocationsNearby extends Location {
   active: boolean;
+  animating?: boolean;
+  animatedVal?: Animated.Value;
 }
 
 export type LocationsNearbyMapped = { [key: number]: LocationsNearby };

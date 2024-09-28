@@ -4,6 +4,7 @@ import panagsamabeach from "@assets/dev/panagsama_beach.png";
 import tongobay from "@assets/dev/tongo_bay.png";
 import freediveplanet from "@assets/dev/freedive_planet.png";
 import { LocationAmenities, LocationsNearby } from "@interfaces/CustomTypes";
+import { Animated } from "react-native";
 
 const mockDirectoryItems: { [key: number]: LocationsNearby } = {
   1: {
@@ -13,6 +14,7 @@ const mockDirectoryItems: { [key: number]: LocationsNearby } = {
     mapPhoto: clubkontiki,
     amenities: ["showers", "toilet", "food", "fee"] as LocationAmenities[],
     active: false,
+    animatedVal: new Animated.Value(1),
   },
   2: {
     id: 2,
@@ -27,6 +29,7 @@ const mockDirectoryItems: { [key: number]: LocationsNearby } = {
       "fee",
     ] as LocationAmenities[],
     active: false,
+    animatedVal: new Animated.Value(1),
   },
   3: {
     id: 3,
@@ -35,6 +38,7 @@ const mockDirectoryItems: { [key: number]: LocationsNearby } = {
     mapPhoto: panagsamabeach,
     amenities: ["food"] as LocationAmenities[],
     active: false,
+    animatedVal: new Animated.Value(1),
   },
   4: {
     id: 4,
@@ -43,6 +47,7 @@ const mockDirectoryItems: { [key: number]: LocationsNearby } = {
     mapPhoto: tongobay,
     amenities: [],
     active: false,
+    animatedVal: new Animated.Value(1),
   },
   5: {
     id: 5,
@@ -57,6 +62,7 @@ const mockDirectoryItems: { [key: number]: LocationsNearby } = {
       "fee",
     ] as LocationAmenities[],
     active: false,
+    animatedVal: new Animated.Value(1),
   },
 };
 

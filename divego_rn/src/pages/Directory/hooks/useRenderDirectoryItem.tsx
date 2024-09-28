@@ -1,4 +1,4 @@
-import { useCallback } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import {
   DirectoryAmenitiesContainer,
   DirectoryItemAddButton,
@@ -12,6 +12,7 @@ import useRenderAmenityIconsList from "./useRenderAmenityIconsList";
 import useDirectoryState from "./useDirectoryState";
 import useDirectoryDispatch from "./useDirectoryDispatch";
 import { IconTypeEnum } from "@components/Icon/IconInterfaces";
+import { Animated } from "react-native";
 
 const useRenderDirectoryItem = (
   preferredDiveSites: number[],
@@ -25,36 +26,63 @@ const useRenderDirectoryItem = (
       const renderAmenityIconsList = useRenderAmenityIconsList();
 
       return (
-        <DirectoryItemContainer
-          active={item.active}
-          onPress={() =>
-            updateNearbyLocations({
-              ...nearbyLocations,
-              [item.id]: { ...item, active: !item.active },
-            })
-          }>
-          <DirectoryItemImage active={item.active} source={item.mapPhoto}>
-            <DirectoryItemHeader>
-              <DirectoryItemText>{item.description}</DirectoryItemText>
-              <DirectoryAmenitiesContainer>
-                {renderAmenityIconsList(item)}
-              </DirectoryAmenitiesContainer>
-            </DirectoryItemHeader>
-            <DirectoryItemAddButton
-              onPress={() => {
-                updatePreferredDiveSites([...preferredDiveSites, item.id]);
-                updateNearbyLocations({
-                  ...nearbyLocations,
-                  [item.id]: { ...item, active: !item.active },
-                });
-              }}>
-              <DirectoryItemAddIcon
-                type={IconTypeEnum.FontAwesome}
-                name="plus"
-              />
-            </DirectoryItemAddButton>
-          </DirectoryItemImage>
-        </DirectoryItemContainer>
+        <Animated.View
+          style={[
+            {
+              opacity: item.animatedVal,
+            },
+          ]}>
+          <DirectoryItemContainer
+            active={item.active}
+            onPress={() =>
+              updateNearbyLocations({
+                ...nearbyLocations,
+                [item.id]: { ...item, active: !item.active },
+              })
+            }>
+            <DirectoryItemImage active={item.active} source={item.mapPhoto}>
+              <DirectoryItemHeader>
+                <DirectoryItemText>{item.description}</DirectoryItemText>
+                <DirectoryAmenitiesContainer>
+                  {renderAmenityIconsList(item)}
+                </DirectoryAmenitiesContainer>
+              </DirectoryItemHeader>
+              <DirectoryItemAddButton
+                onPress={() => {
+                  updateNearbyLocations({
+                    ...nearbyLocations,
+                    [item.id]: { ...item, animating: true },
+                  });
+
+                  Animated.timing(item.animatedVal, {
+                    toValue: 0,
+                    duration: 1000,
+                    useNativeDriver: true,
+                  }).start(({ finished }) => {
+                    if (finished && item && item.id) {
+                      updatePreferredDiveSites([
+                        ...preferredDiveSites,
+                        item.id,
+                      ]);
+                      updateNearbyLocations({
+                        ...nearbyLocations,
+                        [item.id]: {
+                          ...item,
+                          active: false,
+                          animating: false,
+                        },
+                      });
+                    }
+                  });
+                }}>
+                <DirectoryItemAddIcon
+                  type={IconTypeEnum.FontAwesome}
+                  name="plus"
+                />
+              </DirectoryItemAddButton>
+            </DirectoryItemImage>
+          </DirectoryItemContainer>
+        </Animated.View>
       );
     },
     [nearbyLocations, preferredDiveSites, updatePreferredDiveSites],

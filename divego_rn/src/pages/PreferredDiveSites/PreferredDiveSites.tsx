@@ -21,6 +21,7 @@ import {
 } from "./PreferredDiveSitesStyledComponents";
 import useDirectoryState from "@pages/Directory/hooks/useDirectoryState";
 import { ImageBackground, Pressable } from "react-native";
+import useDirectoryDispatch from "@pages/Directory/hooks/useDirectoryDispatch";
 
 interface PreferredDiveSitesProps {
   preferredDiveSites: number[];
@@ -34,6 +35,7 @@ const PreferredDiveSites: React.FunctionComponent<PreferredDiveSitesProps> = ({
   directoryPage,
 }) => {
   const { nearbyLocations } = useDirectoryState();
+  const { updateNearbyLocations } = useDirectoryDispatch();
   const navigation = useReactNavigation();
 
   return (
@@ -57,11 +59,16 @@ const PreferredDiveSites: React.FunctionComponent<PreferredDiveSitesProps> = ({
               </DiveSiteTitleContainer>
               <DiveSiteImageBackground source={nearbyLocations[id].mapPhoto} />
               <DiveSiteIconContainer
-                onPress={() =>
+                onPress={() => {
                   updatePreferredDiveSites(
                     preferredDiveSites.filter((location) => location !== id),
-                  )
-                }>
+                  );
+                  nearbyLocations[id].animatedVal?.setValue(1);
+                  updateNearbyLocations({
+                    ...nearbyLocations,
+                    [id]: { ...nearbyLocations[id], animating: false },
+                  });
+                }}>
                 <DiveSiteIcon
                   name={"trash"}
                   type={IconTypeEnum.FontAwesome}

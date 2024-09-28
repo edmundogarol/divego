@@ -7,11 +7,11 @@ import {
 import mockDirectoryItems from "./mocks/mockDirectoryItems";
 
 export interface DirectoryState {
-  readonly mapCurrentLocation: Location | undefined;
+  readonly mapCurrentLocation?: Location;
   readonly active_index: number;
-  readonly mapNominateLocation: Location | undefined;
+  readonly mapNominateLocation?: Location;
   readonly nearbyLocations: LocationsNearbyMapped;
-  readonly suggestedNearbyLocation: Location | undefined;
+  readonly suggestedNearbyLocation?: Location;
   readonly diveSiteAmenityChoices: { [key: string]: boolean };
 }
 
