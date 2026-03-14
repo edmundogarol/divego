@@ -3,7 +3,8 @@
 Repository: `divego`
 
 ## DiveGo Mobile App
-![DiveGo Mobile App](https://edmundo-dev-assets.s3.us-west-2.amazonaws.com/screenshots/divego_app)
+![DiveGo Mobile App]
+<img src="https://edmundo-dev-assets.s3.us-west-2.amazonaws.com/screenshots/divego_app" style="height: 500px;">
 
 ## Freediver Details
 ![Freediver Details](https://edmundo-dev-assets.s3.us-west-2.amazonaws.com/screenshots/divego_app_freediver-details)
