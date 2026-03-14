@@ -34,7 +34,7 @@ class UserSerializer(serializers.ModelSerializer):
         )
         extra_kwargs = {"password": {"write_only": True}}
 
-        
+
 class ResetPasswordSerializer(serializers.ModelSerializer):
     class Meta:
         model = ResetPasswordSession
